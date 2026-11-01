@@ -458,19 +458,41 @@ finally{$("refreshBtn").disabled=false}
 }
 
 /* ساخت لینک VLESS */
-function buildVless(proxyIP){
-const uuid="97a8da3a-bda2-4942-bd2e-98b79452804d";
-const server="2606:4700:3035::ac43:a615";
-const port="443";
-const host="smart-shield-536.rutiwu6474.workers.dev";
-const wsPath="/rtl-core?proxyip="+proxyIP;
-const params=new URLSearchParams({
-path:wsPath,security:"tls",alpn:"http/1.1",
-encryption:"none",png:"Off",insecure:"0",
-host:host,fp:"chrome",type:"ws",
-allowInsecure:"0",sni:host
-});
-return "vless://"+uuid+"@["+server+"]:"+port+"?"+params.toString()+"#%40DarkvpnTG%20%F0%9F%86%95";
+function buildVless(proxyIP, endpointValue) {
+  const uuid = "97a8da3a-bda2-4942-bd2e-98b79452804d";
+  const host = "smart-shield-536.rutiwu6474.workers.dev";
+
+  const endpoint = parseEndpoint(endpointValue);
+
+  if (!endpoint) {
+    throw new Error("ابتدا یک IP از لیست IPv4 یا IPv6 انتخاب کنید.");
+  }
+
+  const server = endpoint.version === 6
+    ? "[" + endpoint.ip + "]"
+    : endpoint.ip;
+
+  const port = endpoint.port;
+
+  const wsPath = "/rtl-core?proxyip=" + proxyIP;
+
+  const params = new URLSearchParams({
+    path: wsPath,
+    security: "tls",
+    alpn: "http/1.1",
+    encryption: "none",
+    png: "Off",
+    insecure: "0",
+    host: host,
+    fp: "chrome",
+    type: "ws",
+    allowInsecure: "0",
+    sni: host
+  });
+
+  return "vless://" + uuid + "@" + server + ":" + port +
+    "?" + params.toString() +
+    "#%40DarkvpnTG%20%F0%9F%86%95";
 }
 
 /* ساخت فقط در صفحه؛ بدون هدایت خودکار */
