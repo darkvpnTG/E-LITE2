@@ -496,35 +496,41 @@ function buildVless(proxyIP, endpointValue) {
 }
 
 /* ساخت فقط در صفحه؛ بدون هدایت خودکار */
-$("createVlessBtn").addEventListener("click", event => {
-  event.preventDefault();
+$("copyVlessBtn").addEventListener("click", async () => {
+  if (!generatedVlessLink) {
+    setStatus("ابتدا کانفیگ را بسازید.", true);
+    return;
+  }
 
   try {
-    if (!selectedEndpoint) {
-      throw new Error("ابتدا یک Endpoint از لیست IPها انتخاب کنید.");
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(generatedVlessLink);
+    } else {
+      const textarea = document.createElement("textarea");
+
+      textarea.value = generatedVlessLink;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      textarea.style.left = "-9999px";
+
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      textarea.setSelectionRange(0, textarea.value.length);
+
+      const copied = document.execCommand("copy");
+      textarea.remove();
+
+      if (!copied) throw new Error("Copy failed");
     }
 
-    const proxyIP = getSelectedLocationIP();
+    setStatus("کانفیگ VLESS با موفقیت کپی شد.");
 
-    generatedVlessLink = buildVless(
-      proxyIP,
-      selectedEndpoint
-    );
-
-    $("vlessResultLink").textContent = generatedVlessLink;
-
-    $("vlessSelectedIp").textContent =
-      "Endpoint: " + selectedEndpoint +
-      " | Proxy IP: " + proxyIP;
-
-    $("vlessOutput").classList.add("show");
-
-    setStatus("کانفیگ با Endpoint انتخاب‌شده ساخته شد.");
-
-    $("vlessOutput").scrollIntoView({
-      behavior: "smooth",
-      block: "nearest"
-    });
+  } catch (error) {
+    setStatus("کپی خودکار انجام نشد؛ لینک را دستی انتخاب و کپی کنید.", true);
+    $("vlessResultLink").focus();
+  }
+});
 
   } catch(error) {
     setStatus("خطا: " + error.message, true);
