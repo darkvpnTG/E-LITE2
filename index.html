@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -114,8 +115,10 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
 @media(max-width:620px){.service-list,.apn-list,.grid{grid-template-columns:1fr}.panel{padding:16px}.top{align-items:flex-start}.brand h1{font-size:16px}}
 </style>
 </head>
+
 <body class="night">
-<div class="bg"></div><div class="ambient"></div>
+<div class="bg"></div>
+<div class="ambient"></div>
 
 <div class="modal" id="welcomeModal" role="dialog" aria-modal="true">
 <div class="modal-card">
@@ -124,19 +127,23 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
 <div>کانال رسمی DarkVPN</div>
 <a class="modal-channel" href="https://t.me/darkvpnTG" target="_blank" rel="noopener">https://t.me/darkvpnTG</a>
 <button class="modal-button" id="understoodBtn" type="button">فهمیدم</button>
-</div></div>
+</div>
+</div>
 
 <div class="apn-modal hidden" id="apnModal" role="dialog" aria-modal="true">
 <div class="apn-modal-card">
 <div id="apnModalIcon" class="apn-loader"></div>
 <h3 class="apn-modal-title" id="apnModalTitle">در حال انجام تنظیمات</h3>
 <p class="apn-modal-message" id="apnModalMessage">لطفاً شکیبا باشید.</p>
-</div></div>
+</div>
+</div>
 
 <main class="wrap">
 <header class="top">
-<div class="brand"><img class="logo" src="./logo.jpg" alt="DARK VPN Logo">
-<div><h1>𝐃𝐚𝐫𝐤ᵛᵖⁿ</h1><small>WS+TLS • RTL • VLESS</small></div></div>
+<div class="brand">
+<img class="logo" src="./logo.jpg" alt="DARK VPN Logo">
+<div><h1>𝐃𝐚𝐫𝐤ᵛᵖⁿ</h1><small>WS+TLS • RTL • VLESS</small></div>
+</div>
 <button class="theme" id="themeBtn" type="button">☀️ حالت روز</button>
 </header>
 
@@ -149,38 +156,71 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
 <section class="panel">
 <h3 class="section-title">تنظیمات کانفیگ</h3>
 <div class="grid">
+
 <div class="field full">
 <label for="ipSearch">لیست IP رنج ها</label>
 <input id="ipSearch" class="ipsearch" type="search" placeholder="جست‌وجو در لیست IPها..." autocomplete="off">
+
 <div class="ip-group">
-<div class="ip-version-title"><span>IPv4</span><span style="display:flex;align-items:center;gap:9px"><img src="https://www.google.com/s2/favicons?domain=google.com&sz=64" alt="Google" width="22"><img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64" alt="Cloudflare" width="22"><span class="ip-version-count" id="ipv4Count">0 IP</span></span></div>
+<div class="ip-version-title">
+<span>IPv4</span>
+<span style="display:flex;align-items:center;gap:9px">
+<img src="https://www.google.com/s2/favicons?domain=google.com&sz=64" alt="Google" width="22">
+<img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64" alt="Cloudflare" width="22">
+<span class="ip-version-count" id="ipv4Count">0 IP</span>
+</span>
+</div>
 <div class="ipbox"><div id="ipv4List" class="iplist"><div class="ip-empty">در حال دریافت IPv4...</div></div></div>
 </div>
+
 <div class="ip-group">
-<div class="ip-version-title"><span>IPv6</span><span style="display:flex;align-items:center;gap:9px"><img src="https://www.google.com/s2/favicons?domain=google.com&sz=64" alt="Google" width="22"><img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64" alt="Cloudflare" width="22"><span class="ip-version-count" id="ipv6Count">0 IP</span></span></div>
+<div class="ip-version-title">
+<span>IPv6</span>
+<span style="display:flex;align-items:center;gap:9px">
+<img src="https://www.google.com/s2/favicons?domain=google.com&sz=64" alt="Google" width="22">
+<img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64" alt="Cloudflare" width="22">
+<span class="ip-version-count" id="ipv6Count">0 IP</span>
+</span>
+</div>
 <div class="ipbox"><div id="ipv6List" class="iplist"><div class="ip-empty">در حال دریافت IPv6...</div></div></div>
 </div>
 <span class="hint">بعد زدن مرتب سازی IP پینگ ها مرتب میشود</span>
 </div>
 
-<div class="field"><label for="sni">SNI (سفارشی)</label>
+<div class="field">
+<label for="sni">SNI (سفارشی)</label>
 <select id="sni">
-<option value="cloudflare.com">cloudflare.com</option><option value="play.google.com">play.google.com</option><option value="soft98.ir">soft98.ir</option><option value="speedtest.net">speedtest.net</option><option value="chatgpt.com">chatgpt.com</option><option value="aparat.ir">aparat.ir</option><option value="deepseek.com">deepseek.com</option><option value="check-host.net">check-host.net</option>
-</select></div>
+<option value="cloudflare.com">cloudflare.com</option>
+<option value="play.google.com">play.google.com</option>
+<option value="soft98.ir">soft98.ir</option>
+<option value="speedtest.net">speedtest.net</option>
+<option value="chatgpt.com">chatgpt.com</option>
+<option value="aparat.ir">aparat.ir</option>
+<option value="deepseek.com">deepseek.com</option>
+<option value="check-host.net">check-host.net</option>
+</select>
+</div>
 
-<div class="field"><label for="dns">DNS (سفارشی)</label>
+<div class="field">
+<label for="dns">DNS (سفارشی)</label>
 <select id="dns">
-<option value="8.8.8.8,8.8.4.4">Google DNS</option><option value="1.1.1.1,1.0.0.1">Cloudflare DNS</option><option value="9.9.9.9,149.112.112.112">Quad9 DNS</option>
-</select></div>
+<option value="8.8.8.8,8.8.4.4">Google DNS</option>
+<option value="1.1.1.1,1.0.0.1">Cloudflare DNS</option>
+<option value="9.9.9.9,149.112.112.112">Quad9 DNS</option>
+</select>
+</div>
 
-<div class="field full"><label for="locationSelect">انتخاب کشور و لوکیشن دیتاسنتر</label>
-<select id="locationSelect" disabled><option value="">در حال دریافت لوکیشن‌ها...</option></select></div>
+<div class="field full">
+<label for="locationSelect">انتخاب کشور و لوکیشن دیتاسنتر</label>
+<select id="locationSelect" disabled><option value="">در حال دریافت لوکیشن‌ها...</option></select>
+</div>
 </div>
 
 <div class="actions">
 <button class="btn secondary" id="createVlessBtn" type="button" disabled>ساخت کانفیگ VLESS+RTL</button>
 <button class="btn secondary" id="refreshBtn" type="button">مرتب‌سازی IPها</button>
 </div>
+
 <div class="status" id="status" role="status">در حال دریافت فایل‌ها...</div>
 
 <div class="output" id="vlessOutput">
@@ -190,7 +230,8 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
 <div class="actions">
 <button class="btn primary" id="copyVlessBtn" type="button">کپی کانفیگ VLESS+RTL</button>
 <button class="btn secondary" id="openVlessBtn" type="button">باز کرد در ZedSecure</button>
-</div></div>
+</div>
+</div>
 </section>
 
 <section class="panel" style="margin-top:16px">
@@ -209,7 +250,10 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
 
 <section class="panel" style="margin-top:16px">
 <h3 class="section-title">دارک ملی</h3>
-<label class="melli-row"><input type="checkbox" id="melliToggle"><span><strong>فعال‌سازی گزینه دارک ملی</strong><div class="service-desc">انتخاب یا غیرفعال‌کردن این گزینه</div></span></label>
+<label class="melli-row">
+<input type="checkbox" id="melliToggle">
+<span><strong>فعال‌سازی گزینه دارک ملی</strong><div class="service-desc">انتخاب یا غیرفعال‌کردن این گزینه</div></span>
+</label>
 <div class="melli-status" id="melliStatus"></div>
 <p class="notice-hint">توجه: این سیستم برای زمان قطعی اینترنت جهانی است</p>
 </section>
@@ -242,7 +286,8 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
 <label class="service-item"><input type="checkbox" value="پیام‌رسان گپ"><span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=gap.im&sz=64" alt="گپ"></span><span><div class="service-name">پیام‌رسان گپ</div></span></label>
 </div>
 <div class="save-row"><button class="btn primary" id="saveGhostBtn" type="button">ذخیره انتخاب‌ها</button><span class="save-message" id="ghostStatus"></span></div>
-</div></details>
+</div>
+</details>
 </section>
 
 <footer class="foot">
@@ -287,14 +332,17 @@ if(countryNames[code])return countryNames[code];
 try{return new Intl.DisplayNames(["en"],{type:"region"}).of(code)||code}
 catch(_){return code}
 }
+
 function getCountryFlag(code){
 if(!/^[A-Z]{2}$/.test(code))return "🌐";
 return String.fromCodePoint(...[...code].map(c=>127397+c.charCodeAt(0)));
 }
+
 function setStatus(message,error=false){
 $("status").textContent=message;
 $("status").style.color=error?"#ffb4b4":"#bdeeff";
 }
+
 function isValidIPv6(ip){
 if(!ip||ip.includes(":::"))return false;
 const parts=ip.split("::");
@@ -306,16 +354,19 @@ const groups=[...left,...right];
 if(groups.some(g=>!/^[0-9a-fA-F]{1,4}$/.test(g)))return false;
 return compressed?groups.length<8:groups.length===8;
 }
+
 function parseEndpoint(endpoint){
 if(typeof endpoint!=="string")return null;
 const value=endpoint.trim();
 const v4=value.match(/^((?:\d{1,3}\.){3}\d{1,3}):(\d{1,5})$/);
+
 if(v4){
 const octets=v4[1].split(".").map(Number),port=Number(v4[2]);
 if(octets.every(n=>n>=0&&n<=255)&&port>=1&&port<=65535)
 return {ip:v4[1],port:String(port),version:4};
 return null;
 }
+
 const v6=value.match(/^\[([0-9a-fA-F:]+)\]:(\d{1,5})$/);
 if(v6){
 const port=Number(v6[2]);
@@ -324,6 +375,7 @@ return {ip:v6[1],port:String(port),version:6};
 }
 return null;
 }
+
 function isValidLocationIP(ip){
 ip=ip.trim();
 const v4=ip.match(/^(\d{1,3}\.){3}\d{1,3}$/);
@@ -337,42 +389,56 @@ const select=$("locationSelect");
 $("createVlessBtn").disabled=true;
 select.disabled=true;
 select.innerHTML='<option value="">در حال دریافت کشورها...</option>';
+
 try{
 const response=await fetch(LOCATION_LIST_URL+"?v="+Date.now(),{cache:"no-store"});
 if(!response.ok)throw new Error("HTTP "+response.status);
+
 const raw=await response.text();
 const grouped=new Map();
+
 raw.split(/\r?\n/).forEach(line=>{
 line=line.trim();
 if(!line||line.startsWith("#"))return;
+
 const parts=line.split("#");
 if(parts.length!==2)return;
+
 const ip=parts[0].trim();
 let code=parts[1].trim().toUpperCase();
 if(code==="UK")code="GB";
+
 if(!isValidLocationIP(ip)||!/^[A-Z]{2}$/.test(code))return;
+
 if(!grouped.has(code))grouped.set(code,[]);
 if(!grouped.get(code).includes(ip))grouped.get(code).push(ip);
 });
+
 locationIps=grouped;
 select.innerHTML="";
+
 const countries=[...locationIps.keys()].sort();
+
 countries.forEach(code=>{
 const option=document.createElement("option");
 option.value=code;
 option.textContent=getCountryFlag(code)+" "+getCountryName(code)+" ("+locationIps.get(code).length+" IP)";
 select.appendChild(option);
 });
+
 let total=0;
 locationIps.forEach(list=>total+=list.length);
+
 select.disabled=total===0;
 $("createVlessBtn").disabled=total===0;
+
 if(total){
 setStatus("لوکیشن‌ها دریافت شدند: "+countries.length+" کشور و "+total+" IP.");
 }else{
 select.innerHTML='<option value="">لوکیشنی پیدا نشد</option>';
 setStatus("هیچ IP معتبری با فرمت IP#CC پیدا نشد.",true);
 }
+
 }catch(error){
 locationIps.clear();
 select.innerHTML='<option value="">خطا در دریافت لوکیشن</option>';
@@ -386,192 +452,281 @@ setStatus("دریافت لوکیشن ناموفق بود: "+error.message,true);
 function getSelectedLocationIP(){
 const code=$("locationSelect").value;
 const selectedIPs=locationIps.get(code);
-if(!selectedIPs||!selectedIPs.length)throw new Error("ابتدا یک کشور انتخاب کنید.");
+
+if(!selectedIPs||!selectedIPs.length)
+throw new Error("ابتدا یک کشور انتخاب کنید.");
+
 return selectedIPs[Math.floor(Math.random()*selectedIPs.length)];
 }
 
 /* پینگ نمایشی برای لیست رنج */
 function generateDemoPings(){
-pingTimes.clear();ipMeta.clear();
+pingTimes.clear();
+ipMeta.clear();
+
 ips.forEach(ip=>{
 pingTimes.set(ip,Math.floor(Math.random()*386)+95);
 ipMeta.set(ip,{operator:"MCI/MTN"});
 });
+
 ips.sort((a,b)=>pingTimes.get(a)-pingTimes.get(b));
 }
+
 function getPingClass(ms){
 if(ms<150)return "";
 if(ms<300)return "medium";
 return "slow";
 }
+
 function renderIpGroup(listId,version){
 const query=$("ipSearch").value.trim().toLowerCase();
 const box=$(listId);
+
 const filtered=ips.filter(value=>{
 const parsed=parseEndpoint(value);
 return parsed&&parsed.version===version&&value.toLowerCase().includes(query);
 });
+
 box.replaceChildren();
+
 if(!filtered.length){
 const empty=document.createElement("div");
 empty.className="ip-empty";
 empty.textContent=query?"IP مطابقی پیدا نشد":version===4?"هیچ IPv4 وجود ندارد":"هیچ IPv6 وجود ندارد";
-box.append(empty);return;
+box.append(empty);
+return;
 }
+
 filtered.forEach(value=>{
 const row=document.createElement("div");
 row.className="iprow"+(value===selectedEndpoint?" active":"");
+
 const ip=document.createElement("span");
-ip.className="ipaddress";ip.textContent=value;
+ip.className="ipaddress";
+ip.textContent=value;
+
 const ping=document.createElement("span");
 ping.className="ping "+getPingClass(pingTimes.get(value));
 ping.textContent=pingTimes.get(value)+"ms";
+
 const tag=document.createElement("span");
-tag.className="pill";tag.textContent=value===selectedEndpoint?"انتخاب‌شده":"انتخاب";
+tag.className="pill";
+tag.textContent=value===selectedEndpoint?"انتخاب‌شده":"انتخاب";
+
 row.append(ip,ping,tag);
+
 row.addEventListener("click",()=>{
-selectedEndpoint=value;renderIps();setStatus("Endpoint انتخاب شد: "+value);
+selectedEndpoint=value;
+renderIps();
+setStatus("Endpoint انتخاب شد: "+value);
 });
+
 box.append(row);
 });
 }
+
 function renderIps(){
 renderIpGroup("ipv4List",4);
 renderIpGroup("ipv6List",6);
+
 $("ipv4Count").textContent=ips.filter(ip=>parseEndpoint(ip)?.version===4).length+" IP";
 $("ipv6Count").textContent=ips.filter(ip=>parseEndpoint(ip)?.version===6).length+" IP";
 }
+
 async function loadIps(){
 $("refreshBtn").disabled=true;
 setStatus("در حال دریافت Endpoint ها از range.txt...");
+
 try{
 const response=await fetch(IP_LIST_URL+"?v="+Date.now(),{cache:"no-store"});
 if(!response.ok)throw new Error("HTTP "+response.status);
+
 const raw=await response.text();
+
 ips=[...new Set(raw.split(/\r?\n/).map(line=>line.trim()).filter(line=>parseEndpoint(line)!==null))];
+
 if(!ips.length)throw new Error("فایل range.txt خالی یا نامعتبر است.");
+
 if(selectedEndpoint&&!ips.includes(selectedEndpoint))selectedEndpoint="";
-generateDemoPings();renderIps();
+
+generateDemoPings();
+renderIps();
+
 setStatus("Endpointها دریافت شدند: "+ips.length);
-}catch(error){setStatus("دریافت range.txt ناموفق بود: "+error.message,true)}
-finally{$("refreshBtn").disabled=false}
+
+}catch(error){
+setStatus("دریافت range.txt ناموفق بود: "+error.message,true);
+}finally{
+$("refreshBtn").disabled=false;
+}
 }
 
 /* ساخت لینک VLESS */
-function buildVless(proxyIP, endpointValue) {
-  const uuid = "97a8da3a-bda2-4942-bd2e-98b79452804d";
-  const host = "smart-shield-536.rutiwu6474.workers.dev";
+function buildVless(proxyIP,endpointValue){
+const uuid="97a8da3a-bda2-4942-bd2e-98b79452804d";
+const host="smart-shield-536.rutiwu6474.workers.dev";
 
-  const endpoint = parseEndpoint(endpointValue);
+const endpoint=parseEndpoint(endpointValue);
 
-  if (!endpoint) {
-    throw new Error("ابتدا یک IP از لیست IPv4 یا IPv6 انتخاب کنید.");
-  }
-
-  const server = endpoint.version === 6
-    ? "[" + endpoint.ip + "]"
-    : endpoint.ip;
-
-  const port = endpoint.port;
-
-  const wsPath = "/rtl-core?proxyip=" + proxyIP;
-
-  const params = new URLSearchParams({
-    path: wsPath,
-    security: "tls",
-    alpn: "http/1.1",
-    encryption: "none",
-    png: "Off",
-    insecure: "0",
-    host: host,
-    fp: "chrome",
-    type: "ws",
-    allowInsecure: "0",
-    sni: host
-  });
-
-  return "vless://" + uuid + "@" + server + ":" + port +
-    "?" + params.toString() +
-    "#%40DarkvpnTG%20%F0%9F%86%95";
+if(!endpoint){
+throw new Error("ابتدا یک IP از لیست IPv4 یا IPv6 انتخاب کنید.");
 }
 
-/* ساخت فقط در صفحه؛ بدون هدایت خودکار */
-$("copyVlessBtn").addEventListener("click", async () => {
-  if (!generatedVlessLink) {
-    setStatus("ابتدا کانفیگ را بسازید.", true);
-    return;
-  }
+const server=endpoint.version===6
+?"["+endpoint.ip+"]"
+:endpoint.ip;
 
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(generatedVlessLink);
-    } else {
-      const textarea = document.createElement("textarea");
+const port=endpoint.port;
+const wsPath="/rtl-core?proxyip="+proxyIP;
 
-      textarea.value = generatedVlessLink;
-      textarea.style.position = "fixed";
-      textarea.style.opacity = "0";
-      textarea.style.left = "-9999px";
-
-      document.body.appendChild(textarea);
-      textarea.focus();
-      textarea.select();
-      textarea.setSelectionRange(0, textarea.value.length);
-
-      const copied = document.execCommand("copy");
-      textarea.remove();
-
-      if (!copied) throw new Error("Copy failed");
-    }
-
-    setStatus("کانفیگ VLESS با موفقیت کپی شد.");
-
-  } catch (error) {
-    setStatus("کپی خودکار انجام نشد؛ لینک را دستی انتخاب و کپی کنید.", true);
-    $("vlessResultLink").focus();
-  }
+const params=new URLSearchParams({
+path:wsPath,
+security:"tls",
+alpn:"http/1.1",
+encryption:"none",
+png:"Off",
+insecure:"0",
+host:host,
+fp:"chrome",
+type:"ws",
+allowInsecure:"0",
+sni:host
 });
 
-  } catch(error) {
-    setStatus("خطا: " + error.message, true);
-  }
+return "vless://"+uuid+"@"+server+":"+port+
+"?"+params.toString()+
+"#%40DarkvpnTG%20%F0%9F%86%95";
+}
+
+/* ساخت کانفیگ VLESS+RTL */
+$("createVlessBtn").addEventListener("click",()=>{
+try{
+const proxyIP=getSelectedLocationIP();
+
+if(!selectedEndpoint){
+throw new Error("ابتدا یک IP از لیست IPv4 یا IPv6 انتخاب کنید.");
+}
+
+generatedVlessLink=buildVless(proxyIP,selectedEndpoint);
+
+$("vlessSelectedIp").textContent=
+"IP انتخاب‌شده: "+selectedEndpoint+" | Proxy IP: "+proxyIP;
+
+$("vlessResultLink").textContent=generatedVlessLink;
+$("vlessOutput").classList.add("show");
+
+setStatus("کانفیگ VLESS+RTL با موفقیت ساخته شد.");
+
+}catch(error){
+setStatus("خطا: "+error.message,true);
+}
 });
 
-/* فقط دکمه باز کردن، برنامه را اجرا می‌کند */
+/* کپی کانفیگ VLESS+RTL */
+$("copyVlessBtn").addEventListener("click",async()=>{
+if(!generatedVlessLink){
+setStatus("ابتدا کانفیگ را بسازید.",true);
+return;
+}
+
+try{
+if(!navigator.clipboard||!window.isSecureContext){
+throw new Error("Clipboard API unavailable");
+}
+
+await navigator.clipboard.writeText(generatedVlessLink);
+setStatus("کانفیگ VLESS با موفقیت کپی شد.");
+
+}catch(_){
+try{
+const textarea=document.createElement("textarea");
+
+textarea.value=generatedVlessLink;
+textarea.readOnly=true;
+textarea.style.position="fixed";
+textarea.style.top="0";
+textarea.style.left="0";
+textarea.style.width="1px";
+textarea.style.height="1px";
+textarea.style.opacity="0";
+textarea.style.fontSize="16px";
+
+document.body.appendChild(textarea);
+
+textarea.focus();
+textarea.select();
+textarea.setSelectionRange(0,textarea.value.length);
+
+const copied=document.execCommand("copy");
+textarea.remove();
+
+if(!copied)throw new Error("Copy failed");
+
+setStatus("کانفیگ VLESS با موفقیت کپی شد.");
+
+}catch(error){
+setStatus("کپی خودکار انجام نشد؛ متن کانفیگ را دستی انتخاب و کپی کنید.",true);
+
+const output=$("vlessResultLink");
+const range=document.createRange();
+range.selectNodeContents(output);
+
+const selection=window.getSelection();
+selection.removeAllRanges();
+selection.addRange(range);
+}
+}
+});
+
+/* باز کردن کانفیگ در برنامه */
 $("openVlessBtn").addEventListener("click",()=>{
-if(generatedVlessLink)window.location.href=generatedVlessLink;
+if(generatedVlessLink){
+window.location.href=generatedVlessLink;
+}
 });
 
 /* APN */
 function closeApnModal(){
-clearTimeout(apnTimer);clearTimeout(apnCloseTimer);
+clearTimeout(apnTimer);
+clearTimeout(apnCloseTimer);
 $("apnModal").classList.add("hidden");
 }
+
 function showApnLoading(){
-clearTimeout(apnTimer);clearTimeout(apnCloseTimer);
+clearTimeout(apnTimer);
+clearTimeout(apnCloseTimer);
+
 $("apnModalIcon").className="apn-loader";
 $("apnModalIcon").textContent="";
 $("apnModalTitle").textContent="در حال انجام تنظیمات";
 $("apnModalMessage").textContent="لطفاً شکیبا باشید.";
 $("apnModal").classList.remove("hidden");
+
 apnTimer=setTimeout(showApnSuccess,4000);
 }
+
 function showApnSuccess(){
 $("apnModalIcon").className="apn-success";
 $("apnModalIcon").textContent="✓";
 $("apnModalTitle").textContent="عملیات با موفقیت انجام شد";
 $("apnModalMessage").textContent="این بخش فقط تنظیمات APN را تغییر می‌دهد.";
+
 apnCloseTimer=setTimeout(()=>$("apnModal").classList.add("hidden"),1800);
 }
+
 function showApnReset(){
-clearTimeout(apnTimer);clearTimeout(apnCloseTimer);
+clearTimeout(apnTimer);
+clearTimeout(apnCloseTimer);
+
 $("apnModalIcon").className="apn-success";
 $("apnModalIcon").textContent="✓";
 $("apnModalTitle").textContent="بازنشانی انجام شد";
 $("apnModalMessage").textContent="تنظیمات APN بازنشانی شد.";
 $("apnModal").classList.remove("hidden");
+
 apnCloseTimer=setTimeout(()=>$("apnModal").classList.add("hidden"),1800);
 }
+
 document.querySelectorAll('input[name="apnChoice"]').forEach(input=>{
 input.addEventListener("change",()=>{
 if(!input.checked)return;
@@ -582,31 +737,65 @@ input.value==="none"?showApnReset():showApnLoading();
 /* ذخیره انتخاب‌ها */
 function readSavedChecks(containerId,storageKey){
 let saved=[];
-try{saved=JSON.parse(localStorage.getItem(storageKey)||"[]");if(!Array.isArray(saved))saved=[]}catch(_){}
-document.querySelectorAll("#"+containerId+' input[type="checkbox"]').forEach(input=>input.checked=saved.includes(input.value));
+
+try{
+saved=JSON.parse(localStorage.getItem(storageKey)||"[]");
+if(!Array.isArray(saved))saved=[];
+}catch(_){}
+
+document.querySelectorAll("#"+containerId+' input[type="checkbox"]').forEach(input=>{
+input.checked=saved.includes(input.value);
+});
 }
+
 function saveChecks(containerId,storageKey,statusId,label){
 const selected=[...document.querySelectorAll("#"+containerId+' input[type="checkbox"]:checked')].map(input=>input.value);
+
 try{
 localStorage.setItem(storageKey,JSON.stringify(selected));
 $(statusId).textContent=selected.length?selected.length+" مورد "+label+" ذخیره شد.":"همه گزینه‌ها غیرفعال و ذخیره شدند.";
-}catch(_){$(statusId).textContent="ذخیره‌سازی در مرورگر امکان‌پذیر نیست."}
+}catch(_){
+$(statusId).textContent="ذخیره‌سازی در مرورگر امکان‌پذیر نیست.";
 }
+}
+
 function updateMelliStatus(save=true){
 const enabled=$("melliToggle").checked;
-if(save){try{localStorage.setItem("darkvpn_melli",String(enabled))}catch(_){}}
+
+if(save){
+try{localStorage.setItem("darkvpn_melli",String(enabled));}catch(_){}
+}
+
 $("melliStatus").textContent=enabled?"گزینه دارک ملی فعال شد.":"دارک ملی غیرفعال است.";
 }
+
 function initExtraOptions(){
 readSavedChecks("sanctionList","darkvpn_sanctions");
 readSavedChecks("ghostList","darkvpn_ghost");
-try{$("melliToggle").checked=localStorage.getItem("darkvpn_melli")==="true"}catch(_){}
+
+try{
+$("melliToggle").checked=localStorage.getItem("darkvpn_melli")==="true";
+}catch(_){}
+
 updateMelliStatus(false);
 }
-$("saveSanctionBtn").addEventListener("click",()=>saveChecks("sanctionList","darkvpn_sanctions","sanctionStatus","تحریم‌شکن"));
-$("saveGhostBtn").addEventListener("click",()=>saveChecks("ghostList","darkvpn_ghost","ghostStatus","حالت روح"));
-$("melliToggle").addEventListener("change",()=>updateMelliStatus(true));
-$("understoodBtn").addEventListener("click",()=>$("welcomeModal").classList.add("hidden"));
+
+$("saveSanctionBtn").addEventListener("click",()=>{
+saveChecks("sanctionList","darkvpn_sanctions","sanctionStatus","تحریم‌شکن");
+});
+
+$("saveGhostBtn").addEventListener("click",()=>{
+saveChecks("ghostList","darkvpn_ghost","ghostStatus","حالت روح");
+});
+
+$("melliToggle").addEventListener("change",()=>{
+updateMelliStatus(true);
+});
+
+/* دکمه فهمیدم */
+$("understoodBtn").addEventListener("click",()=>{
+$("welcomeModal").classList.add("hidden");
+});
 
 /* تغییر تم */
 $("themeBtn").addEventListener("click",()=>{
@@ -622,6 +811,7 @@ $("refreshBtn").addEventListener("click",loadIps);
 initExtraOptions();
 loadLocations();
 loadIps();
+
 </script>
 </body>
 </html>
