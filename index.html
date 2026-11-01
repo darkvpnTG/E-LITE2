@@ -298,7 +298,7 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
 <section class="hero">
   <span class="eyebrow">DarkVPN • Dedicated DataCenter</span>
   <h2>ساخت کانفیگ PingNG و VLESS+RTL</h2>
-  <p>انتخاب Endpoint و لوکیشن دیتاسنتر</p>
+  <p>انتخاب IP رنج و لوکیشن دیتاسنتر</p>
 </section>
 
 <section class="panel">
@@ -327,7 +327,7 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
         <span class="country-current" id="countryCurrent">
           <span class="flag-circle">🌐</span><span>Automatic / Random</span>
         </span>
-        <span class="country-arrow">⌄</span>
+        <span class="country-arrow">🔻</span>
       </button>
       <div class="country-menu" id="countryMenu">
         <input class="country-search" id="countrySearch" type="search" placeholder="جست‌وجوی کشور...">
@@ -456,7 +456,7 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
 </a>
 <div class="motto">یک قدم جلوتر از فیلترینگ 😎</div>
 <div class="team">برای ورود به کانال روی آیکون تلگرام بزن</div>
-<small>v1.0.3 ✓ • Powered by Team "𝐃𝐚𝐫𝐤ᵛᵖⁿ"</small>
+<small>v2.0.0 ✓ • Powered by Team "𝐃𝐚𝐫𝐤ᵛᵖⁿ"</small>
 </footer>
 </main>
 
@@ -873,52 +873,6 @@ async function loadIps() {
   }
 }
 
-/* Build PingNG profile - original format preserved */
-function buildPingNg(endpoint) {
-  const parsed = parseEndpoint(endpoint);
-  if (!parsed) throw new Error("فرمت Endpoint معتبر نیست.");
-
-  const endpointIp = parsed.ip;
-  const endpointPort = parsed.port;
-
-  const selected = parsed.version === 6
-    ? "[" + endpointIp + "]:" + endpointPort
-    : endpointIp + ":" + endpointPort;
-
-  const params = new URLSearchParams({
-    v:"1",
-    kind:"m",
-    r:b64("@DarkvpnTG 🆕"),
-    ec:b64("2606:4700:105::/48:443"),
-    pe:b64(endpointIp),
-    pp:b64(endpointPort),
-    mode:b64("Custom"),
-    dn:b64("DARKVPNTG - RTL"),
-    sni:b64($("sni").value.trim() || "cloudflare.com"),
-    dns:b64($("dns").value),
-    h2:b64("true"),
-    sb:b64("127.0.0.1"),
-    sp:b64("1819"),
-    cfg:"",
-    sel:b64(selected),
-    ps:b64("true"),
-    tor:b64("false"),
-    reg:b64("__AUTO__"),
-    tbm:b64("auto"),
-    tbs:b64("auto"),
-    tbl:"",
-    pr:b64($("region").value),
-    pm:b64("direct"),
-    ci:"",
-    cs:"",
-    cl:"",
-    ppro:b64("Off"),
-    da:""
-  });
-
-  return "pingng-warp://profile?" + params.toString();
-}
-
 /* Build VLESS URI using selected proxy IP */
 function buildVless(proxyIP) {
   const uuid = "97a8da3a-bda2-4942-bd2e-98b79452804d";
@@ -1050,7 +1004,7 @@ function showApnReset() {
   $("apnModalIcon").className = "apn-success";
   $("apnModalIcon").textContent = "✓";
   $("apnModalTitle").textContent = "بازنشانی انجام شد";
-  $("apnModalMessage").textContent = "انتخاب APN نمایشی بازنشانی شد.";
+  $("apnModalMessage").textContent = "تنظیمات APN بازنشانی شود؟";
   $("apnModal").classList.remove("hidden");
 
   apnCloseTimer = setTimeout(() =>
