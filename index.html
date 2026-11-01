@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -173,7 +172,7 @@ background:#17394b;color:#9deaff;direction:ltr
 .ip-group .ipbox{margin-top:7px}
 .ip-empty{padding:15px;color:#aebbd0;font-size:12px;text-align:center}
 
-/* Services */
+/* Service and brand logos */
 .service-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .service-item{
 display:flex;align-items:center;gap:10px;padding:11px;
@@ -308,14 +307,31 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
   <div class="field full">
     <label for="ipSearch">لیست IP رنج ها (PingNG)</label>
     <input id="ipSearch" class="ipsearch" type="search" placeholder="جست‌وجو در لیست IPها..." autocomplete="off">
+
     <div class="ip-group">
-      <div class="ip-version-title"><span>IPv4</span><span class="ip-version-count" id="ipv4Count">0 IP</span></div>
+      <div class="ip-version-title">
+        <span>IPv4</span>
+        <span style="display:flex;align-items:center;gap:9px">
+          <img src="https://www.google.com/s2/favicons?domain=google.com&sz=64" alt="Google" title="Google" width="22" height="22" loading="lazy">
+          <img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64" alt="Cloudflare" title="Cloudflare" width="22" height="22" loading="lazy">
+          <span class="ip-version-count" id="ipv4Count">0 IP</span>
+        </span>
+      </div>
       <div class="ipbox"><div id="ipv4List" class="iplist"><div class="ip-empty">در حال دریافت IPv4...</div></div></div>
     </div>
+
     <div class="ip-group">
-      <div class="ip-version-title"><span>IPv6</span><span class="ip-version-count" id="ipv6Count">0 IP</span></div>
+      <div class="ip-version-title">
+        <span>IPv6</span>
+        <span style="display:flex;align-items:center;gap:9px">
+          <img src="https://www.google.com/s2/favicons?domain=google.com&sz=64" alt="Google" title="Google" width="22" height="22" loading="lazy">
+          <img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64" alt="Cloudflare" title="Cloudflare" width="22" height="22" loading="lazy">
+          <span class="ip-version-count" id="ipv6Count">0 IP</span>
+        </span>
+      </div>
       <div class="ipbox"><div id="ipv6List" class="iplist"><div class="ip-empty">در حال دریافت IPv6...</div></div></div>
     </div>
+
     <span class="hint">بعد زدن مرتب سازی IP پینگ ها مرتب میشود</span>
   </div>
 
@@ -382,26 +398,64 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
   <div class="hint" id="vlessSelectedIp" style="margin-bottom:10px"></div>
   <code id="vlessResultLink"></code>
   <div class="actions">
-    <button class="btn primary" id="copyVlessBtn" type="button">کپی کانفیگ RTK</button>
+    <button class="btn primary" id="copyVlessBtn" type="button">کپی کانفیگ RTL</button>
     <button class="btn secondary" id="openVlessBtn" type="button">باز کردن RTL</button>
   </div>
 </div>
 </section>
 
+<!-- APN MODEM -->
 <section class="panel" style="margin-top:16px">
 <h3 class="section-title">APN مودم</h3>
 <div class="apn-list" id="apnList">
-  <label class="apn-item"><input type="radio" name="apnChoice" value="none" checked><span class="apn-logo"><span class="sim-icon">🚫</span></span><span><div class="apn-name">خاموش کردن APN ترکیبی</div><div class="apn-desc">بازنشانی انتخاب APN</div></span></label>
-  <label class="apn-item"><input type="radio" name="apnChoice" value="asiatech"><span class="apn-logo">📶</span><span><div class="apn-name">آسیاتک</div><div class="apn-desc">AsiaTech</div></span></label>
-  <label class="apn-item"><input type="radio" name="apnChoice" value="pishgaman"><span class="apn-logo">📶</span><span><div class="apn-name">پیشگامان</div><div class="apn-desc">Pishgaman</div></span></label>
-  <label class="apn-item"><input type="radio" name="apnChoice" value="shatel"><span class="apn-logo">📶</span><span><div class="apn-name">شاتل</div><div class="apn-desc">Shatel</div></span></label>
-  <label class="apn-item"><input type="radio" name="apnChoice" value="hiweb"><span class="apn-logo">📶</span><span><div class="apn-name">های‌وب</div><div class="apn-desc">HiWeb</div></span></label>
-  <label class="apn-item"><input type="radio" name="apnChoice" value="mokhaberat"><span class="apn-logo">📶</span><span><div class="apn-name">مخابرات</div><div class="apn-desc">TCI</div></span></label>
-  <label class="apn-item"><input type="radio" name="apnChoice" value="simdata"><span class="apn-logo">📶</span><span><div class="apn-name">سیم کارت دیتا</div><div class="apn-desc">Data SIM</div></span></label>
+
+  <label class="apn-item">
+    <input type="radio" name="apnChoice" value="none" checked>
+    <span class="apn-logo"><span class="sim-icon">🚫</span></span>
+    <span><div class="apn-name">خاموش کردن APN ترکیبی</div><div class="apn-desc">بازنشانی انتخاب APN</div></span>
+  </label>
+
+  <label class="apn-item">
+    <input type="radio" name="apnChoice" value="asiatech">
+    <span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=asiatech.ir&sz=64" alt="AsiaTech" loading="lazy"></span>
+    <span><div class="apn-name">آسیاتک</div><div class="apn-desc">AsiaTech</div></span>
+  </label>
+
+  <label class="apn-item">
+    <input type="radio" name="apnChoice" value="pishgaman">
+    <span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=pishgaman.net&sz=64" alt="Pishgaman" loading="lazy"></span>
+    <span><div class="apn-name">پیشگامان</div><div class="apn-desc">Pishgaman</div></span>
+  </label>
+
+  <label class="apn-item">
+    <input type="radio" name="apnChoice" value="shatel">
+    <span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=shatel.ir&sz=64" alt="Shatel" loading="lazy"></span>
+    <span><div class="apn-name">شاتل</div><div class="apn-desc">Shatel</div></span>
+  </label>
+
+  <label class="apn-item">
+    <input type="radio" name="apnChoice" value="hiweb">
+    <span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=hiweb.ir&sz=64" alt="HiWeb" loading="lazy"></span>
+    <span><div class="apn-name">های‌وب</div><div class="apn-desc">HiWeb</div></span>
+  </label>
+
+  <label class="apn-item">
+    <input type="radio" name="apnChoice" value="mokhaberat">
+    <span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=tci.ir&sz=64" alt="TCI" loading="lazy"></span>
+    <span><div class="apn-name">مخابرات</div><div class="apn-desc">TCI</div></span>
+  </label>
+
+  <label class="apn-item">
+    <input type="radio" name="apnChoice" value="simdata">
+    <span class="apn-logo"><span class="sim-icon">📱</span></span>
+    <span><div class="apn-name">سیم کارت دیتا</div><div class="apn-desc">Data SIM</div></span>
+  </label>
+
 </div>
 <p class="apn-note">فقط در تنظیمات APN تغییرات اعمال میشود</p>
 </section>
 
+<!-- MELLI -->
 <section class="panel" style="margin-top:16px">
 <h3 class="section-title">دارک ملی</h3>
 <label class="melli-row">
@@ -412,36 +466,104 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
 <p class="notice-hint">توجه: این سیستم برای زمان قطعی اینترنت جهانی است</p>
 </section>
 
+<!-- SANCTION BREAKER -->
 <section class="panel" style="margin-top:16px">
 <h3 class="section-title">تحریم‌شکن</h3>
 <p class="hint" style="margin:-5px 0 15px">سرویس‌های موردنظرت را انتخاب کن و ذخیره بزن.</p>
+
 <div class="service-list" id="sanctionList">
-  <label class="service-item"><input type="checkbox" value="Gemini Ai"><span class="service-icon">G</span><span><div class="service-name">Gemini Ai</div><div class="service-desc">Google Gemini</div></span></label>
-  <label class="service-item"><input type="checkbox" value="ChatGPT Ai"><span class="service-icon">GPT</span><span><div class="service-name">ChatGPT Ai</div><div class="service-desc">OpenAI</div></span></label>
-  <label class="service-item"><input type="checkbox" value="Paypal"><span class="service-icon">P</span><span><div class="service-name">Paypal</div><div class="service-desc">PayPal</div></span></label>
-  <label class="service-item"><input type="checkbox" value="X (Twitter premium)"><span class="service-icon">X</span><span><div class="service-name">X (Twitter premium)</div><div class="service-desc">X</div></span></label>
-  <label class="service-item"><input type="checkbox" value="Telegram (premium)"><span class="service-icon">T</span><span><div class="service-name">Telegram (premium)</div><div class="service-desc">Telegram</div></span></label>
-  <label class="service-item"><input type="checkbox" value="AOL Mail (create account)"><span class="service-icon">A</span><span><div class="service-name">AOL Mail (create account)</div><div class="service-desc">AOL Mail</div></span></label>
-  <label class="service-item"><input type="checkbox" value="Tiktok (Sign up)"><span class="service-icon">♪</span><span><div class="service-name">Tiktok (Sign up)</div><div class="service-desc">TikTok</div></span></label>
+
+  <label class="service-item">
+    <input type="checkbox" value="Gemini Ai">
+    <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64" alt="Gemini" loading="lazy"></span>
+    <span><div class="service-name">Gemini Ai</div><div class="service-desc">Google Gemini</div></span>
+  </label>
+
+  <label class="service-item">
+    <input type="checkbox" value="ChatGPT Ai">
+    <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64" alt="ChatGPT" loading="lazy"></span>
+    <span><div class="service-name">ChatGPT Ai</div><div class="service-desc">OpenAI</div></span>
+  </label>
+
+  <label class="service-item">
+    <input type="checkbox" value="Paypal">
+    <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" alt="PayPal" loading="lazy"></span>
+    <span><div class="service-name">Paypal</div><div class="service-desc">PayPal</div></span>
+  </label>
+
+  <label class="service-item">
+    <input type="checkbox" value="X (Twitter premium)">
+    <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=x.com&sz=64" alt="X" loading="lazy"></span>
+    <span><div class="service-name">X (Twitter premium)</div><div class="service-desc">X</div></span>
+  </label>
+
+  <label class="service-item">
+    <input type="checkbox" value="Telegram (premium)">
+    <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=telegram.org&sz=64" alt="Telegram" loading="lazy"></span>
+    <span><div class="service-name">Telegram (premium)</div><div class="service-desc">Telegram</div></span>
+  </label>
+
+  <label class="service-item">
+    <input type="checkbox" value="AOL Mail (create account)">
+    <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=aol.com&sz=64" alt="AOL" loading="lazy"></span>
+    <span><div class="service-name">AOL Mail (create account)</div><div class="service-desc">AOL Mail</div></span>
+  </label>
+
+  <label class="service-item">
+    <input type="checkbox" value="Tiktok (Sign up)">
+    <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=tiktok.com&sz=64" alt="TikTok" loading="lazy"></span>
+    <span><div class="service-name">Tiktok (Sign up)</div><div class="service-desc">TikTok</div></span>
+  </label>
+
 </div>
+
 <div class="save-row">
 <button class="btn primary" id="saveSanctionBtn" type="button">ذخیره انتخاب‌ها</button>
 <span class="save-message" id="sanctionStatus"></span>
 </div>
 </section>
 
+<!-- GHOST MODE -->
 <section class="panel" style="margin-top:16px">
 <details class="collapsible" id="ghostDetails">
 <summary>حالت روح</summary>
 <div class="collapsible-content">
 <p class="hint" style="margin:0 0 13px">پیام‌رسان‌های داخلی موردنظرت را انتخاب کن و ذخیره بزن.</p>
+
 <div class="service-list" id="ghostList">
-  <label class="service-item"><input type="checkbox" value="ایتا"><span class="service-icon">ا</span><span><div class="service-name">ایتا</div></span></label>
-  <label class="service-item"><input type="checkbox" value="روبیکا"><span class="service-icon">ر</span><span><div class="service-name">روبیکا</div></span></label>
-  <label class="service-item"><input type="checkbox" value="بله"><span class="service-icon">ب</span><span><div class="service-name">بله</div></span></label>
-  <label class="service-item"><input type="checkbox" value="سروش"><span class="service-icon">س</span><span><div class="service-name">سروش</div></span></label>
-  <label class="service-item"><input type="checkbox" value="پیام‌رسان گپ"><span class="service-icon">گ</span><span><div class="service-name">پیام‌رسان گپ</div></span></label>
+
+  <label class="service-item">
+    <input type="checkbox" value="ایتا">
+    <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=eitaa.com&sz=64" alt="ایتا" loading="lazy"></span>
+    <span><div class="service-name">ایتا</div></span>
+  </label>
+
+  <label class="service-item">
+    <input type="checkbox" value="روبیکا">
+    <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=rubika.ir&sz=64" alt="روبیکا" loading="lazy"></span>
+    <span><div class="service-name">روبیکا</div></span>
+  </label>
+
+  <label class="service-item">
+    <input type="checkbox" value="بله">
+    <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=bale.ai&sz=64" alt="بله" loading="lazy"></span>
+    <span><div class="service-name">بله</div></span>
+  </label>
+
+  <label class="service-item">
+    <input type="checkbox" value="سروش">
+    <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=splus.ir&sz=64" alt="سروش" loading="lazy"></span>
+    <span><div class="service-name">سروش</div></span>
+  </label>
+
+  <label class="service-item">
+    <input type="checkbox" value="پیام‌رسان گپ">
+    <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=gap.im&sz=64" alt="گپ" loading="lazy"></span>
+    <span><div class="service-name">پیام‌رسان گپ</div></span>
+  </label>
+
 </div>
+
 <div class="save-row">
 <button class="btn primary" id="saveGhostBtn" type="button">ذخیره انتخاب‌ها</button>
 <span class="save-message" id="ghostStatus"></span>
@@ -604,7 +726,9 @@ async function loadLocations() {
       if (parts.length !== 2) return;
 
       const ip = parts[0].trim();
-      const code = parts[1].trim().toUpperCase();
+      let code = parts[1].trim().toUpperCase();
+
+      if (code === "UK") code = "GB";
 
       if (!isValidLocationIP(ip) || !/^[A-Z]{2}$/.test(code)) return;
 
@@ -880,7 +1004,7 @@ function buildVless(proxyIP) {
   const port = "443";
   const host = "smart-shield-536.rutiwu6474.workers.dev";
 
-  const wsPath = "/مسیر-اشتراک?proxyip=" + proxyIP;
+  const wsPath = "/rtl-core?proxyip=" + proxyIP;
 
   const params = new URLSearchParams({
     path:wsPath,
