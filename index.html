@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101827">
-<title>DARK VPN | PingNG & VLESS+RTL Configurator</title>
+<title>DARK VPN | VLESS+RTL Configurator</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
@@ -81,27 +81,6 @@ border-radius:13px;padding:13px 12px;font:inherit;font-size:14px;outline:none
 select option{background:#101827;color:white}
 input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
 .hint{font-size:11px;color:#aebbd0}
-.ipbox{border:1px solid #ffffff24;border-radius:14px;overflow:hidden;background:#081321}
-.ipsearch{border:0;border-radius:0;border-bottom:1px solid #ffffff20;background:#101d30}
-.iplist{max-height:260px;overflow:auto}
-.iprow{
-display:flex;align-items:center;justify-content:space-between;gap:9px;
-padding:11px 13px;border-bottom:1px solid #ffffff12;cursor:pointer;
-font-size:13px;direction:ltr;text-align:left
-}
-.iprow:hover{background:#56d6ff14}
-.iprow.active{background:#56d6ff22;color:#a7edff}
-.ipaddress{direction:ltr;text-align:left;overflow-wrap:anywhere;flex:1}
-.pill{
-font-size:10px;padding:4px 8px;border-radius:20px;
-background:#17394b;color:#9deaff;white-space:nowrap
-}
-.ping{
-font-size:11px;padding:4px 8px;border-radius:20px;
-background:#173d2c;color:#9effbd;white-space:nowrap;min-width:67px;text-align:center
-}
-.ping.medium{background:#51401c;color:#ffe09a}
-.ping.slow{background:#512727;color:#ffaaaa}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .btn{
 border:0;border-radius:14px;padding:13px 18px;
@@ -158,19 +137,6 @@ gap:8px;padding:9px;border-radius:10px;cursor:pointer;font-size:12px
 }
 .country-option:hover,.country-option.selected{background:#56d6ff20}
 .country-option-code{font-size:10px;color:#9eafc5;direction:ltr}
-.ip-version-title{
-display:flex;align-items:center;justify-content:space-between;
-gap:8px;padding:11px 13px;background:#101d30;
-border-bottom:1px solid #ffffff20;font-size:13px;font-weight:900
-}
-.ip-version-count{
-font-size:10px;padding:4px 9px;border-radius:20px;
-background:#17394b;color:#9deaff;direction:ltr
-}
-.ip-group{margin-top:12px}
-.ip-group:first-of-type{margin-top:0}
-.ip-group .ipbox{margin-top:7px}
-.ip-empty{padding:15px;color:#aebbd0;font-size:12px;text-align:center}
 
 /* Service and brand logos */
 .service-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -296,8 +262,8 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
 
 <section class="hero">
   <span class="eyebrow">DarkVPN • Dedicated DataCenter</span>
-  <h2>ساخت کانفیگ PingNG و VLESS+RTL</h2>
-  <p>انتخاب IP رنج و لوکیشن دیتاسنتر</p>
+  <h2>ساخت کانفیگ VLESS+RTL</h2>
+  <p>انتخاب لوکیشن دیتاسنتر و ساخت کانفیگ VLESS</p>
 </section>
 
 <section class="panel">
@@ -305,37 +271,6 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
 
 <div class="grid">
   <div class="field full">
-    <label for="ipSearch">لیست IP رنج ها (PingNG)</label>
-    <input id="ipSearch" class="ipsearch" type="search" placeholder="جست‌وجو در لیست IPها..." autocomplete="off">
-
-    <div class="ip-group">
-      <div class="ip-version-title">
-        <span>IPv4</span>
-        <span style="display:flex;align-items:center;gap:9px">
-          <img src="https://www.google.com/s2/favicons?domain=google.com&sz=64" alt="Google" title="Google" width="22" height="22" loading="lazy">
-          <img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64" alt="Cloudflare" title="Cloudflare" width="22" height="22" loading="lazy">
-          <span class="ip-version-count" id="ipv4Count">0 IP</span>
-        </span>
-      </div>
-      <div class="ipbox"><div id="ipv4List" class="iplist"><div class="ip-empty">در حال دریافت IPv4...</div></div></div>
-    </div>
-
-    <div class="ip-group">
-      <div class="ip-version-title">
-        <span>IPv6</span>
-        <span style="display:flex;align-items:center;gap:9px">
-          <img src="https://www.google.com/s2/favicons?domain=google.com&sz=64" alt="Google" title="Google" width="22" height="22" loading="lazy">
-          <img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64" alt="Cloudflare" title="Cloudflare" width="22" height="22" loading="lazy">
-          <span class="ip-version-count" id="ipv6Count">0 IP</span>
-        </span>
-      </div>
-      <div class="ipbox"><div id="ipv6List" class="iplist"><div class="ip-empty">در حال دریافت IPv6...</div></div></div>
-    </div>
-
-    <span class="hint">بعد زدن مرتب سازی IP پینگ ها مرتب میشود</span>
-  </div>
-
-  <div class="field">
     <label>لوکیشن دیتاسنتر (RTL)</label>
     <input type="hidden" id="region" value="__AUTO__">
     <div class="country-select">
@@ -352,46 +287,13 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
     </div>
     <span class="hint">کشورها از فایل ip.txt خوانده می‌شوند.</span>
   </div>
-
-  <div class="field">
-    <label for="sni">SNI (PingNG)</label>
-    <select id="sni">
-      <option value="cloudflare.com">cloudflare.com</option>
-      <option value="play.google.com">play.google.com</option>
-      <option value="soft98.ir">soft98.ir</option>
-      <option value="speedtest.net">speedtest.net</option>
-      <option value="chatgpt.com">chatgpt.com</option>
-      <option value="aparat.ir">aparat.ir</option>
-      <option value="deepseek.com">deepseek.com</option>
-      <option value="check-host.net">check-host.net</option>
-    </select>
-  </div>
-
-  <div class="field full">
-    <label for="dns">DNS (PingNG)</label>
-    <select id="dns">
-      <option value="8.8.8.8,8.8.4.4">Google DNS</option>
-      <option value="1.1.1.1,1.0.0.1">Cloudflare DNS</option>
-      <option value="9.9.9.9,149.112.112.112">Quad9 DNS</option>
-    </select>
-  </div>
 </div>
 
 <div class="actions">
-  <button class="btn primary" id="createBtn" type="button" disabled>ساخت کانفیگ PingNG</button>
-  <button class="btn secondary" id="createVlessBtn" type="button" disabled>ساخت کانفیگ VLESS+RTL</button>
-  <button class="btn secondary" id="refreshBtn" type="button">مرتب‌سازی IPها</button>
+  <button class="btn primary" id="createVlessBtn" type="button" disabled>ساخت کانفیگ VLESS+RTL</button>
 </div>
 
-<div class="status" id="status" role="status">در حال دریافت فایل‌ها...</div>
-
-<div class="output" id="output">
-  <div style="font-weight:800;margin-bottom:9px">کانفیگ PingNG آماده است</div>
-  <code id="resultLink"></code>
-  <div class="actions">
-    <button class="btn primary" id="openBtn" type="button">وارد کردن در PingNG</button>
-  </div>
-</div>
+<div class="status" id="status" role="status">در حال دریافت فایل لوکیشن‌ها...</div>
 
 <div class="output" id="vlessOutput">
   <div style="font-weight:800;margin-bottom:9px">کانفیگ VLESS+RTL آماده است</div>
@@ -585,19 +487,11 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
 <script>
 "use strict";
 
-const IP_LIST_URL =
-"https://raw.githubusercontent.com/darkvpnTG/Vless-RTL/refs/heads/main/range.txt";
-
 const LOCATION_LIST_URL =
 "https://raw.githubusercontent.com/darkvpnTG/Vless-RTL/refs/heads/main/ip.txt";
 
 const $ = id => document.getElementById(id);
 
-let ips = [];
-let pingTimes = new Map();
-let ipMeta = new Map();
-let selectedEndpoint = "";
-let generatedLink = "";
 let generatedVlessLink = "";
 let locationIps = new Map();
 let apnTimer = null;
@@ -641,11 +535,7 @@ function setStatus(message,error=false) {
   $("status").style.color = error ? "#ffb4b4" : "#bdeeff";
 }
 
-function b64(value) {
-  return btoa(unescape(encodeURIComponent(String(value))));
-}
-
-/* IPv6 validation */
+/* Location IP validation: IP only, no port */
 function isValidIPv6(ip) {
   if (!ip || ip.includes(":::")) return false;
   const parts = ip.split("::");
@@ -663,36 +553,6 @@ function isValidIPv6(ip) {
   return hasCompression ? groups.length < 8 : groups.length === 8;
 }
 
-/* Parse PingNG endpoint */
-function parseEndpoint(endpoint) {
-  if (typeof endpoint !== "string") return null;
-  const value = endpoint.trim();
-
-  const ipv4 = value.match(/^((?:\d{1,3}\.){3}\d{1,3}):(\d{1,5})$/);
-
-  if (ipv4) {
-    const octets = ipv4[1].split(".").map(Number);
-    const port = Number(ipv4[2]);
-
-    if (octets.every(n => n >= 0 && n <= 255) && port >= 1 && port <= 65535) {
-      return {ip:ipv4[1],port:String(port),version:4};
-    }
-    return null;
-  }
-
-  const ipv6 = value.match(/^\[([0-9a-fA-F:]+)\]:(\d{1,5})$/);
-
-  if (ipv6) {
-    const port = Number(ipv6[2]);
-    if (isValidIPv6(ipv6[1]) && port >= 1 && port <= 65535) {
-      return {ip:ipv6[1],port:String(port),version:6};
-    }
-  }
-
-  return null;
-}
-
-/* Location IP validation: IP only, no port */
 function isValidLocationIP(ip) {
   ip = ip.trim();
 
@@ -874,129 +734,6 @@ document.addEventListener("click",event => {
   }
 });
 
-/* Demo ping values for PingNG list */
-function generateDemoPings() {
-  pingTimes.clear();
-  ipMeta.clear();
-
-  ips.forEach(ip => {
-    pingTimes.set(ip,Math.floor(Math.random() * 386) + 95);
-    ipMeta.set(ip,{operator:"MCI/MTN"});
-  });
-
-  ips.sort((a,b) => pingTimes.get(a) - pingTimes.get(b));
-}
-
-function getPingClass(ms) {
-  if (ms < 150) return "";
-  if (ms < 300) return "medium";
-  return "slow";
-}
-
-function renderIpGroup(listId,version) {
-  const query = $("ipSearch").value.trim().toLowerCase();
-  const box = $(listId);
-
-  const filtered = ips.filter(value => {
-    const parsed = parseEndpoint(value);
-    return parsed && parsed.version === version &&
-      value.toLowerCase().includes(query);
-  });
-
-  box.replaceChildren();
-
-  if (!filtered.length) {
-    const empty = document.createElement("div");
-    empty.className = "ip-empty";
-    empty.textContent = query ? "IP مطابقی پیدا نشد" :
-      version === 4 ? "هیچ IPv4 وجود ندارد" : "هیچ IPv6 وجود ندارد";
-    box.append(empty);
-    return;
-  }
-
-  filtered.forEach(value => {
-    const row = document.createElement("div");
-    row.className = "iprow" + (value === selectedEndpoint ? " active" : "");
-
-    const ip = document.createElement("span");
-    ip.className = "ipaddress";
-    ip.textContent = value;
-
-    const ping = document.createElement("span");
-    ping.className = "ping " + getPingClass(pingTimes.get(value));
-    ping.textContent = pingTimes.get(value) + "ms";
-
-    const tag = document.createElement("span");
-    tag.className = "pill";
-    tag.textContent = value === selectedEndpoint ? "انتخاب‌شده" : "انتخاب";
-
-    row.append(ip,ping,tag);
-
-    row.addEventListener("click",() => {
-      selectedEndpoint = value;
-      generatedLink = "";
-      $("createBtn").disabled = false;
-      $("output").classList.remove("show");
-      renderIps();
-      setStatus("Endpoint انتخاب شد: " + value);
-    });
-
-    box.append(row);
-  });
-}
-
-function renderIps() {
-  renderIpGroup("ipv4List",4);
-  renderIpGroup("ipv6List",6);
-
-  $("ipv4Count").textContent =
-    ips.filter(ip => parseEndpoint(ip)?.version === 4).length + " IP";
-
-  $("ipv6Count").textContent =
-    ips.filter(ip => parseEndpoint(ip)?.version === 6).length + " IP";
-}
-
-/* Load PingNG range.txt */
-async function loadIps() {
-  $("refreshBtn").disabled = true;
-  $("createBtn").disabled = true;
-
-  setStatus("در حال دریافت Endpoint ها از range.txt...");
-
-  try {
-    const response = await fetch(IP_LIST_URL + "?v=" + Date.now(), {
-      cache:"no-store"
-    });
-
-    if (!response.ok) throw new Error("HTTP " + response.status);
-
-    const raw = await response.text();
-
-    ips = [...new Set(
-      raw.split(/\r?\n/)
-        .map(line => line.trim())
-        .filter(line => parseEndpoint(line) !== null)
-    )];
-
-    if (!ips.length) throw new Error("فایل range.txt خالی یا نامعتبر است.");
-
-    if (selectedEndpoint && !ips.includes(selectedEndpoint)) {
-      selectedEndpoint = "";
-    }
-
-    generateDemoPings();
-    renderIps();
-    $("createBtn").disabled = !selectedEndpoint;
-
-    setStatus("Endpointهای PingNG دریافت شدند: " + ips.length);
-
-  } catch(error) {
-    setStatus("دریافت range.txt ناموفق بود: " + error.message,true);
-  } finally {
-    $("refreshBtn").disabled = false;
-  }
-}
-
 /* Build VLESS URI using selected proxy IP */
 function buildVless(proxyIP) {
   const uuid = "97a8da3a-bda2-4942-bd2e-98b79452804d";
@@ -1024,26 +761,6 @@ function buildVless(proxyIP) {
     "?" + params.toString() +
     "#%40DarkvpnTG%20%F0%9F%86%95";
 }
-
-/* PingNG button */
-$("createBtn").addEventListener("click",() => {
-  if (!selectedEndpoint) {
-    setStatus("ابتدا یک Endpoint انتخاب کنید.",true);
-    return;
-  }
-
-  try {
-    $("createBtn").disabled = true;
-    generatedLink = buildPingNg(selectedEndpoint);
-    $("resultLink").textContent = generatedLink;
-    $("output").classList.add("show");
-    setStatus("پروفایل PingNG ساخته شد.");
-  } catch(error) {
-    setStatus("خطا: " + error.message,true);
-  } finally {
-    $("createBtn").disabled = !selectedEndpoint;
-  }
-});
 
 /* VLESS button */
 $("createVlessBtn").addEventListener("click",() => {
@@ -1082,13 +799,6 @@ $("copyVlessBtn").addEventListener("click",async () => {
 $("openVlessBtn").addEventListener("click",() => {
   if (generatedVlessLink) window.location.href = generatedVlessLink;
 });
-
-$("openBtn").addEventListener("click",() => {
-  if (generatedLink) window.location.href = generatedLink;
-});
-
-$("ipSearch").addEventListener("input",renderIps);
-$("refreshBtn").addEventListener("click",loadIps);
 
 /* APN demo modal */
 function closeApnModal() {
@@ -1224,7 +934,6 @@ $("themeBtn").addEventListener("click",() => {
 renderCountryOptions();
 initExtraOptions();
 loadLocations();
-loadIps();
 </script>
 </body>
 </html>
