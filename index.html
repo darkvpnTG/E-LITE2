@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101827">
-<title>DARK VPN | PingNG & VLESS Configurator</title>
+<title>DARK VPN | PingNG & VLESS+RTL Configurator</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
@@ -290,14 +290,14 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
 <header class="top">
   <div class="brand">
     <img class="logo" src="./logo.jpg" alt="DARK VPN Logo">
-    <div><h1>𝐃𝐚𝐫𝐤ᵛᵖⁿ</h1><small>WARP • HTTP • MSQp</small></div>
+    <div><h1>𝐃𝐚𝐫𝐤ᵛᵖⁿ</h1><small>WS+TLS • RTL • VLESS</small></div>
   </div>
   <button class="theme" id="themeBtn" type="button">☀️ حالت روز</button>
 </header>
 
 <section class="hero">
   <span class="eyebrow">DarkVPN • Dedicated DataCenter</span>
-  <h2>ساخت کانفیگ PingNG و VLESS</h2>
+  <h2>ساخت کانفیگ PingNG و VLESS+RTL</h2>
   <p>انتخاب Endpoint و لوکیشن دیتاسنتر</p>
 </section>
 
@@ -316,11 +316,11 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
       <div class="ip-version-title"><span>IPv6</span><span class="ip-version-count" id="ipv6Count">0 IP</span></div>
       <div class="ipbox"><div id="ipv6List" class="iplist"><div class="ip-empty">در حال دریافت IPv6...</div></div></div>
     </div>
-    <span class="hint">پینگ نمایشی است و تست واقعی شبکه انجام نمی‌شود.</span>
+    <span class="hint">بعد زدن مرتب سازی IP پینگ ها مرتب میشود</span>
   </div>
 
   <div class="field">
-    <label>لوکیشن دیتاسنتر (VLESS)</label>
+    <label>لوکیشن دیتاسنتر (RTL)</label>
     <input type="hidden" id="region" value="__AUTO__">
     <div class="country-select">
       <button class="country-button" id="countryButton" type="button" aria-expanded="false">
@@ -363,14 +363,14 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
 
 <div class="actions">
   <button class="btn primary" id="createBtn" type="button" disabled>ساخت کانفیگ PingNG</button>
-  <button class="btn secondary" id="createVlessBtn" type="button" disabled>ساخت کانفیگ VLESS</button>
+  <button class="btn secondary" id="createVlessBtn" type="button" disabled>ساخت کانفیگ VLESS+RTL</button>
   <button class="btn secondary" id="refreshBtn" type="button">مرتب‌سازی IPها</button>
 </div>
 
 <div class="status" id="status" role="status">در حال دریافت فایل‌ها...</div>
 
 <div class="output" id="output">
-  <div style="font-weight:800;margin-bottom:9px">پروفایل PingNG آماده است</div>
+  <div style="font-weight:800;margin-bottom:9px">کانفیگ PingNG آماده است</div>
   <code id="resultLink"></code>
   <div class="actions">
     <button class="btn primary" id="openBtn" type="button">وارد کردن در PingNG</button>
@@ -378,12 +378,12 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
 </div>
 
 <div class="output" id="vlessOutput">
-  <div style="font-weight:800;margin-bottom:9px">کانفیگ VLESS آماده است</div>
+  <div style="font-weight:800;margin-bottom:9px">کانفیگ VLESS+RTL آماده است</div>
   <div class="hint" id="vlessSelectedIp" style="margin-bottom:10px"></div>
   <code id="vlessResultLink"></code>
   <div class="actions">
-    <button class="btn primary" id="copyVlessBtn" type="button">کپی کانفیگ VLESS</button>
-    <button class="btn secondary" id="openVlessBtn" type="button">باز کردن VLESS</button>
+    <button class="btn primary" id="copyVlessBtn" type="button">کپی کانفیگ RTK</button>
+    <button class="btn secondary" id="openVlessBtn" type="button">باز کردن RTL</button>
   </div>
 </div>
 </section>
@@ -399,7 +399,7 @@ color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer
   <label class="apn-item"><input type="radio" name="apnChoice" value="mokhaberat"><span class="apn-logo">📶</span><span><div class="apn-name">مخابرات</div><div class="apn-desc">TCI</div></span></label>
   <label class="apn-item"><input type="radio" name="apnChoice" value="simdata"><span class="apn-logo">📶</span><span><div class="apn-name">سیم کارت دیتا</div><div class="apn-desc">Data SIM</div></span></label>
 </div>
-<p class="apn-note">این بخش صرفاً نمایشی است و هیچ تنظیم واقعی مودم یا شبکه‌ای را تغییر نمی‌دهد.</p>
+<p class="apn-note">فقط در تنظیمات APN تغییرات اعمال میشود</p>
 </section>
 
 <section class="panel" style="margin-top:16px">
