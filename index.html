@@ -496,33 +496,39 @@ function buildVless(proxyIP, endpointValue) {
 }
 
 /* ساخت فقط در صفحه؛ بدون هدایت خودکار */
-$("createVlessBtn").addEventListener("click",event=>{
-event.preventDefault();
-try{
-const proxyIP=getSelectedLocationIP();
-generatedVlessLink=buildVless(proxyIP);
-$("vlessResultLink").textContent=generatedVlessLink;
-$("vlessSelectedIp").textContent="Country: "+$("locationSelect").selectedOptions[0].textContent+" | Proxy IP: "+proxyIP;
-$("vlessOutput").classList.add("show");
-setStatus("کانفیگ VLESS با موفقیت ساخته شد.");
-$("vlessOutput").scrollIntoView({behavior:"smooth",block:"nearest"});
-}catch(error){setStatus("خطا در ساخت VLESS: "+error.message,true)}
-});
+$("createVlessBtn").addEventListener("click", event => {
+  event.preventDefault();
 
-$("copyVlessBtn").addEventListener("click",async()=>{
-if(!generatedVlessLink)return;
-try{
-await navigator.clipboard.writeText(generatedVlessLink);
-setStatus("کانفیگ VLESS کپی شد.");
-}catch(_){
-const area=document.createElement("textarea");
-area.value=generatedVlessLink;
-document.body.appendChild(area);
-area.select();
-try{document.execCommand("copy");setStatus("کانفیگ VLESS کپی شد.")}
-catch(__){setStatus("کپی خودکار در دسترس نیست؛ لینک را دستی کپی کنید.",true)}
-area.remove();
-}
+  try {
+    if (!selectedEndpoint) {
+      throw new Error("ابتدا یک Endpoint از لیست IPها انتخاب کنید.");
+    }
+
+    const proxyIP = getSelectedLocationIP();
+
+    generatedVlessLink = buildVless(
+      proxyIP,
+      selectedEndpoint
+    );
+
+    $("vlessResultLink").textContent = generatedVlessLink;
+
+    $("vlessSelectedIp").textContent =
+      "Endpoint: " + selectedEndpoint +
+      " | Proxy IP: " + proxyIP;
+
+    $("vlessOutput").classList.add("show");
+
+    setStatus("کانفیگ با Endpoint انتخاب‌شده ساخته شد.");
+
+    $("vlessOutput").scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
+    });
+
+  } catch(error) {
+    setStatus("خطا: " + error.message, true);
+  }
 });
 
 /* فقط دکمه باز کردن، برنامه را اجرا می‌کند */
