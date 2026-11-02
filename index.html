@@ -377,7 +377,7 @@ const octets=v4[1].split(".").map(Number);
 if(octets.every(n=>n>=0&&n<=255)){
 return {
 ip:v4[1],
-port:"443",
+port:"8443",
 version:4
 };
 }
@@ -604,8 +604,8 @@ $("refreshBtn").disabled=false;
 
 /* ساخت لینک VLESS */
 function buildVless(proxyIP,endpointValue){
-const uuid="97a8da3a-bda2-4942-bd2e-98b79452804d";
-const host="smart-shield-536.rutiwu6474.workers.dev";
+const uuid="7b102311-43fd-4e8f-877e-8090623c101d";
+const host="darkvpntg.jewehi6136.workers.dev";
 
 const endpoint=parseEndpoint(endpointValue);
 
@@ -620,7 +620,7 @@ const server=endpoint.version===6
 // پورت همیشه 443 است؛ پورت فایل range.txt نادیده گرفته می‌شود.
 const port=443;
 
-const wsPath="/rtl-core?proxyip="+proxyIP;
+const wsPath="/proxyip="+proxyIP;
 
 const params=new URLSearchParams({
 path:wsPath,
