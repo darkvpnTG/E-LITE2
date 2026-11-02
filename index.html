@@ -355,24 +355,58 @@ if(groups.some(g=>!/^[0-9a-fA-F]{1,4}$/.test(g)))return false;
 return compressed?groups.length<8:groups.length===8;
 }
 
+/*
+  پردازش IP Range:
+  - ورودی IPv4 به شکل IP یا IP:PORT
+  - ورودی IPv6 به شکل IPv6 یا [IPv6]:PORT
+  - پورت ورودی نادیده گرفته می‌شود.
+  - پورت نهایی همیشه 443 است.
+*/
 function parseEndpoint(endpoint){
 if(typeof endpoint!=="string")return null;
+
 const value=endpoint.trim();
-const v4=value.match(/^((?:\d{1,3}\.){3}\d{1,3}):(\d{1,5})$/);
+if(!value)return null;
+
+// IPv4 با پورت یا بدون پورت
+const v4=value.match(/^((?:\d{1,3}\.){3}\d{1,3})(?::\d{1,5})?$/);
 
 if(v4){
-const octets=v4[1].split(".").map(Number),port=Number(v4[2]);
-if(octets.every(n=>n>=0&&n<=255)&&port>=1&&port<=65535)
-return {ip:v4[1],port:String(port),version:4};
+const octets=v4[1].split(".").map(Number);
+
+if(octets.every(n=>n>=0&&n<=255)){
+return {
+ip:v4[1],
+port:"443",
+version:4
+};
+}
 return null;
 }
 
-const v6=value.match(/^\[([0-9a-fA-F:]+)\]:(\d{1,5})$/);
-if(v6){
-const port=Number(v6[2]);
-if(isValidIPv6(v6[1])&&port>=1&&port<=65535)
-return {ip:v6[1],port:String(port),version:6};
+// IPv6 داخل براکت، با پورت یا بدون پورت
+const bracketedV6=value.match(/^\[([0-9a-fA-F:]+)\](?::\d{1,5})?$/);
+
+if(bracketedV6){
+if(isValidIPv6(bracketedV6[1])){
+return {
+ip:bracketedV6[1],
+port:"443",
+version:6
+};
 }
+return null;
+}
+
+// IPv6 بدون براکت و بدون پورت
+if(isValidIPv6(value)){
+return {
+ip:value,
+port:"443",
+version:6
+};
+}
+
 return null;
 }
 
@@ -484,7 +518,7 @@ const box=$(listId);
 
 const filtered=ips.filter(value=>{
 const parsed=parseEndpoint(value);
-return parsed&&parsed.version===version&&value.toLowerCase().includes(query);
+return parsed&&parsed.version===version&&parsed.ip.toLowerCase().includes(query);
 });
 
 box.replaceChildren();
@@ -498,12 +532,17 @@ return;
 }
 
 filtered.forEach(value=>{
+const parsed=parseEndpoint(value);
+if(!parsed)return;
+
 const row=document.createElement("div");
 row.className="iprow"+(value===selectedEndpoint?" active":"");
 
 const ip=document.createElement("span");
 ip.className="ipaddress";
-ip.textContent=value;
+
+// فقط IP نمایش داده می‌شود؛ پورت حذف شده است.
+ip.textContent=parsed.ip;
 
 const ping=document.createElement("span");
 ping.className="ping "+getPingClass(pingTimes.get(value));
@@ -518,7 +557,7 @@ row.append(ip,ping,tag);
 row.addEventListener("click",()=>{
 selectedEndpoint=value;
 renderIps();
-setStatus("Endpoint انتخاب شد: "+value);
+setStatus("IP انتخاب شد: "+parsed.ip);
 });
 
 box.append(row);
@@ -535,7 +574,7 @@ $("ipv6Count").textContent=ips.filter(ip=>parseEndpoint(ip)?.version===6).length
 
 async function loadIps(){
 $("refreshBtn").disabled=true;
-setStatus("در حال دریافت Endpoint ها از range.txt...");
+setStatus("در حال دریافت IP ها از range.txt...");
 
 try{
 const response=await fetch(IP_LIST_URL+"?v="+Date.now(),{cache:"no-store"});
@@ -543,6 +582,8 @@ if(!response.ok)throw new Error("HTTP "+response.status);
 
 const raw=await response.text();
 
+// IPها با یا بدون پورت پذیرفته می‌شوند.
+// پورت اصلی در نمایش و ساخت کانفیگ استفاده نمی‌شود.
 ips=[...new Set(raw.split(/\r?\n/).map(line=>line.trim()).filter(line=>parseEndpoint(line)!==null))];
 
 if(!ips.length)throw new Error("فایل range.txt خالی یا نامعتبر است.");
@@ -552,7 +593,7 @@ if(selectedEndpoint&&!ips.includes(selectedEndpoint))selectedEndpoint="";
 generateDemoPings();
 renderIps();
 
-setStatus("Endpointها دریافت شدند: "+ips.length);
+setStatus("IPها دریافت شدند: "+ips.length);
 
 }catch(error){
 setStatus("دریافت range.txt ناموفق بود: "+error.message,true);
@@ -576,7 +617,9 @@ const server=endpoint.version===6
 ?"["+endpoint.ip+"]"
 :endpoint.ip;
 
-const port=endpoint.port;
+// پورت همیشه 443 است؛ پورت فایل range.txt نادیده گرفته می‌شود.
+const port=443;
+
 const wsPath="/rtl-core?proxyip="+proxyIP;
 
 const params=new URLSearchParams({
@@ -609,8 +652,10 @@ throw new Error("ابتدا یک IP از لیست IPv4 یا IPv6 انتخاب ک
 
 generatedVlessLink=buildVless(proxyIP,selectedEndpoint);
 
+const parsed=parseEndpoint(selectedEndpoint);
+
 $("vlessSelectedIp").textContent=
-"IP انتخاب‌شده: "+selectedEndpoint+" | Proxy IP: "+proxyIP;
+"IP انتخاب‌شده: "+parsed.ip+" | Proxy IP: "+proxyIP;
 
 $("vlessResultLink").textContent=generatedVlessLink;
 $("vlessOutput").classList.add("show");
