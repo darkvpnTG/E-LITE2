@@ -377,7 +377,7 @@ const octets=v4[1].split(".").map(Number);
 if(octets.every(n=>n>=0&&n<=255)){
 return {
 ip:v4[1],
-port:"8443",
+port:"443",
 version:4
 };
 }
@@ -391,7 +391,7 @@ if(bracketedV6){
 if(isValidIPv6(bracketedV6[1])){
 return {
 ip:bracketedV6[1],
-port:"8443",
+port:"443",
 version:6
 };
 }
@@ -402,7 +402,7 @@ return null;
 if(isValidIPv6(value)){
 return {
 ip:value,
-port:"8443",
+port:"443",
 version:6
 };
 }
@@ -617,8 +617,8 @@ const server=endpoint.version===6
 ?"["+endpoint.ip+"]"
 :endpoint.ip;
 
-// پورت همیشه 443 است؛ پورت فایل range.txt نادیده گرفته می‌شود.
-const port=443;
+// پورت همیشه 8443 است؛ پورت فایل range.txt نادیده گرفته می‌شود.
+const port=8443;
 
 const wsPath="/proxyip="+proxyIP;
 
