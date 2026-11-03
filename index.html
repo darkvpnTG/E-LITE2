@@ -422,19 +422,19 @@ function buildVless(proxyIP,endpointValue){
 
   const wsPath="/proxyip="+proxyIP;
 
-  const params=new URLSearchParams({
-    path:wsPath,
-    security:"tls",
-    alpn:"h3,h2,http/1.1",
-    encryption:"none",
-    png:"Off",
-    insecure:"0",
-    host:host,
-    fp:"chrome",
-    type:"ws",
-    allowInsecure:"0",
-    sni:host
-  });
+  const params=new URLSearchParams();
+
+  params.append("path",wsPath);
+  params.append("security","tls");
+  params.append("alpn","h3,h2,http/1.1");
+  params.append("encryption","none");
+  params.append("png","Off");
+  params.append("insecure","0");
+  params.append("host",host);
+  params.append("fp","chrome");
+  params.append("type","ws");
+  params.append("allowInsecure","0");
+  params.append("sni",host);
 
   return "vless://"+uuid+"@"+server+":"+port+"?"+
     params.toString()+
