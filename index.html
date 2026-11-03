@@ -482,11 +482,7 @@ function openInVlessClients(){
     return;
   }
 
-  const importUrl=
-    "v2rayng://install-config?url="+
-    encodeURIComponent(generatedVlessLink);
-
-  window.location.href=importUrl;
+  window.location.href = generatedVlessLink;
 }
 
 $("openVlessBtn").textContent="افزودن به کلاینت";
