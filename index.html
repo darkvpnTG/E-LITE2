@@ -485,7 +485,9 @@ function openInVlessClients(){
   const importUrl =
     "v2rayng://install-config?url=" +
     encodeURIComponent(generatedVlessLink);
-
+  
+prompt("لینک انتقال:", importUrl);
+  
   window.location.href = importUrl;
 }
 
