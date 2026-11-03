@@ -67,6 +67,41 @@ input,select{background:rgba(9,19,34,.72)}
 .ip-versions .pill{font-size:9px;padding:4px 5px}
 @media(max-width:620px){.ip-versions{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ip-versions .iplist{height:230px;max-height:230px}.ip-versions .ip-version-title{padding:9px 7px;font-size:11px}.ip-versions .ip-version-title img{display:none}.ip-versions .iprow{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+/* Final layout fixes: keep country choices clear of action buttons */
+.country-picker.menu-open{z-index:auto}
+.field:has(.country-picker.menu-open){z-index:auto}
+.panel:has(.country-picker.menu-open){z-index:auto}
+.country-menu{
+  position:relative;
+  top:auto;right:auto;left:auto;
+  width:100%;
+  margin-top:8px;
+  z-index:auto;
+  max-height:min(280px,45vh);
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+}
+.country-menu:not([hidden]){display:block}
+/* Restore the original full-width, stacked IPv4 / IPv6 lists */
+.ip-versions{display:block;width:100%;direction:ltr}
+.ip-versions .ip-group{min-width:0;margin-top:12px}
+.ip-versions .ip-group:first-child{margin-top:0}
+.ip-versions .iplist{height:auto;max-height:260px;overflow:auto}
+.ip-versions .iprow{padding:11px 13px;gap:9px;flex-wrap:nowrap}
+.ip-versions .ipaddress{font-size:13px}
+.ip-versions .ping{min-width:67px;font-size:11px;padding:4px 8px}
+.ip-versions .pill{font-size:10px;padding:4px 8px}
+@media(max-width:620px){
+  .ip-versions{display:block}
+  .ip-versions .iplist{height:auto;max-height:260px}
+  .ip-versions .ip-version-title{padding:11px 13px;font-size:13px}
+  .ip-versions .ip-version-title img{display:inline}
+  .ip-versions .iprow{flex-wrap:nowrap}
+}
+
 </style>
 </head>
 <body class="night">
