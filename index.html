@@ -97,16 +97,17 @@ $("createVlessBtn").addEventListener("click",()=>{try{const proxyIP=getSelectedL
  * سایت نمی‌تواند تحمیل کند؛ اندروید بر اساس برنامه‌های نصب‌شده تصمیم می‌گیرد.
  */
 function openInVlessClients(){
- if(!generatedVlessLink){setStatus("ابتدا کانفیگ را بسازید.",true);return}
- const payload=generatedVlessLink.slice("vless://".length);
- const intentUrl="intent://"+payload+"#Intent;scheme=vless;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;end";
- // Intent URI مخصوص مرورگرهای اندروید؛ لینک خام به‌عنوان مسیر جایگزین.
- if(/Android/i.test(navigator.userAgent)){
-   window.location.href=intentUrl;
- }else{
-   window.location.href=generatedVlessLink;
+ if(!generatedVlessLink){
+   setStatus("ابتدا کانفیگ را بسازید.",true);
+   return;
  }
+ const importUrl =
+   "v2rayng://install-config?url=" +
+   encodeURIComponent(generatedVlessLink);
+
+ window.location.href = importUrl;
 }
+$("openVlessBtn").textContent="باز کردن در V2RayNG";
 $("openVlessBtn").addEventListener("click",openInVlessClients);
 
 function closeApnModal(){clearTimeout(apnTimer);clearTimeout(apnCloseTimer);$("apnModal").classList.add("hidden")}
