@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -6,113 +5,690 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101827">
 <title>DARK VPN | PingNG Configurator</title>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
-:root{--glass:rgba(13,22,38,.76);--line:rgba(211,228,255,.16);--text:#f7f9ff;--muted:#c6d0df;--accent:#75d9ff;--accent2:#a69aff}
+
+:root{
+  --glass:rgba(13,22,38,.76);
+  --line:rgba(211,228,255,.16);
+  --text:#f7f9ff;
+  --muted:#c6d0df;
+  --accent:#75d9ff;
+  --accent2:#a69aff
+}
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;min-height:100vh;color:var(--text);font-family:Vazirmatn,system-ui,sans-serif;background:#0c1422}
-.bg{position:fixed;inset:0;z-index:-3;background:url('./background.png') center/cover no-repeat}
-.bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,10,20,.28),rgba(5,10,20,.72) 55%,rgba(5,10,20,.9))}
+
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  font-family:Vazirmatn,system-ui,sans-serif;
+  background:#0c1422
+}
+
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  background:url('./background.png') center/cover no-repeat
+}
+
+.bg:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(5,10,20,.28),rgba(5,10,20,.72) 55%,rgba(5,10,20,.9))
+}
+
 body.day .bg{filter:brightness(1.15) saturate(1.05)}
 body.night .bg{filter:brightness(.48) saturate(.8)}
-.ambient{position:fixed;z-index:-1;inset:0;pointer-events:none;background:radial-gradient(circle at 85% 10%,#56d6ff24,transparent 30%),radial-gradient(circle at 10% 85%,#8b7cff22,transparent 32%)}
-.wrap{width:min(920px,calc(100% - 28px));margin:auto;padding:20px 0 30px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+
+.ambient{
+  position:fixed;
+  z-index:-1;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle at 85% 10%,#56d6ff24,transparent 30%),radial-gradient(circle at 10% 85%,#8b7cff22,transparent 32%)
+}
+
+.wrap{
+  width:min(920px,calc(100% - 28px));
+  margin:auto;
+  padding:20px 0 30px
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:18px
+}
+
 .brand{display:flex;align-items:center;gap:11px}
-.logo{width:44px;height:44px;min-width:44px;border-radius:14px;object-fit:cover;border:1px solid #ffffff35;background:#071321}
-.brand h1{font-size:18px;line-height:1.2;margin:0;font-weight:900}
+
+.logo{
+  width:44px;
+  height:44px;
+  min-width:44px;
+  border-radius:14px;
+  object-fit:cover;
+  border:1px solid #ffffff35;
+  background:#071321
+}
+
+.brand h1{
+  font-size:18px;
+  line-height:1.2;
+  margin:0;
+  font-weight:900
+}
+
 .brand small{color:var(--muted);font-size:11px}
-.theme{border:1px solid var(--line);background:#050c16ad;color:white;border-radius:30px;padding:10px 14px;font:inherit;font-size:13px;cursor:pointer}
+
+.theme{
+  border:1px solid var(--line);
+  background:#050c16ad;
+  color:white;
+  border-radius:30px;
+  padding:10px 14px;
+  font:inherit;
+  font-size:13px;
+  cursor:pointer
+}
+
 .hero{text-align:center;padding:20px 12px 24px}
-.hero .eyebrow{display:inline-block;padding:6px 12px;border:1px solid #8be4ff55;border-radius:30px;color:#c7f4ff;background:#09253a88;font-size:12px}
-.hero h2{font-size:clamp(27px,6vw,46px);line-height:1.25;margin:14px 0 8px;font-weight:900}
+
+.hero .eyebrow{
+  display:inline-block;
+  padding:6px 12px;
+  border:1px solid #8be4ff55;
+  border-radius:30px;
+  color:#c7f4ff;
+  background:#09253a88;
+  font-size:12px
+}
+
+.hero h2{
+  font-size:clamp(27px,6vw,46px);
+  line-height:1.25;
+  margin:14px 0 8px;
+  font-weight:900
+}
+
 .hero p{color:#e0e8f3;margin:0;font-size:14px}
-.panel{position:relative;background:linear-gradient(145deg,rgba(24,38,59,.74),rgba(8,15,28,.70));border:1px solid var(--line);border-radius:24px;padding:20px;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);box-shadow:0 10px 28px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.05)}
-.section-title{font-size:17px;font-weight:800;margin:0 0 15px;display:flex;align-items:center;gap:9px}
-.section-title:before{content:"";width:4px;height:19px;border-radius:9px;background:linear-gradient(#56d6ff,#8b7cff)}
+
+.panel{
+  position:relative;
+  background:linear-gradient(145deg,rgba(24,38,59,.74),rgba(8,15,28,.70));
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:20px;
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+  box-shadow:0 10px 28px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.05)
+}
+
+.section-title{
+  font-size:17px;
+  font-weight:800;
+  margin:0 0 15px;
+  display:flex;
+  align-items:center;
+  gap:9px
+}
+
+.section-title:before{
+  content:"";
+  width:4px;
+  height:19px;
+  border-radius:9px;
+  background:linear-gradient(#56d6ff,#8b7cff)
+}
+
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
 .field{display:flex;flex-direction:column;gap:7px;min-width:0}
 .field.full{grid-column:1/-1}
+
 label{font-size:12px;color:#d6e0ed;font-weight:700}
-input,select{width:100%;border:1px solid #ffffff24;background:rgba(9,19,34,.72);color:#fff;border-radius:13px;padding:13px 12px;font:inherit;font-size:14px;outline:none}
+
+input,select{
+  width:100%;
+  border:1px solid #ffffff24;
+  background:rgba(9,19,34,.72);
+  color:#fff;
+  border-radius:13px;
+  padding:13px 12px;
+  font:inherit;
+  font-size:14px;
+  outline:none
+}
+
 select option{background:#101827;color:white}
-input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
+
+input:focus,select:focus{
+  border-color:#56d6ff;
+  box-shadow:0 0 0 3px #56d6ff20
+}
+
 .hint{font-size:11px;color:#aebbd0;line-height:1.8}
+
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.btn{border:0;border-radius:14px;padding:13px 18px;font:inherit;font-weight:800;cursor:pointer;transition:.2s}
-.btn.primary{background:linear-gradient(100deg,#56d6ff,#8b7cff);color:#071321;flex:1}
-.btn.secondary{background:rgba(255,255,255,.075);color:#fff;border:1px solid rgba(218,232,255,.2)}
+
+.btn{
+  border:0;
+  border-radius:14px;
+  padding:13px 18px;
+  font:inherit;
+  font-weight:800;
+  cursor:pointer;
+  transition:.2s
+}
+
+.btn.primary{
+  background:linear-gradient(100deg,#56d6ff,#8b7cff);
+  color:#071321;
+  flex:1
+}
+
+.btn.secondary{
+  background:rgba(255,255,255,.075);
+  color:#fff;
+  border:1px solid rgba(218,232,255,.2)
+}
+
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.status{min-height:22px;margin-top:12px;color:#bdeeff;font-size:12px;line-height:1.8}
-.output{display:none;margin-top:16px;padding:16px;border:1px solid #56d6ff55;border-radius:16px;background:rgba(7,19,34,.9);overflow:hidden}
+
+.status{
+  min-height:22px;
+  margin-top:12px;
+  color:#bdeeff;
+  font-size:12px;
+  line-height:1.8
+}
+
+.output{
+  display:none;
+  margin-top:16px;
+  padding:16px;
+  border:1px solid #56d6ff55;
+  border-radius:16px;
+  background:rgba(7,19,34,.9);
+  overflow:hidden
+}
+
 .output.show{display:block}
-.output code{display:block;direction:ltr;text-align:left;overflow-wrap:anywhere;word-break:break-all;padding:13px;border-radius:10px;background:#020813;color:#9deaff;font-size:12px;line-height:1.8;user-select:all}
+
+.output code{
+  display:block;
+  direction:ltr;
+  text-align:left;
+  overflow-wrap:anywhere;
+  word-break:break-all;
+  padding:13px;
+  border-radius:10px;
+  background:#020813;
+  color:#9deaff;
+  font-size:12px;
+  line-height:1.8;
+  user-select:all
+}
+
 .foot{text-align:center;padding:30px 12px 10px}
-.telegram{display:inline-grid;place-items:center;width:58px;height:58px;border-radius:50%;background:#229ed9;color:white;text-decoration:none}
+
+.telegram{
+  display:inline-grid;
+  place-items:center;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:#229ed9;
+  color:white;
+  text-decoration:none
+}
+
 .telegram svg{width:30px;height:30px;fill:currentColor}
-.motto{font-size:clamp(22px,5vw,32px);font-weight:900;margin:13px 0 20px}
-.team{font-size:clamp(18px,4vw,24px);font-weight:900;margin:28px 0 0;color:#dceaff}
+
+.motto{
+  font-size:clamp(22px,5vw,32px);
+  font-weight:900;
+  margin:13px 0 20px
+}
+
+.team{
+  font-size:clamp(18px,4vw,24px);
+  font-weight:900;
+  margin:28px 0 0;
+  color:#dceaff
+}
+
 .foot small{color:#c0cad8;font-size:11px}
+
+/* DATABASE CARDS */
+
+.database-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:11px
+}
+
+.database-card{
+  min-width:0;
+  min-height:105px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:12px 6px;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:16px;
+  background:rgba(8,20,36,.72);
+  color:white;
+  font:inherit;
+  cursor:pointer;
+  transition:.2s
+}
+
+.database-card:hover{
+  transform:translateY(-2px);
+  border-color:#56d6ff88;
+  background:rgba(22,48,73,.85)
+}
+
+.database-card.selected{
+  border-color:#56d6ff;
+  background:linear-gradient(145deg,rgba(38,91,125,.65),rgba(53,43,105,.55));
+  box-shadow:0 0 0 2px #56d6ff20,inset 0 0 20px #56d6ff12
+}
+
+.database-card:disabled{opacity:.55;cursor:not-allowed}
+
+.database-icon{
+  width:43px;
+  height:43px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.1);
+  overflow:hidden
+}
+
+.database-icon img{
+  width:29px;
+  height:29px;
+  object-fit:contain
+}
+
+.database-icon .fallback{
+  font-size:24px;
+  font-weight:900;
+  color:#dff7ff
+}
+
+.database-name{
+  font-size:11px;
+  font-weight:800;
+  text-align:center;
+  direction:ltr
+}
+
+.database-status{
+  min-height:23px;
+  margin-top:12px;
+  font-size:12px;
+  color:#bdeeff;
+  line-height:1.8
+}
+
+/* COUNTRY PICKER */
+
 .country-picker{position:relative;width:100%;direction:rtl}
-.country-trigger{width:100%;min-height:51px;display:flex;align-items:center;gap:11px;padding:9px 12px;border:1px solid rgba(218,232,255,.19);border-radius:14px;background:linear-gradient(135deg,rgba(24,41,63,.82),rgba(8,17,31,.86));color:#fff;font:inherit;font-size:14px;text-align:right;cursor:pointer}
+
+.country-trigger{
+  width:100%;
+  min-height:51px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:9px 12px;
+  border:1px solid rgba(218,232,255,.19);
+  border-radius:14px;
+  background:linear-gradient(135deg,rgba(24,41,63,.82),rgba(8,17,31,.86));
+  color:#fff;
+  font:inherit;
+  font-size:14px;
+  text-align:right;
+  cursor:pointer
+}
+
 .country-trigger:disabled{opacity:.6;cursor:not-allowed}
-.country-current-flag{width:37px;height:26px;min-width:37px;display:grid;place-items:center;overflow:hidden;border-radius:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}
-.country-current-flag img,.country-flag-img{display:block;width:100%;height:100%;object-fit:cover}
+
+.country-current-flag{
+  width:37px;
+  height:26px;
+  min-width:37px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  border-radius:6px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16)
+}
+
+.country-current-flag img,.country-flag-img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
 .country-current-name{flex:1;font-weight:700}
-.country-chevron{font-size:19px;color:#9cddf5;transition:transform .2s}
+
+.country-chevron{
+  font-size:19px;
+  color:#9cddf5;
+  transition:transform .2s
+}
+
 .country-trigger[aria-expanded="true"] .country-chevron{transform:rotate(180deg)}
-.country-menu{width:100%;margin-top:8px;max-height:min(280px,45vh);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:6px;border:1px solid rgba(211,228,255,.2);border-radius:16px;background:#0b1728;box-shadow:0 18px 48px rgba(0,0,0,.48)}
+
+.country-menu{
+  width:100%;
+  margin-top:8px;
+  max-height:min(280px,45vh);
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  padding:6px;
+  border:1px solid rgba(211,228,255,.2);
+  border-radius:16px;
+  background:#0b1728;
+  box-shadow:0 18px 48px rgba(0,0,0,.48)
+}
+
 .country-menu[hidden]{display:none}
-.country-option{width:100%;min-height:44px;display:flex;align-items:center;gap:11px;padding:9px 10px;border:1px solid transparent;border-radius:11px;background:transparent;color:#f4f8ff;font:inherit;font-size:13px;text-align:right;cursor:pointer}
-.country-option:hover{background:rgba(117,217,255,.09);border-color:rgba(117,217,255,.16)}
-.country-option.active{background:rgba(117,217,255,.13);border-color:rgba(117,217,255,.3);color:#bceeff}
-.country-flag{width:38px;height:27px;min-width:38px;overflow:hidden;border-radius:6px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08)}
+
+.country-option{
+  width:100%;
+  min-height:44px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:9px 10px;
+  border:1px solid transparent;
+  border-radius:11px;
+  background:transparent;
+  color:#f4f8ff;
+  font:inherit;
+  font-size:13px;
+  text-align:right;
+  cursor:pointer
+}
+
+.country-option:hover{
+  background:rgba(117,217,255,.09);
+  border-color:rgba(117,217,255,.16)
+}
+
+.country-option.active{
+  background:rgba(117,217,255,.13);
+  border-color:rgba(117,217,255,.3);
+  color:#bceeff
+}
+
+.country-flag{
+  width:38px;
+  height:27px;
+  min-width:38px;
+  overflow:hidden;
+  border-radius:6px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.08)
+}
+
 .country-option-name{flex:1}
-.location-native{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
-.service-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.service-item{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid #ffffff1b;border-radius:13px;background:rgba(12,25,43,.68);cursor:pointer}
-.service-item:has(input:checked){border-color:#56d6ff88;background:#163249aa}
-.service-item input,.melli-row input,.apn-item input{width:18px;height:18px;min-width:18px;accent-color:#56d6ff;cursor:pointer}
-.service-icon{width:36px;height:36px;min-width:36px;display:grid;place-items:center;border-radius:11px;background:#ffffff12;overflow:hidden}
+
+.location-native{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important
+}
+
+/* SERVICE LISTS */
+
+.service-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px
+}
+
+.service-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px;
+  border:1px solid #ffffff1b;
+  border-radius:13px;
+  background:rgba(12,25,43,.68);
+  cursor:pointer
+}
+
+.service-item:has(input:checked){
+  border-color:#56d6ff88;
+  background:#163249aa
+}
+
+.service-item input,.melli-row input,.apn-item input{
+  width:18px;
+  height:18px;
+  min-width:18px;
+  accent-color:#56d6ff;
+  cursor:pointer
+}
+
+.service-icon{
+  width:36px;
+  height:36px;
+  min-width:36px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  background:#ffffff12;
+  overflow:hidden
+}
+
 .service-icon img{width:27px;height:27px;object-fit:contain}
+
 .service-name{font-size:12px;font-weight:800}
 .service-desc{font-size:10px;color:#9eafc5;margin-top:2px}
-.save-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}
+
+.save-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:14px
+}
+
 .save-message{font-size:11px;color:#9effbd;min-height:20px}
-.collapsible{border:1px solid #ffffff24;border-radius:16px;background:#08152399;overflow:hidden}
-.collapsible summary{cursor:pointer;list-style:none;padding:15px;display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:14px}
+
+.collapsible{
+  border:1px solid #ffffff24;
+  border-radius:16px;
+  background:#08152399;
+  overflow:hidden
+}
+
+.collapsible summary{
+  cursor:pointer;
+  list-style:none;
+  padding:15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-weight:800;
+  font-size:14px
+}
+
 .collapsible summary::-webkit-details-marker{display:none}
 .collapsible summary:after{content:"⌄";color:#56d6ff;font-size:18px}
 .collapsible[open] summary:after{content:"⌃"}
 .collapsible-content{padding:0 14px 14px}
-.melli-row{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid #ffffff20;border-radius:13px;background:#081523a8}
+
+.melli-row{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:13px;
+  border:1px solid #ffffff20;
+  border-radius:13px;
+  background:#081523a8
+}
+
 .melli-row strong{font-size:13px}
 .melli-status{font-size:12px;margin-top:10px;min-height:22px;color:#9effbd}
+
 .notice-hint{font-size:11px;color:#aebbd0;line-height:1.8;margin:10px 0 0}
+
 .apn-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.apn-item{display:flex;align-items:center;gap:11px;padding:12px;border:1px solid #ffffff20;border-radius:14px;background:#081523a8;cursor:pointer}
+
+.apn-item{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:12px;
+  border:1px solid #ffffff20;
+  border-radius:14px;
+  background:#081523a8;
+  cursor:pointer
+}
+
 .apn-item:has(input:checked){border-color:#56d6ff;background:#163249c9}
-.apn-logo{width:39px;height:39px;min-width:39px;display:grid;place-items:center;border-radius:12px;background:#ffffff12;overflow:hidden}
+
+.apn-logo{
+  width:39px;
+  height:39px;
+  min-width:39px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:#ffffff12;
+  overflow:hidden
+}
+
 .apn-logo img{width:29px;height:29px;object-fit:contain}
 .apn-logo .sim-icon{font-size:25px}
 .apn-name{font-size:12px;font-weight:800}
 .apn-desc{font-size:10px;color:#9eafc5;margin-top:3px}
 .apn-note{font-size:11px;color:#aebbd0;line-height:1.8;margin:12px 0 0}
-.apn-modal,.modal{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;background:#020713dc;backdrop-filter:blur(10px)}
+
+/* MODALS */
+
+.apn-modal,.modal{
+  position:fixed;
+  inset:0;
+  z-index:2000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:#020713dc;
+  backdrop-filter:blur(10px)
+}
+
 .apn-modal.hidden,.modal.hidden{display:none}
-.apn-modal-card,.modal-card{width:min(400px,100%);padding:27px 22px;border-radius:23px;border:1px solid #56d6ff66;background:linear-gradient(145deg,#14253b,#091321);box-shadow:0 20px 70px #000b;text-align:center}
-.apn-loader{width:54px;height:54px;margin:0 auto 18px;border:5px solid #ffffff20;border-top-color:#56d6ff;border-right-color:#8b7cff;border-radius:50%;animation:apnSpin .8s linear infinite}
+
+.apn-modal-card,.modal-card{
+  width:min(400px,100%);
+  padding:27px 22px;
+  border-radius:23px;
+  border:1px solid #56d6ff66;
+  background:linear-gradient(145deg,#14253b,#091321);
+  box-shadow:0 20px 70px #000b;
+  text-align:center
+}
+
+.apn-loader{
+  width:54px;
+  height:54px;
+  margin:0 auto 18px;
+  border:5px solid #ffffff20;
+  border-top-color:#56d6ff;
+  border-right-color:#8b7cff;
+  border-radius:50%;
+  animation:apnSpin .8s linear infinite
+}
+
 @keyframes apnSpin{to{transform:rotate(360deg)}}
-.apn-success{width:58px;height:58px;margin:0 auto 17px;border:3px solid #36df91;border-radius:50%;display:grid;place-items:center;color:#36df91;font-size:34px}
+
+.apn-success{
+  width:58px;
+  height:58px;
+  margin:0 auto 17px;
+  border:3px solid #36df91;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#36df91;
+  font-size:34px
+}
+
 .apn-modal-title{font-size:17px;font-weight:900;margin:0 0 9px}
 .apn-modal-message{font-size:13px;line-height:2;color:#d5e7f6;margin:0}
+
 .modal-title{font-size:24px;font-weight:900;margin:0 0 16px}
 .modal-message{font-size:22px;font-weight:900;line-height:1.9;margin:0 0 14px;color:#dff7ff}
-.modal-channel{display:block;direction:ltr;color:#56d6ff;font-size:15px;font-weight:800;margin:8px 0 20px;text-decoration:none}
-.modal-button{width:100%;padding:13px;border:0;border-radius:13px;background:linear-gradient(100deg,#56d6ff,#8b7cff);color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer}
-@media(max-width:620px){.service-list,.apn-list,.grid{grid-template-columns:1fr}.panel{padding:16px}.top{align-items:flex-start}.brand h1{font-size:16px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+.modal-channel{
+  display:block;
+  direction:ltr;
+  color:#56d6ff;
+  font-size:15px;
+  font-weight:800;
+  margin:8px 0 20px;
+  text-decoration:none
+}
+
+.modal-button{
+  width:100%;
+  padding:13px;
+  border:0;
+  border-radius:13px;
+  background:linear-gradient(100deg,#56d6ff,#8b7cff);
+  color:#071321;
+  font:inherit;
+  font-weight:900;
+  font-size:15px;
+  cursor:pointer
+}
+
+@media(max-width:620px){
+  .service-list,.apn-list,.grid{grid-template-columns:1fr}
+  .panel{padding:16px}
+  .top{align-items:flex-start}
+  .brand h1{font-size:16px}
+  .database-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{
+    animation-duration:.01ms!important;
+    transition-duration:.01ms!important
+  }
+}
 </style>
 </head>
 
@@ -121,6 +697,9 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
 <div class="ambient"></div>
 
 <div class="wrap">
+
+<!-- WELCOME MODAL -->
+
 <div class="modal" id="welcomeModal" role="dialog" aria-modal="true">
   <div class="modal-card">
     <h2 class="modal-title">هشدار</h2>
@@ -131,6 +710,20 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
   </div>
 </div>
 
+<!-- DATABASE CONNECTION MODAL -->
+
+<div class="apn-modal hidden" id="databaseModal" role="dialog" aria-modal="true">
+  <div class="apn-modal-card">
+    <div id="databaseModalIcon" class="apn-loader"></div>
+    <h3 class="apn-modal-title" id="databaseModalTitle">در حال اتصال به دیتابیس</h3>
+    <p class="apn-modal-message" id="databaseModalMessage">
+      لطفاً تا پایان فرایند منتظر بمانید.
+    </p>
+  </div>
+</div>
+
+<!-- APN MODAL -->
+
 <div class="apn-modal hidden" id="apnModal" role="dialog" aria-modal="true">
   <div class="apn-modal-card">
     <div id="apnModalIcon" class="apn-loader"></div>
@@ -140,6 +733,7 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
 </div>
 
 <main class="wrap">
+
 <header class="top">
   <div class="brand">
     <img class="logo" src="./logo.jpg" alt="DARK VPN Logo">
@@ -154,10 +748,100 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
 <section class="hero">
   <span class="eyebrow">DarkVPN • Dedicated DataCenter</span>
   <h2>ساخت کانفیگ PingNG</h2>
-  <p>انتخاب کشور برای تنظیم لوکیشن دیتاسنتر</p>
+  <p>انتخاب دیتابیس و کشور برای تنظیم لوکیشن</p>
 </section>
 
-<section class="panel">
+<!-- DATABASE SECTION -->
+
+<section class="panel" id="databasePanel">
+  <h3 class="section-title">انتخاب دیتابیس</h3>
+
+  <p class="hint" style="margin:-5px 0 15px">
+    ابتدا یک دیتابیس انتخاب کن تا مرحله انتخاب کشور فعال شود.
+  </p>
+
+  <div class="database-grid" id="databaseGrid">
+
+    <button class="database-card" type="button" data-db="Google">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=google.com&sz=128" alt="Google">
+      </span>
+      <span class="database-name">Google</span>
+    </button>
+
+    <button class="database-card" type="button" data-db="Cloudflare">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=128" alt="Cloudflare">
+      </span>
+      <span class="database-name">Cloudflare</span>
+    </button>
+
+    <button class="database-card" type="button" data-db="Microsoft">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=microsoft.com&sz=128" alt="Microsoft">
+      </span>
+      <span class="database-name">Microsoft</span>
+    </button>
+
+    <button class="database-card" type="button" data-db="Xbox">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=xbox.com&sz=128" alt="Xbox">
+      </span>
+      <span class="database-name">Xbox</span>
+    </button>
+
+    <button class="database-card" type="button" data-db="PlayStation">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=playstation.com&sz=128" alt="PlayStation">
+      </span>
+      <span class="database-name">PlayStation</span>
+    </button>
+
+    <button class="database-card" type="button" data-db="NASA">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=nasa.gov&sz=128" alt="NASA">
+      </span>
+      <span class="database-name">NASA</span>
+    </button>
+
+    <button class="database-card" type="button" data-db="Tesla">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=tesla.com&sz=128" alt="Tesla">
+      </span>
+      <span class="database-name">Tesla</span>
+    </button>
+
+    <button class="database-card" type="button" data-db="SpaceX">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=spacex.com&sz=128" alt="SpaceX">
+      </span>
+      <span class="database-name">SpaceX</span>
+    </button>
+
+    <button class="database-card" type="button" data-db="KFC">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=kfc.com&sz=128" alt="KFC">
+      </span>
+      <span class="database-name">KFC</span>
+    </button>
+
+    <button class="database-card" type="button" data-db="Vodafone">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=vodafone.com&sz=128" alt="Vodafone">
+      </span>
+      <span class="database-name">Vodafone</span>
+    </button>
+
+  </div>
+
+  <div class="database-status" id="databaseStatus" role="status">
+    هنوز دیتابیسی انتخاب نشده است.
+  </div>
+</section>
+
+<!-- PINGNG CONFIGURATION -->
+
+<section class="panel" id="configPanel" style="margin-top:16px">
   <h3 class="section-title">تنظیمات کانفیگ</h3>
 
   <div class="grid">
@@ -170,7 +854,7 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
           <span class="country-current-flag">
             <img id="countryCurrentFlag" src="" alt="" hidden>
           </span>
-          <span class="country-current-name" id="countryCurrentName">در حال دریافت لوکیشن‌ها...</span>
+          <span class="country-current-name" id="countryCurrentName">ابتدا دیتابیس انتخاب کنید</span>
           <span class="country-chevron" aria-hidden="true">⌄</span>
         </button>
 
@@ -180,10 +864,10 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
 
       <select id="locationSelect" class="location-native"
         disabled aria-hidden="true" tabindex="-1">
-        <option value="">در حال دریافت لوکیشن‌ها...</option>
+        <option value="">ابتدا دیتابیس انتخاب کنید</option>
       </select>
 
-      <span class="hint">کشور انتخاب‌شده در پارامتر لوکیشن دیتاسنتر قرار می‌گیرد.</span>
+      <span class="hint">کشور انتخاب‌شده در پارامتر لوکیشن پروفایل قرار می‌گیرد.</span>
     </div>
   </div>
 
@@ -191,75 +875,94 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
     <button class="btn primary" id="createPingngBtn" type="button" disabled>
       ساخت کانفیگ PingNG
     </button>
-    <button class="btn secondary" id="refreshBtn" type="button">
+    <button class="btn secondary" id="refreshBtn" type="button" disabled>
       بارگذاری مجدد کشورها
     </button>
   </div>
 
-  <div class="status" id="status" role="status">در حال دریافت فهرست کشورها...</div>
+  <div class="status" id="status" role="status">
+    ابتدا یک دیتابیس انتخاب کنید.
+  </div>
 
   <div class="output" id="pingngOutput">
     <div style="font-weight:800;margin-bottom:9px">کانفیگ PingNG آماده است</div>
     <div class="hint" id="selectedCountryText" style="margin-bottom:10px"></div>
     <code id="pingngResultLink"></code>
+
     <div class="actions">
       <button class="btn primary" id="openPingngBtn" type="button">
         باز کردن در PingNG
       </button>
-      <button class="btn secondary" id="copyPingngBtn" type="button">
-        کپی لینک
-      </button>
     </div>
+
     <div class="hint" style="margin-top:9px">
       برای باز شدن مستقیم، برنامه PingNG باید روی گوشی نصب باشد.
     </div>
   </div>
 </section>
 
+<!-- APN -->
+
 <section class="panel" style="margin-top:16px">
   <h3 class="section-title">APN مودم</h3>
+
   <div class="apn-list" id="apnList">
+
     <label class="apn-item">
       <input type="radio" name="apnChoice" value="none" checked>
       <span class="apn-logo"><span class="sim-icon">🚫</span></span>
-      <span><div class="apn-name">خاموش کردن APN ترکیبی</div><div class="apn-desc">بازنشانی انتخاب APN</div></span>
+      <span>
+        <div class="apn-name">خاموش کردن APN ترکیبی</div>
+        <div class="apn-desc">بازنشانی انتخاب APN</div>
+      </span>
     </label>
+
     <label class="apn-item">
       <input type="radio" name="apnChoice" value="asiatech">
       <span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=asiatech.ir&sz=64" alt="AsiaTech"></span>
       <span><div class="apn-name">آسیاتک</div><div class="apn-desc">AsiaTech</div></span>
     </label>
+
     <label class="apn-item">
       <input type="radio" name="apnChoice" value="pishgaman">
       <span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=pishgaman.net&sz=64" alt="Pishgaman"></span>
       <span><div class="apn-name">پیشگامان</div><div class="apn-desc">Pishgaman</div></span>
     </label>
+
     <label class="apn-item">
       <input type="radio" name="apnChoice" value="shatel">
       <span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=shatel.ir&sz=64" alt="Shatel"></span>
       <span><div class="apn-name">شاتل</div><div class="apn-desc">Shatel</div></span>
     </label>
+
     <label class="apn-item">
       <input type="radio" name="apnChoice" value="hiweb">
       <span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=hiweb.ir&sz=64" alt="HiWeb"></span>
       <span><div class="apn-name">های‌وب</div><div class="apn-desc">HiWeb</div></span>
     </label>
+
     <label class="apn-item">
       <input type="radio" name="apnChoice" value="mokhaberat">
       <span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=tci.ir&sz=64" alt="TCI"></span>
       <span><div class="apn-name">مخابرات</div><div class="apn-desc">TCI</div></span>
     </label>
+
     <label class="apn-item">
       <input type="radio" name="apnChoice" value="simdata">
       <span class="apn-logo"><span class="sim-icon">📱</span></span>
       <span><div class="apn-name">سیم کارت دیتا</div><div class="apn-desc">Data SIM</div></span>
     </label>
+
   </div>
+
   <p class="apn-note">فقط در تنظیمات APN تغییرات اعمال میشود</p>
 </section>
 
+<!-- DARK MELLI -->
+
 <section class="panel" style="margin-top:16px">
   <h3 class="section-title">دارک ملی</h3>
+
   <label class="melli-row">
     <input type="checkbox" id="melliToggle">
     <span>
@@ -267,50 +970,63 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
       <div class="service-desc">انتخاب یا غیرفعال‌کردن این گزینه</div>
     </span>
   </label>
+
   <div class="melli-status" id="melliStatus"></div>
   <p class="notice-hint">توجه: این سیستم برای زمان قطعی اینترنت جهانی است</p>
 </section>
 
+<!-- SANCTION BREAKER -->
+
 <section class="panel" style="margin-top:16px">
   <h3 class="section-title">تحریم‌شکن</h3>
-  <p class="hint" style="margin:-5px 0 15px">سرویس‌های موردنظرت را انتخاب کن و ذخیره بزن.</p>
+  <p class="hint" style="margin:-5px 0 15px">
+    سرویس‌های موردنظرت را انتخاب کن و ذخیره بزن.
+  </p>
 
   <div class="service-list" id="sanctionList">
+
     <label class="service-item">
       <input type="checkbox" value="Gemini Ai">
       <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64" alt="Gemini"></span>
       <span><div class="service-name">Gemini Ai</div><div class="service-desc">Google Gemini</div></span>
     </label>
+
     <label class="service-item">
       <input type="checkbox" value="ChatGPT Ai">
       <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64" alt="ChatGPT"></span>
       <span><div class="service-name">ChatGPT Ai</div><div class="service-desc">OpenAI</div></span>
     </label>
+
     <label class="service-item">
       <input type="checkbox" value="Paypal">
       <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" alt="PayPal"></span>
       <span><div class="service-name">Paypal</div><div class="service-desc">PayPal</div></span>
     </label>
+
     <label class="service-item">
       <input type="checkbox" value="X (Twitter premium)">
       <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=x.com&sz=64" alt="X"></span>
       <span><div class="service-name">X (Twitter premium)</div><div class="service-desc">X</div></span>
     </label>
+
     <label class="service-item">
       <input type="checkbox" value="Telegram (premium)">
       <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=telegram.org&sz=64" alt="Telegram"></span>
       <span><div class="service-name">Telegram (premium)</div><div class="service-desc">Telegram</div></span>
     </label>
+
     <label class="service-item">
       <input type="checkbox" value="AOL Mail (create account)">
       <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=aol.com&sz=64" alt="AOL"></span>
       <span><div class="service-name">AOL Mail (create account)</div><div class="service-desc">AOL Mail</div></span>
     </label>
+
     <label class="service-item">
       <input type="checkbox" value="Tiktok (Sign up)">
       <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=tiktok.com&sz=64" alt="TikTok"></span>
       <span><div class="service-name">Tiktok (Sign up)</div><div class="service-desc">TikTok</div></span>
     </label>
+
   </div>
 
   <div class="save-row">
@@ -319,38 +1035,51 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
   </div>
 </section>
 
+<!-- GHOST MODE -->
+
 <section class="panel" style="margin-top:16px">
   <details class="collapsible" id="ghostDetails">
     <summary>حالت روح</summary>
+
     <div class="collapsible-content">
-      <p class="hint" style="margin:0 0 13px">پیام‌رسان‌های داخلی موردنظرت را انتخاب کن و ذخیره بزن.</p>
+      <p class="hint" style="margin:0 0 13px">
+        پیام‌رسان‌های داخلی موردنظرت را انتخاب کن و ذخیره بزن.
+      </p>
+
       <div class="service-list" id="ghostList">
+
         <label class="service-item">
           <input type="checkbox" value="ایتا">
           <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=eitaa.com&sz=64" alt="ایتا"></span>
           <span><div class="service-name">ایتا</div></span>
         </label>
+
         <label class="service-item">
           <input type="checkbox" value="روبیکا">
           <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=rubika.ir&sz=64" alt="روبیکا"></span>
           <span><div class="service-name">روبیکا</div></span>
         </label>
+
         <label class="service-item">
           <input type="checkbox" value="بله">
           <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=bale.ai&sz=64" alt="بله"></span>
           <span><div class="service-name">بله</div></span>
         </label>
+
         <label class="service-item">
           <input type="checkbox" value="سروش">
           <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=splus.ir&sz=64" alt="سروش"></span>
           <span><div class="service-name">سروش</div></span>
         </label>
+
         <label class="service-item">
           <input type="checkbox" value="پیام‌رسان گپ">
           <span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=gap.im&sz=64" alt="گپ"></span>
           <span><div class="service-name">پیام‌رسان گپ</div></span>
         </label>
+
       </div>
+
       <div class="save-row">
         <button class="btn primary" id="saveGhostBtn" type="button">ذخیره انتخاب‌ها</button>
         <span class="save-message" id="ghostStatus"></span>
@@ -359,17 +1088,22 @@ input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}
   </details>
 </section>
 
+<!-- FOOTER -->
+
 <footer class="foot">
   <a class="telegram" href="https://t.me/darkvpnTG" target="_blank" rel="noopener" aria-label="کانال تلگرام DARK VPN">
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M21.7 4.3 18.5 20c-.2 1.1-.8 1.4-1.7.9l-4.7-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.4-4.8 8.8-8c.4-.4-.1-.6-.6-.2L6.5 14.2 1.9 12.8c-1-.3-1-1 .2-1.5L20 4.2c.8-.3 1.5.2 1.7.1Z"/>
     </svg>
   </a>
+
   <div class="motto">یک قدم جلوتر از فیلترینگ 😎</div>
   <div class="team">برای ورود به کانال روی آیکون تلگرام بزن</div>
   <small>v2.2.0 ✓ • Powered by Team "𝐃𝐚𝐫𝐤ᵛᵖⁿ"</small>
 </footer>
+
 </main>
+</div>
 
 <script>
 "use strict";
@@ -382,6 +1116,13 @@ const $ = id => document.getElementById(id);
 let availableCountries = new Set();
 let selectedCountry = "";
 let generatedPingngLink = "";
+
+let databaseUnlocked = false;
+let selectedDatabase = "";
+
+let databaseTimer = null;
+let databaseCloseTimer = null;
+
 let apnTimer = null;
 let apnCloseTimer = null;
 
@@ -419,19 +1160,99 @@ function setStatus(message, error=false) {
 
 function getCountryFlag(code) {
   if (!/^[A-Z]{2}$/.test(code)) return "🌐";
-  return String.fromCodePoint(...[...code].map(c => 127397 + c.charCodeAt(0)));
+
+  return String.fromCodePoint(
+    ...[...code].map(c => 127397 + c.charCodeAt(0))
+  );
 }
 
-/*
-  فایل ip.txt باید فقط شامل کد کشورها باشد:
-  {de}
-  {fr}
-  {nl}
+/* =========================
+   DATABASE SELECTION
+========================= */
 
-  هیچ IP یا پورتی در این فایل قرار نمی‌گیرد.
-*/
+function setDatabaseCardsDisabled(disabled) {
+  document.querySelectorAll(".database-card").forEach(card => {
+    card.disabled = disabled;
+  });
+}
+
+function selectDatabase(database, card) {
+  if (databaseUnlocked) return;
+
+  selectedDatabase = database;
+
+  document.querySelectorAll(".database-card").forEach(item => {
+    item.classList.toggle("selected", item === card);
+  });
+
+  setDatabaseCardsDisabled(true);
+
+  $("databaseStatus").textContent =
+    "در حال آماده‌سازی دیتابیس " + database + "...";
+
+  showDatabaseLoading(database);
+}
+
+function showDatabaseLoading(database) {
+  clearTimeout(databaseTimer);
+  clearTimeout(databaseCloseTimer);
+
+  $("databaseModalIcon").className = "apn-loader";
+  $("databaseModalIcon").textContent = "";
+
+  $("databaseModalTitle").textContent = "در حال اتصال به دیتابیس";
+  $("databaseModalMessage").textContent =
+    "در حال آماده‌سازی " + database + " ... لطفاً شکیبا باشید.";
+
+  $("databaseModal").classList.remove("hidden");
+
+  databaseTimer = setTimeout(() => {
+    showDatabaseSuccess(database);
+  }, 6000);
+}
+
+function showDatabaseSuccess(database) {
+  $("databaseModalIcon").className = "apn-success";
+  $("databaseModalIcon").textContent = "✓";
+
+  $("databaseModalTitle").textContent = "عملیات با موفقیت انجام شد";
+
+  $("databaseModalMessage").textContent =
+    "دیتابیس " + database +
+    " انتخاب شد. اکنون می‌توانید کشور موردنظر را انتخاب کنید.";
+
+  databaseUnlocked = true;
+
+  $("databaseStatus").textContent =
+    "✓ دیتابیس انتخاب‌شده: " + database;
+
+  setDatabaseCardsDisabled(false);
+
+  $("countryTrigger").disabled = false;
+  $("refreshBtn").disabled = false;
+
+  setStatus("دیتابیس انتخاب شد؛ در حال دریافت فهرست کشورها...");
+
+  loadLocations();
+
+  databaseCloseTimer = setTimeout(() => {
+    $("databaseModal").classList.add("hidden");
+  }, 5000);
+}
+
+document.querySelectorAll(".database-card").forEach(card => {
+  card.addEventListener("click", () => {
+    selectDatabase(card.dataset.db, card);
+  });
+});
+
+/* =========================
+   COUNTRY DATABASE
+========================= */
 
 async function loadLocations() {
+  if (!databaseUnlocked) return;
+
   const select = $("locationSelect");
   const trigger = $("countryTrigger");
   const menu = $("countryMenu");
@@ -445,6 +1266,7 @@ async function loadLocations() {
 
   $("countryCurrentName").textContent = "در حال دریافت لوکیشن‌ها...";
   $("countryCurrentFlag").hidden = true;
+
   menu.replaceChildren();
   closeCountryMenu();
 
@@ -467,6 +1289,7 @@ async function loadLocations() {
       if (!line || line.startsWith("#")) return;
 
       const match = line.match(/^\{\s*([A-Za-z]{2})\s*\}$/);
+
       if (!match) return;
 
       let code = match[1].toUpperCase();
@@ -490,6 +1313,7 @@ async function loadLocations() {
       select.appendChild(option);
 
       const item = document.createElement("button");
+
       item.type = "button";
       item.className = "country-option";
       item.setAttribute("role", "option");
@@ -504,6 +1328,7 @@ async function loadLocations() {
       flag.src = "https://flagcdn.com/w80/" + code.toLowerCase() + ".png";
       flag.alt = code + " flag";
       flag.loading = "lazy";
+
       flag.onerror = () => {
         flag.style.display = "none";
         flagFrame.textContent = getCountryFlag(code);
@@ -516,26 +1341,35 @@ async function loadLocations() {
       name.textContent = getCountryName(code);
 
       item.append(flagFrame, name);
+
       item.addEventListener("click", () => selectCountry(code));
+
       menu.appendChild(item);
     });
 
     select.disabled = sortedCountries.length === 0;
     trigger.disabled = sortedCountries.length === 0;
+
     $("createPingngBtn").disabled = sortedCountries.length === 0;
 
     if (sortedCountries.length) {
       const firstCountry = sortedCountries[0];
+
       select.value = firstCountry;
       selectCountry(firstCountry);
 
       setStatus(
         "کشورها دریافت شدند: " + sortedCountries.length + " کشور."
       );
+
     } else {
       select.innerHTML = '<option value="">کشوری پیدا نشد</option>';
       $("countryCurrentName").textContent = "کشوری پیدا نشد";
-      setStatus("هیچ کد کشور معتبری در فایل ip.txt پیدا نشد.", true);
+
+      setStatus(
+        "هیچ کد کشور معتبری در فایل ip.txt پیدا نشد.",
+        true
+      );
     }
 
   } catch (error) {
@@ -544,12 +1378,17 @@ async function loadLocations() {
     select.innerHTML = '<option value="">خطا در دریافت کشورها</option>';
     select.disabled = true;
     trigger.disabled = true;
+
     $("createPingngBtn").disabled = true;
 
     menu.replaceChildren();
+
     $("countryCurrentName").textContent = "خطا در دریافت لوکیشن";
 
-    setStatus("دریافت کشورها ناموفق بود: " + error.message, true);
+    setStatus(
+      "دریافت کشورها ناموفق بود: " + error.message,
+      true
+    );
 
   } finally {
     $("refreshBtn").disabled = false;
@@ -562,6 +1401,7 @@ function updateCountryPicker(code) {
   flag.src = "https://flagcdn.com/w80/" + code.toLowerCase() + ".png";
   flag.alt = code + " flag";
   flag.hidden = false;
+
   flag.onerror = () => {
     flag.hidden = true;
   };
@@ -571,6 +1411,7 @@ function updateCountryPicker(code) {
 
   document.querySelectorAll(".country-option").forEach(item => {
     const active = item.dataset.code === code;
+
     item.classList.toggle("active", active);
     item.setAttribute("aria-selected", String(active));
   });
@@ -582,9 +1423,11 @@ function selectCountry(code) {
   if (!availableCountries.has(code)) return;
 
   selectedCountry = code;
+
   $("locationSelect").value = code;
 
   updateCountryPicker(code);
+
   $("pingngOutput").classList.remove("show");
 
   generatedPingngLink = "";
@@ -609,16 +1452,9 @@ function closeCountryMenu() {
   picker.classList.remove("menu-open");
 }
 
-/*
-  قالب پایه PingNG:
-  cfg، کلید خصوصی و access_token در این قالب وجود ندارند.
-  فقط پارامتر pr بر اساس کشور انتخابی ساخته می‌شود.
-
-  مقدار pr به صورت Base64 کد کشور است:
-  DE = REU
-  FR = RlI
-  NL = Tkw
-*/
+/* =========================
+   PINGNG LINK
+========================= */
 
 const PINGNG_BASE =
   "pingng-warp://profile?v=1" +
@@ -659,13 +1495,15 @@ function buildPingngLink(countryCode) {
     throw new Error("لطفاً ابتدا یک کشور معتبر انتخاب کنید.");
   }
 
-  const countryParameter = encodeCountry(code);
-
-  return PINGNG_BASE + "&pr=" + countryParameter;
+  return PINGNG_BASE + "&pr=" + encodeCountry(code);
 }
 
 $("createPingngBtn").addEventListener("click", () => {
   try {
+    if (!databaseUnlocked) {
+      throw new Error("ابتدا یک دیتابیس انتخاب کنید.");
+    }
+
     if (!selectedCountry) {
       throw new Error("ابتدا کشور موردنظر را انتخاب کنید.");
     }
@@ -673,12 +1511,14 @@ $("createPingngBtn").addEventListener("click", () => {
     generatedPingngLink = buildPingngLink(selectedCountry);
 
     $("selectedCountryText").textContent =
+      "دیتابیس: " + selectedDatabase + " | " +
       "لوکیشن انتخاب‌شده: " +
       getCountryFlag(selectedCountry) + " " +
       getCountryName(selectedCountry) +
       " (" + selectedCountry + ")";
 
     $("pingngResultLink").textContent = generatedPingngLink;
+
     $("pingngOutput").classList.add("show");
 
     setStatus("لینک PingNG برای کشور انتخاب‌شده ساخته شد.");
@@ -687,11 +1527,6 @@ $("createPingngBtn").addEventListener("click", () => {
     setStatus("خطا: " + error.message, true);
   }
 });
-
-/*
-  باز کردن مستقیم لینک در PingNG.
-  هیچ منوی انتخاب کلاینت یا لینک V2RayNG وجود ندارد.
-*/
 
 $("openPingngBtn").addEventListener("click", () => {
   if (!generatedPingngLink) {
@@ -702,32 +1537,6 @@ $("openPingngBtn").addEventListener("click", () => {
   window.location.href = generatedPingngLink;
 });
 
-$("copyPingngBtn").addEventListener("click", async () => {
-  if (!generatedPingngLink) {
-    setStatus("ابتدا لینک PingNG را بسازید.", true);
-    return;
-  }
-
-  try {
-    await navigator.clipboard.writeText(generatedPingngLink);
-    setStatus("لینک PingNG کپی شد.");
-  } catch (_) {
-    const textArea = document.createElement("textarea");
-    textArea.value = generatedPingngLink;
-    document.body.appendChild(textArea);
-    textArea.select();
-
-    try {
-      document.execCommand("copy");
-      setStatus("لینک PingNG کپی شد.");
-    } catch (_) {
-      setStatus("کپی خودکار انجام نشد؛ لینک را دستی انتخاب کنید.", true);
-    }
-
-    textArea.remove();
-  }
-});
-
 /* =========================
    APN MODAL
 ========================= */
@@ -735,6 +1544,7 @@ $("copyPingngBtn").addEventListener("click", async () => {
 function closeApnModal() {
   clearTimeout(apnTimer);
   clearTimeout(apnCloseTimer);
+
   $("apnModal").classList.add("hidden");
 }
 
@@ -744,8 +1554,10 @@ function showApnLoading() {
 
   $("apnModalIcon").className = "apn-loader";
   $("apnModalIcon").textContent = "";
+
   $("apnModalTitle").textContent = "در حال انجام تنظیمات";
   $("apnModalMessage").textContent = "لطفاً شکیبا باشید.";
+
   $("apnModal").classList.remove("hidden");
 
   apnTimer = setTimeout(showApnSuccess, 4000);
@@ -754,7 +1566,9 @@ function showApnLoading() {
 function showApnSuccess() {
   $("apnModalIcon").className = "apn-success";
   $("apnModalIcon").textContent = "✓";
+
   $("apnModalTitle").textContent = "عملیات با موفقیت انجام شد";
+
   $("apnModalMessage").textContent =
     "این بخش فقط تنظیمات APN را تغییر می‌دهد.";
 
@@ -770,8 +1584,10 @@ function showApnReset() {
 
   $("apnModalIcon").className = "apn-success";
   $("apnModalIcon").textContent = "✓";
+
   $("apnModalTitle").textContent = "بازنشانی انجام شد";
   $("apnModalMessage").textContent = "تنظیمات APN بازنشانی شد.";
+
   $("apnModal").classList.remove("hidden");
 
   apnCloseTimer = setTimeout(
@@ -797,6 +1613,7 @@ function readSavedChecks(containerId, storageKey) {
 
   try {
     saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
+
     if (!Array.isArray(saved)) saved = [];
   } catch (_) {}
 
@@ -884,17 +1701,25 @@ $("understoodBtn").addEventListener("click", () => {
 
 $("themeBtn").addEventListener("click", () => {
   const day = document.body.classList.toggle("day");
+
   document.body.classList.toggle("night", !day);
-  $("themeBtn").textContent = day ? "🌙 حالت شب" : "☀️ حالت روز";
+
+  $("themeBtn").textContent =
+    day ? "🌙 حالت شب" : "☀️ حالت روز";
 });
 
 $("countryTrigger").addEventListener("click", () => {
+  if (!databaseUnlocked) return;
+
   const menu = $("countryMenu");
   const trigger = $("countryTrigger");
+
   const opening = menu.hidden;
 
   menu.hidden = !opening;
+
   trigger.setAttribute("aria-expanded", String(opening));
+
   $("countryPicker").classList.toggle("menu-open", opening);
 });
 
@@ -905,13 +1730,28 @@ document.addEventListener("click", event => {
 });
 
 document.addEventListener("keydown", event => {
-  if (event.key === "Escape") closeCountryMenu();
+  if (event.key === "Escape") {
+    closeCountryMenu();
+  }
 });
 
-$("refreshBtn").addEventListener("click", loadLocations);
+$("refreshBtn").addEventListener("click", () => {
+  if (databaseUnlocked) loadLocations();
+});
+
+/* =========================
+   START
+========================= */
 
 initExtraOptions();
-loadLocations();
+
+/*
+  در شروع صفحه:
+  دیتابیس هنوز انتخاب نشده است.
+  انتخاب کشور و ساخت لینک تا پایان مرحله دیتابیس غیرفعال می‌مانند.
+*/
+setDatabaseCardsDisabled(false);
+
 </script>
 </body>
 </html>
