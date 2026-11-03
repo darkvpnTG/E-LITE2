@@ -482,12 +482,15 @@ function openInVlessClients(){
     return;
   }
 
+  const importLink = generatedVlessLink.replace(
+    /([?&]path=)([^&]*)/,
+    (match, prefix, value) => prefix + encodeURIComponent(value)
+  );
+
   const importUrl =
     "v2rayng://install-config?url=" +
-    encodeURIComponent(generatedVlessLink);
-  
-prompt("لینک انتقال:", importUrl);
-  
+    encodeURIComponent(importLink);
+
   window.location.href = importUrl;
 }
 
