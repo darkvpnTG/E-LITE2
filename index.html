@@ -27,6 +27,7 @@ body.day .bg{filter:brightness(1.15) saturate(1.05)}body.night .bg{filter:bright
 </head>
 <body class="night">
 <div class="bg"></div><div class="ambient"></div>
+<div class="wrap">
 <div class="modal" id="welcomeModal" role="dialog" aria-modal="true"><div class="modal-card"><h2 class="modal-title">هشدار</h2><p class="modal-message">این پنل کاملا رایگان است. 📡</p><div>کانال رسمی DarkVPN</div><a class="modal-channel" href="https://t.me/darkvpnTG" target="_blank" rel="noopener">https://t.me/darkvpnTG</a><button class="modal-button" id="understoodBtn" type="button">فهمیدم</button></div></div>
 <div class="apn-modal hidden" id="apnModal" role="dialog" aria-modal="true"><div class="apn-modal-card"><div id="apnModalIcon" class="apn-loader"></div><h3 class="apn-modal-title" id="apnModalTitle">در حال انجام تنظیمات</h3><p class="apn-modal-message" id="apnModalMessage">لطفاً شکیبا باشید.</p></div></div>
 <main class="wrap">
@@ -68,27 +69,405 @@ body.day .bg{filter:brightness(1.15) saturate(1.05)}body.night .bg{filter:bright
 </main>
 <script>
 "use strict";
+
 const IP_LIST_URL="https://raw.githubusercontent.com/darkvpnTG/Vless-RTL/refs/heads/main/range.txt";
 const LOCATION_LIST_URL="https://raw.githubusercontent.com/darkvpnTG/Vless-RTL/refs/heads/main/ip.txt";
+
 const $=id=>document.getElementById(id);
+
 let ips=[],pingTimes=new Map(),ipMeta=new Map(),selectedEndpoint="";
 let generatedVlessLink="",locationIps=new Map(),apnTimer=null,apnCloseTimer=null;
+
 const countryNames={CA:"Canada",US:"United States",DE:"Germany",FR:"France",GB:"United Kingdom",UK:"United Kingdom",NL:"Netherlands",BE:"Belgium",AT:"Austria",AU:"Australia",CH:"Switzerland",ES:"Spain",FI:"Finland",IN:"India",IT:"Italy",JP:"Japan",PL:"Poland",RO:"Romania",AE:"United Arab Emirates",TR:"Turkey",RS:"Serbia",UA:"Ukraine",IL:"Israel",KR:"South Korea",SE:"Sweden",HK:"Hong Kong",SG:"Singapore",BR:"Brazil",MX:"Mexico",ZA:"South Africa",CZ:"Czechia",NO:"Norway",DK:"Denmark",IE:"Ireland",PT:"Portugal",GR:"Greece",BG:"Bulgaria",HR:"Croatia",CY:"Cyprus",LU:"Luxembourg",LT:"Lithuania",LV:"Latvia",EE:"Estonia",IS:"Iceland",ID:"Indonesia",MY:"Malaysia",TH:"Thailand",VN:"Vietnam",PH:"Philippines",TW:"Taiwan",AR:"Argentina",CL:"Chile",CO:"Colombia",NZ:"New Zealand"};
-function getCountryName(code){if(countryNames[code])return countryNames[code];try{return new Intl.DisplayNames(["en"],{type:"region"}).of(code)||code}catch(_){return code}}
-function getCountryFlag(code){if(!/^[A-Z]{2}$/.test(code))return "🌐";return String.fromCodePoint(...[...code].map(c=>127397+c.charCodeAt(0)))}
-function setStatus(message,error=false){$("status").textContent=message;$("status").style.color=error?"#ffb4b4":"#bdeeff"}
-function isValidIPv6(ip){if(!ip||ip.includes(":::"))return false;const parts=ip.split("::");if(parts.length>2)return false;const compressed=parts.length===2;const left=parts[0]?parts[0].split(":"):[];const right=compressed&&parts[1]?parts[1].split(":"):[];const groups=[...left,...right];if(groups.some(g=>!/^[0-9a-fA-F]{1,4}$/.test(g)))return false;return compressed?groups.length<8:groups.length===8}
-function parseEndpoint(endpoint){if(typeof endpoint!=="string")return null;const value=endpoint.trim();if(!value)return null;const v4=value.match(/^((?:\d{1,3}\.){3}\d{1,3})(?::\d{1,5})?$/);if(v4){const octets=v4[1].split(".").map(Number);if(octets.every(n=>n>=0&&n<=255))return{ip:v4[1],port:"443",version:4};return null}const bracketedV6=value.match(/^\[([0-9a-fA-F:]+)\](?::\d{1,5})?$/);if(bracketedV6){if(isValidIPv6(bracketedV6[1]))return{ip:bracketedV6[1],port:"443",version:6};return null}if(isValidIPv6(value))return{ip:value,port:"443",version:6};return null}
-function isValidLocationIP(ip){ip=ip.trim();const v4=ip.match(/^(\d{1,3}\.){3}\d{1,3}$/);if(v4)return ip.split(".").every(n=>Number(n)>=0&&Number(n)<=255);return isValidIPv6(ip)}
-async function loadLocations(){const select=$("locationSelect");$("createVlessBtn").disabled=true;select.disabled=true;select.innerHTML='<option value="">در حال دریافت کشورها...</option>';try{const response=await fetch(LOCATION_LIST_URL+"?v="+Date.now(),{cache:"no-store"});if(!response.ok)throw new Error("HTTP "+response.status);const raw=await response.text();const grouped=new Map();raw.split(/\r?\n/).forEach(line=>{line=line.trim();if(!line||line.startsWith("#"))return;const parts=line.split("#");if(parts.length!==2)return;const ip=parts[0].trim();let code=parts[1].trim().toUpperCase();if(code==="UK")code="GB";if(!isValidLocationIP(ip)||!/^[A-Z]{2}$/.test(code))return;if(!grouped.has(code))grouped.set(code,[]);if(!grouped.get(code).includes(ip))grouped.get(code).push(ip)});locationIps=grouped;select.innerHTML="";const countries=[...locationIps.keys()].sort();countries.forEach(code=>{const option=document.createElement("option");option.value=code;option.textContent=getCountryFlag(code)+" "+getCountryName(code)+" ("+locationIps.get(code).length+" IP)";select.appendChild(option)});let total=0;locationIps.forEach(list=>total+=list.length);select.disabled=total===0;$("createVlessBtn").disabled=total===0;if(total)setStatus("لوکیشن‌ها دریافت شدند: "+countries.length+" کشور و "+total+" IP.");else{select.innerHTML='<option value="">لوکیشنی پیدا نشد</option>';setStatus("هیچ IP معتبری با فرمت IP#CC پیدا نشد.",true)}}catch(error){locationIps.clear();select.innerHTML='<option value="">خطا در دریافت لوکیشن</option>';select.disabled=true;$("createVlessBtn").disabled=true;setStatus("دریافت لوکیشن ناموفق بود: "+error.message,true)}}
-function getSelectedLocationIP(){const code=$("locationSelect").value;const selectedIPs=locationIps.get(code);if(!selectedIPs||!selectedIPs.length)throw new Error("ابتدا یک کشور انتخاب کنید.");return selectedIPs[Math.floor(Math.random()*selectedIPs.length)]}
-function generateDemoPings(){pingTimes.clear();ipMeta.clear();ips.forEach(ip=>{pingTimes.set(ip,Math.floor(Math.random()*386)+95);ipMeta.set(ip,{operator:"MCI/MTN"})});ips.sort((a,b)=>pingTimes.get(a)-pingTimes.get(b))}
-function getPingClass(ms){if(ms<150)return "";if(ms<300)return "medium";return "slow"}
-function renderIpGroup(listId,version){const query=$("ipSearch").value.trim().toLowerCase();const box=$(listId);const filtered=ips.filter(value=>{const parsed=parseEndpoint(value);return parsed&&parsed.version===version&&parsed.ip.toLowerCase().includes(query)});box.replaceChildren();if(!filtered.length){const empty=document.createElement("div");empty.className="ip-empty";empty.textContent=query?"IP مطابقی پیدا نشد":version===4?"هیچ IPv4 وجود ندارد":"هیچ IPv6 وجود ندارد";box.append(empty);return}filtered.forEach(value=>{const parsed=parseEndpoint(value);if(!parsed)return;const row=document.createElement("div");row.className="iprow"+(value===selectedEndpoint?" active":"");const ip=document.createElement("span");ip.className="ipaddress";ip.textContent=parsed.ip;const ping=document.createElement("span");ping.className="ping "+getPingClass(pingTimes.get(value));ping.textContent=pingTimes.get(value)+"ms";const tag=document.createElement("span");tag.className="pill";tag.textContent=value===selectedEndpoint?"انتخاب‌شده":"انتخاب";row.append(ip,ping,tag);row.addEventListener("click",()=>{selectedEndpoint=value;renderIps();setStatus("IP انتخاب شد: "+parsed.ip)});box.append(row)})}
-function renderIps(){renderIpGroup("ipv4List",4);renderIpGroup("ipv6List",6);$("ipv4Count").textContent=ips.filter(ip=>parseEndpoint(ip)?.version===4).length+" IP";$("ipv6Count").textContent=ips.filter(ip=>parseEndpoint(ip)?.version===6).length+" IP"}
-async function loadIps(){$("refreshBtn").disabled=true;setStatus("در حال دریافت IP ها از range.txt...");try{const response=await fetch(IP_LIST_URL+"?v="+Date.now(),{cache:"no-store"});if(!response.ok)throw new Error("HTTP "+response.status);const raw=await response.text();ips=[...new Set(raw.split(/\r?\n/).map(line=>line.trim()).filter(line=>parseEndpoint(line)!==null))];if(!ips.length)throw new Error("فایل range.txt خالی یا نامعتبر است.");if(selectedEndpoint&&!ips.includes(selectedEndpoint))selectedEndpoint="";generateDemoPings();renderIps();setStatus("IPها دریافت شدند: "+ips.length)}catch(error){setStatus("دریافت range.txt ناموفق بود: "+error.message,true)}finally{$("refreshBtn").disabled=false}}
-function buildVless(proxyIP,endpointValue){const uuid="2011a64f-022f-463d-a20c-88ca09a20986";const host="sky-shield-935.vowuha6919.workers.dev";const endpoint=parseEndpoint(endpointValue);if(!endpoint)throw new Error("ابتدا یک IP از لیست IPv4 یا IPv6 انتخاب کنید.");const server=endpoint.version===6?"["+endpoint.ip+"]":endpoint.ip;const port=2053;const wsPath="/proxyip="+proxyIP;const params=new URLSearchParams({path:wsPath,security:"tls",alpn:"h3,h2,http/1.1",encryption:"none",png:"Off",insecure:"0",host:host,fp:"chrome",type:"ws",allowInsecure:"0",sni:host});return "vless://"+uuid+"@"+server+":"+port+"?"+params.toString()+"#%40DarkvpnTG%20%F0%9F%86%95"}
-$("createVlessBtn").addEventListener("click",()=>{try{const proxyIP=getSelectedLocationIP();if(!selectedEndpoint)throw new Error("ابتدا یک IP از لیست IPv4 یا IPv6 انتخاب کنید.");generatedVlessLink=buildVless(proxyIP,selectedEndpoint);const parsed=parseEndpoint(selectedEndpoint);$("vlessSelectedIp").textContent="IP انتخاب‌شده: "+parsed.ip+" | Proxy IP: "+proxyIP;$("vlessResultLink").textContent=generatedVlessLink;$("vlessOutput").classList.add("show");setStatus("کانفیگ VLESS+RTL با موفقیت ساخته شد.")}catch(error){setStatus("خطا: "+error.message,true)}});
+
+function getCountryName(code){
+  if(countryNames[code])return countryNames[code];
+  try{return new Intl.DisplayNames(["en"],{type:"region"}).of(code)||code}
+  catch(_){return code}
+}
+
+function getCountryFlag(code){
+  if(!/^[A-Z]{2}$/.test(code))return "🌐";
+  return String.fromCodePoint(...[...code].map(c=>127397+c.charCodeAt(0)));
+}
+
+function setStatus(message,error=false){
+  $("status").textContent=message;
+  $("status").style.color=error?"#ffb4b4":"#bdeeff";
+}
+
+function isValidIPv6(ip){
+  if(!ip||ip.includes(":::"))return false;
+  const parts=ip.split("::");
+  if(parts.length>2)return false;
+  const compressed=parts.length===2;
+  const left=parts[0]?parts[0].split(":"):[];
+  const right=compressed&&parts[1]?parts[1].split(":"):[];
+  const groups=[...left,...right];
+  if(groups.some(g=>!/^[0-9a-fA-F]{1,4}$/.test(g)))return false;
+  return compressed?groups.length<8:groups.length===8;
+}
+
+function parseEndpoint(endpoint){
+  if(typeof endpoint!=="string")return null;
+  const value=endpoint.trim();
+  if(!value)return null;
+
+  const v4=value.match(/^((?:\d{1,3}\.){3}\d{1,3})(?::\d{1,5})?$/);
+
+  if(v4){
+    const octets=v4[1].split(".").map(Number);
+    if(octets.every(n=>n>=0&&n<=255)){
+      return{ip:v4[1],port:"443",version:4};
+    }
+    return null;
+  }
+
+  const bracketedV6=value.match(/^\[([0-9a-fA-F:]+)\](?::\d{1,5})?$/);
+
+  if(bracketedV6){
+    if(isValidIPv6(bracketedV6[1])){
+      return{ip:bracketedV6[1],port:"443",version:6};
+    }
+    return null;
+  }
+
+  if(isValidIPv6(value))return{ip:value,port:"443",version:6};
+  return null;
+}
+
+function isValidLocationIP(ip){
+  ip=String(ip||"").trim();
+
+  const v4=ip.match(/^(\d{1,3}\.){3}\d{1,3}$/);
+
+  if(v4){
+    return ip.split(".").every(n=>Number(n)>=0&&Number(n)<=255);
+  }
+
+  return isValidIPv6(ip);
+}
+
+/* ================================
+   اصلاح بخش دریافت Proxy IP
+   فرمت فایل:
+   176.97.68.17#AU
+   144.225.188.205#CH
+   ================================ */
+
+async function loadLocations(){
+  const select=$("locationSelect");
+
+  $("createVlessBtn").disabled=true;
+  select.disabled=true;
+  select.innerHTML='<option value="">در حال دریافت کشورها...</option>';
+
+  try{
+    const response=await fetch(
+      LOCATION_LIST_URL+"?v="+Date.now(),
+      {cache:"no-store"}
+    );
+
+    if(!response.ok){
+      throw new Error("HTTP "+response.status);
+    }
+
+    const raw=await response.text();
+    const grouped=new Map();
+
+    raw.split(/\r?\n/).forEach(line=>{
+
+      // حذف فاصله و BOM احتمالی فایل
+      line=line.replace(/^\uFEFF/,"").trim();
+
+      if(!line||line.startsWith("#"))return;
+
+      // خواندن فرمت IP#CC
+      const match=line.match(/^(.+?)\s*#\s*([A-Za-z]{2})\s*$/);
+
+      if(!match)return;
+
+      const ip=match[1].trim();
+      let code=match[2].trim().toUpperCase();
+
+      if(code==="UK")code="GB";
+
+      if(!isValidLocationIP(ip))return;
+
+      if(!grouped.has(code)){
+        grouped.set(code,[]);
+      }
+
+      if(!grouped.get(code).includes(ip)){
+        grouped.get(code).push(ip);
+      }
+    });
+
+    locationIps=grouped;
+    select.innerHTML="";
+
+    const countries=[...locationIps.keys()].sort();
+
+    countries.forEach(code=>{
+      const option=document.createElement("option");
+
+      option.value=code;
+      option.textContent=
+        getCountryFlag(code)+" "+
+        getCountryName(code)+" ("+
+        locationIps.get(code).length+" IP)";
+
+      select.appendChild(option);
+    });
+
+    let total=0;
+    locationIps.forEach(list=>{
+      total+=list.length;
+    });
+
+    select.disabled=total===0;
+    $("createVlessBtn").disabled=total===0;
+
+    if(total){
+      setStatus(
+        "لوکیشن‌ها دریافت شدند: "+
+        countries.length+" کشور و "+total+" IP."
+      );
+    }else{
+      select.innerHTML='<option value="">لوکیشنی پیدا نشد</option>';
+      setStatus("هیچ IP معتبری در فایل پیدا نشد.",true);
+    }
+
+  }catch(error){
+
+    locationIps.clear();
+
+    select.innerHTML='<option value="">خطا در دریافت لوکیشن</option>';
+    select.disabled=true;
+    $("createVlessBtn").disabled=true;
+
+    setStatus(
+      "دریافت لوکیشن ناموفق بود: "+error.message,
+      true
+    );
+  }
+}
+
+function getSelectedLocationIP(){
+  const code=$("locationSelect").value.trim().toUpperCase();
+  const selectedIPs=locationIps.get(code);
+
+  if(!code||!selectedIPs||!selectedIPs.length){
+    throw new Error("برای کشور انتخاب‌شده Proxy IP پیدا نشد.");
+  }
+
+  const proxyIP=selectedIPs[
+    Math.floor(Math.random()*selectedIPs.length)
+  ].trim();
+
+  if(!isValidLocationIP(proxyIP)){
+    throw new Error("Proxy IP انتخاب‌شده نامعتبر است.");
+  }
+
+  return proxyIP;
+}
+
+/* پایان اصلاح بخش Proxy IP */
+
+function generateDemoPings(){
+  pingTimes.clear();
+  ipMeta.clear();
+
+  ips.forEach(ip=>{
+    pingTimes.set(ip,Math.floor(Math.random()*386)+95);
+    ipMeta.set(ip,{operator:"MCI/MTN"});
+  });
+
+  ips.sort((a,b)=>pingTimes.get(a)-pingTimes.get(b));
+}
+
+function getPingClass(ms){
+  if(ms<150)return "";
+  if(ms<300)return "medium";
+  return "slow";
+}
+
+function renderIpGroup(listId,version){
+  const query=$("ipSearch").value.trim().toLowerCase();
+  const box=$(listId);
+
+  const filtered=ips.filter(value=>{
+    const parsed=parseEndpoint(value);
+    return parsed&&parsed.version===version&&parsed.ip.toLowerCase().includes(query);
+  });
+
+  box.replaceChildren();
+
+  if(!filtered.length){
+    const empty=document.createElement("div");
+    empty.className="ip-empty";
+    empty.textContent=query?"IP مطابقی پیدا نشد":version===4?"هیچ IPv4 وجود ندارد":"هیچ IPv6 وجود ندارد";
+    box.append(empty);
+    return;
+  }
+
+  filtered.forEach(value=>{
+    const parsed=parseEndpoint(value);
+    if(!parsed)return;
+
+    const row=document.createElement("div");
+    row.className="iprow"+(value===selectedEndpoint?" active":"");
+
+    const ip=document.createElement("span");
+    ip.className="ipaddress";
+    ip.textContent=parsed.ip;
+
+    const ping=document.createElement("span");
+    ping.className="ping "+getPingClass(pingTimes.get(value));
+    ping.textContent=pingTimes.get(value)+"ms";
+
+    const tag=document.createElement("span");
+    tag.className="pill";
+    tag.textContent=value===selectedEndpoint?"انتخاب‌شده":"انتخاب";
+
+    row.append(ip,ping,tag);
+
+    row.addEventListener("click",()=>{
+      selectedEndpoint=value;
+      renderIps();
+      setStatus("IP انتخاب شد: "+parsed.ip);
+    });
+
+    box.append(row);
+  });
+}
+
+function renderIps(){
+  renderIpGroup("ipv4List",4);
+  renderIpGroup("ipv6List",6);
+
+  $("ipv4Count").textContent=
+    ips.filter(ip=>parseEndpoint(ip)?.version===4).length+" IP";
+
+  $("ipv6Count").textContent=
+    ips.filter(ip=>parseEndpoint(ip)?.version===6).length+" IP";
+}
+
+async function loadIps(){
+  $("refreshBtn").disabled=true;
+  setStatus("در حال دریافت IP ها از range.txt...");
+
+  try{
+    const response=await fetch(
+      IP_LIST_URL+"?v="+Date.now(),
+      {cache:"no-store"}
+    );
+
+    if(!response.ok)throw new Error("HTTP "+response.status);
+
+    const raw=await response.text();
+
+    ips=[
+      ...new Set(
+        raw.split(/\r?\n/)
+          .map(line=>line.trim())
+          .filter(line=>parseEndpoint(line)!==null)
+      )
+    ];
+
+    if(!ips.length){
+      throw new Error("فایل range.txt خالی یا نامعتبر است.");
+    }
+
+    if(selectedEndpoint&&!ips.includes(selectedEndpoint)){
+      selectedEndpoint="";
+    }
+
+    generateDemoPings();
+    renderIps();
+
+    setStatus("IPها دریافت شدند: "+ips.length);
+
+  }catch(error){
+    setStatus(
+      "دریافت range.txt ناموفق بود: "+error.message,
+      true
+    );
+  }finally{
+    $("refreshBtn").disabled=false;
+  }
+}
+
+function buildVless(proxyIP,endpointValue){
+  const uuid="2011a64f-022f-463d-a20c-88ca09a20986";
+  const host="sky-shield-935.vowuha6919.workers.dev";
+
+  const endpoint=parseEndpoint(endpointValue);
+
+  if(!endpoint){
+    throw new Error("ابتدا یک IP از لیست IPv4 یا IPv6 انتخاب کنید.");
+  }
+
+  proxyIP=String(proxyIP||"").trim();
+
+  if(!isValidLocationIP(proxyIP)){
+    throw new Error("Proxy IP خالی یا نامعتبر است.");
+  }
+
+  const server=endpoint.version===6
+    ? "["+endpoint.ip+"]"
+    : endpoint.ip;
+
+  const port=2053;
+
+  const wsPath="/proxyip="+proxyIP;
+
+  const params=new URLSearchParams({
+    path:wsPath,
+    security:"tls",
+    alpn:"h3,h2,http/1.1",
+    encryption:"none",
+    png:"Off",
+    insecure:"0",
+    host:host,
+    fp:"chrome",
+    type:"ws",
+    allowInsecure:"0",
+    sni:host
+  });
+
+  return "vless://"+uuid+"@"+server+":"+port+"?"+
+    params.toString()+
+    "#%40DarkvpnTG%20%F0%9F%86%95";
+}
+
+$("createVlessBtn").addEventListener("click",()=>{
+  try{
+    const proxyIP=getSelectedLocationIP();
+
+    if(!selectedEndpoint){
+      throw new Error("ابتدا یک IP از لیست IPv4 یا IPv6 انتخاب کنید.");
+    }
+
+    generatedVlessLink=buildVless(proxyIP,selectedEndpoint);
+
+    const parsed=parseEndpoint(selectedEndpoint);
+
+    $("vlessSelectedIp").textContent=
+      "IP انتخاب‌شده: "+parsed.ip+
+      " | Proxy IP: "+proxyIP;
+
+    $("vlessResultLink").textContent=generatedVlessLink;
+
+    $("vlessOutput").classList.add("show");
+
+    setStatus("کانفیگ VLESS+RTL با موفقیت ساخته شد.");
+
+  }catch(error){
+    setStatus("خطا: "+error.message,true);
+  }
+});
+
 /*
  * App chooser:
  * از Intent URI اندروید با scheme=vless استفاده می‌کنیم.
@@ -96,35 +475,175 @@ $("createVlessBtn").addEventListener("click",()=>{try{const proxyIP=getSelectedL
  * به‌عنوان مقصد بازکردن لینک ثبت شده‌اند. فهرست برنامه‌ها را
  * سایت نمی‌تواند تحمیل کند؛ اندروید بر اساس برنامه‌های نصب‌شده تصمیم می‌گیرد.
  */
-function openInVlessClients(){
- if(!generatedVlessLink){
-   setStatus("ابتدا کانفیگ را بسازید.",true);
-   return;
- }
- const importUrl =
-   "v2rayng://install-config?url=" +
-   encodeURIComponent(generatedVlessLink);
 
- window.location.href = importUrl;
+function openInVlessClients(){
+  if(!generatedVlessLink){
+    setStatus("ابتدا کانفیگ را بسازید.",true);
+    return;
+  }
+
+  const importUrl=
+    "v2rayng://install-config?url="+
+    encodeURIComponent(generatedVlessLink);
+
+  window.location.href=importUrl;
 }
+
 $("openVlessBtn").textContent="افزودن به کلاینت";
 $("openVlessBtn").addEventListener("click",openInVlessClients);
 
-function closeApnModal(){clearTimeout(apnTimer);clearTimeout(apnCloseTimer);$("apnModal").classList.add("hidden")}
-function showApnLoading(){clearTimeout(apnTimer);clearTimeout(apnCloseTimer);$("apnModalIcon").className="apn-loader";$("apnModalIcon").textContent="";$("apnModalTitle").textContent="در حال انجام تنظیمات";$("apnModalMessage").textContent="لطفاً شکیبا باشید.";$("apnModal").classList.remove("hidden");apnTimer=setTimeout(showApnSuccess,4000)}
-function showApnSuccess(){$("apnModalIcon").className="apn-success";$("apnModalIcon").textContent="✓";$("apnModalTitle").textContent="عملیات با موفقیت انجام شد";$("apnModalMessage").textContent="این بخش فقط تنظیمات APN را تغییر می‌دهد.";apnCloseTimer=setTimeout(()=>$("apnModal").classList.add("hidden"),1800)}
-function showApnReset(){clearTimeout(apnTimer);clearTimeout(apnCloseTimer);$("apnModalIcon").className="apn-success";$("apnModalIcon").textContent="✓";$("apnModalTitle").textContent="بازنشانی انجام شد";$("apnModalMessage").textContent="تنظیمات APN بازنشانی شد.";$("apnModal").classList.remove("hidden");apnCloseTimer=setTimeout(()=>$("apnModal").classList.add("hidden"),1800)}
-document.querySelectorAll('input[name="apnChoice"]').forEach(input=>input.addEventListener("change",()=>{if(input.checked)input.value==="none"?showApnReset():showApnLoading()}));
-function readSavedChecks(containerId,storageKey){let saved=[];try{saved=JSON.parse(localStorage.getItem(storageKey)||"[]");if(!Array.isArray(saved))saved=[]}catch(_){}document.querySelectorAll("#"+containerId+' input[type="checkbox"]').forEach(input=>input.checked=saved.includes(input.value))}
-function saveChecks(containerId,storageKey,statusId,label){const selected=[...document.querySelectorAll("#"+containerId+' input[type="checkbox"]:checked')].map(input=>input.value);try{localStorage.setItem(storageKey,JSON.stringify(selected));$(statusId).textContent=selected.length?selected.length+" مورد "+label+" ذخیره شد.":"همه گزینه‌ها غیرفعال و ذخیره شدند."}catch(_){$(statusId).textContent="ذخیره‌سازی در مرورگر امکان‌پذیر نیست."}}
-function updateMelliStatus(save=true){const enabled=$("melliToggle").checked;if(save){try{localStorage.setItem("darkvpn_melli",String(enabled))}catch(_){}}$("melliStatus").textContent=enabled?"گزینه دارک ملی فعال شد.":"دارک ملی غیرفعال است."}
-function initExtraOptions(){readSavedChecks("sanctionList","darkvpn_sanctions");readSavedChecks("ghostList","darkvpn_ghost");try{$("melliToggle").checked=localStorage.getItem("darkvpn_melli")==="true"}catch(_){}updateMelliStatus(false)}
-$("saveSanctionBtn").addEventListener("click",()=>saveChecks("sanctionList","darkvpn_sanctions","sanctionStatus","تحریم‌شکن"));
-$("saveGhostBtn").addEventListener("click",()=>saveChecks("ghostList","darkvpn_ghost","ghostStatus","حالت روح"));
-$("melliToggle").addEventListener("change",()=>updateMelliStatus(true));
-$("understoodBtn").addEventListener("click",()=>$("welcomeModal").classList.add("hidden"));
-$("themeBtn").addEventListener("click",()=>{const day=document.body.classList.toggle("day");document.body.classList.toggle("night",!day);$("themeBtn").textContent=day?"🌙 حالت شب":"☀️ حالت روز"});
-$("ipSearch").addEventListener("input",renderIps);$("refreshBtn").addEventListener("click",loadIps);
-initExtraOptions();loadLocations();loadIps();
+function closeApnModal(){
+  clearTimeout(apnTimer);
+  clearTimeout(apnCloseTimer);
+  $("apnModal").classList.add("hidden");
+}
+
+function showApnLoading(){
+  clearTimeout(apnTimer);
+  clearTimeout(apnCloseTimer);
+
+  $("apnModalIcon").className="apn-loader";
+  $("apnModalIcon").textContent="";
+  $("apnModalTitle").textContent="در حال انجام تنظیمات";
+  $("apnModalMessage").textContent="لطفاً شکیبا باشید.";
+  $("apnModal").classList.remove("hidden");
+
+  apnTimer=setTimeout(showApnSuccess,4000);
+}
+
+function showApnSuccess(){
+  $("apnModalIcon").className="apn-success";
+  $("apnModalIcon").textContent="✓";
+  $("apnModalTitle").textContent="عملیات با موفقیت انجام شد";
+  $("apnModalMessage").textContent="این بخش فقط تنظیمات APN را تغییر می‌دهد.";
+
+  apnCloseTimer=setTimeout(
+    ()=>$("apnModal").classList.add("hidden"),
+    1800
+  );
+}
+
+function showApnReset(){
+  clearTimeout(apnTimer);
+  clearTimeout(apnCloseTimer);
+
+  $("apnModalIcon").className="apn-success";
+  $("apnModalIcon").textContent="✓";
+  $("apnModalTitle").textContent="بازنشانی انجام شد";
+  $("apnModalMessage").textContent="تنظیمات APN بازنشانی شد.";
+  $("apnModal").classList.remove("hidden");
+
+  apnCloseTimer=setTimeout(
+    ()=>$("apnModal").classList.add("hidden"),
+    1800
+  );
+}
+
+document.querySelectorAll('input[name="apnChoice"]').forEach(input=>
+  input.addEventListener("change",()=>{
+    if(input.checked){
+      input.value==="none"?showApnReset():showApnLoading();
+    }
+  })
+);
+
+function readSavedChecks(containerId,storageKey){
+  let saved=[];
+
+  try{
+    saved=JSON.parse(localStorage.getItem(storageKey)||"[]");
+    if(!Array.isArray(saved))saved=[];
+  }catch(_){}
+
+  document.querySelectorAll(
+    "#"+containerId+' input[type="checkbox"]'
+  ).forEach(input=>{
+    input.checked=saved.includes(input.value);
+  });
+}
+
+function saveChecks(containerId,storageKey,statusId,label){
+  const selected=[
+    ...document.querySelectorAll(
+      "#"+containerId+' input[type="checkbox"]:checked'
+    )
+  ].map(input=>input.value);
+
+  try{
+    localStorage.setItem(storageKey,JSON.stringify(selected));
+
+    $(statusId).textContent=selected.length
+      ?selected.length+" مورد "+label+" ذخیره شد."
+      :"همه گزینه‌ها غیرفعال و ذخیره شدند.";
+
+  }catch(_){
+    $(statusId).textContent="ذخیره‌سازی در مرورگر امکان‌پذیر نیست.";
+  }
+}
+
+function updateMelliStatus(save=true){
+  const enabled=$("melliToggle").checked;
+
+  if(save){
+    try{
+      localStorage.setItem("darkvpn_melli",String(enabled));
+    }catch(_){}
+  }
+
+  $("melliStatus").textContent=
+    enabled?"گزینه دارک ملی فعال شد.":"دارک ملی غیرفعال است.";
+}
+
+function initExtraOptions(){
+  readSavedChecks("sanctionList","darkvpn_sanctions");
+  readSavedChecks("ghostList","darkvpn_ghost");
+
+  try{
+    $("melliToggle").checked=
+      localStorage.getItem("darkvpn_melli")==="true";
+  }catch(_){}
+
+  updateMelliStatus(false);
+}
+
+$("saveSanctionBtn").addEventListener("click",()=>{
+  saveChecks(
+    "sanctionList",
+    "darkvpn_sanctions",
+    "sanctionStatus",
+    "تحریم‌شکن"
+  );
+});
+
+$("saveGhostBtn").addEventListener("click",()=>{
+  saveChecks(
+    "ghostList",
+    "darkvpn_ghost",
+    "ghostStatus",
+    "حالت روح"
+  );
+});
+
+$("melliToggle").addEventListener("change",()=>{
+  updateMelliStatus(true);
+});
+
+$("understoodBtn").addEventListener("click",()=>{
+  $("welcomeModal").classList.add("hidden");
+});
+
+$("themeBtn").addEventListener("click",()=>{
+  const day=document.body.classList.toggle("day");
+  document.body.classList.toggle("night",!day);
+  $("themeBtn").textContent=day?"🌙 حالت شب":"☀️ حالت روز";
+});
+
+$("ipSearch").addEventListener("input",renderIps);
+$("refreshBtn").addEventListener("click",loadIps);
+
+initExtraOptions();
+loadLocations();
+loadIps();
 </script>
-</body></html>
+</body>
+</html>
