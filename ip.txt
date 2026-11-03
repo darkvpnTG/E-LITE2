@@ -1,6 +1,7 @@
 {at}
 {au}
 {be}
+{br}
 {ca}
 {ch}
 {cz}
@@ -15,6 +16,7 @@
 {in}
 {it}
 {jp}
+{kr}
 {lt}
 {nl}
 {no}
