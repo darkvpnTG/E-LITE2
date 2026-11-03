@@ -22,6 +22,37 @@ body.day .bg{filter:brightness(1.15) saturate(1.05)}body.night .bg{filter:bright
 .service-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}.service-item{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid #ffffff1b;border-radius:13px;background:#081523a8;cursor:pointer}.service-item:has(input:checked){border-color:#56d6ff88;background:#163249aa}.service-item input,.melli-row input,.apn-item input{width:18px;height:18px;min-width:18px;accent-color:#56d6ff;cursor:pointer}.service-icon{width:36px;height:36px;min-width:36px;display:grid;place-items:center;border-radius:11px;background:#ffffff12;overflow:hidden}.service-icon img{width:27px;height:27px;object-fit:contain}.service-name{font-size:12px;font-weight:800}.service-desc{font-size:10px;color:#9eafc5;margin-top:2px}.save-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}.save-message{font-size:11px;color:#9effbd;min-height:20px}
 .collapsible{border:1px solid #ffffff24;border-radius:16px;background:#08152399;overflow:hidden}.collapsible summary{cursor:pointer;list-style:none;padding:15px;display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:14px}.collapsible summary::-webkit-details-marker{display:none}.collapsible summary:after{content:"⌄";color:#56d6ff;font-size:18px}.collapsible[open] summary:after{content:"⌃"}.collapsible-content{padding:0 14px 14px}.melli-row{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid #ffffff20;border-radius:13px;background:#081523a8}.melli-row strong{font-size:13px}.melli-status{font-size:12px;margin-top:10px;min-height:22px;color:#9effbd}.notice-hint{font-size:11px;color:#aebbd0;line-height:1.8;margin:10px 0 0}.apn-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}.apn-item{display:flex;align-items:center;gap:11px;padding:12px;border:1px solid #ffffff20;border-radius:14px;background:#081523a8;cursor:pointer}.apn-item:has(input:checked){border-color:#56d6ff;background:#163249c9}.apn-logo{width:39px;height:39px;min-width:39px;display:grid;place-items:center;border-radius:12px;background:#ffffff12;overflow:hidden}.apn-logo img{width:29px;height:29px;object-fit:contain}.apn-logo .sim-icon{font-size:25px}.apn-name{font-size:12px;font-weight:800}.apn-desc{font-size:10px;color:#9eafc5;margin-top:3px}.apn-note{font-size:11px;color:#aebbd0;line-height:1.8;margin:12px 0 0}
 .apn-modal,.modal{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;background:#020713dc;backdrop-filter:blur(10px)}.apn-modal.hidden,.modal.hidden{display:none}.apn-modal-card,.modal-card{width:min(400px,100%);padding:27px 22px;border-radius:23px;border:1px solid #56d6ff66;background:linear-gradient(145deg,#14253b,#091321);box-shadow:0 20px 70px #000b;text-align:center}.apn-loader{width:54px;height:54px;margin:0 auto 18px;border:5px solid #ffffff20;border-top-color:#56d6ff;border-right-color:#8b7cff;border-radius:50%;animation:apnSpin .8s linear infinite}@keyframes apnSpin{to{transform:rotate(360deg)}}.apn-success{width:58px;height:58px;margin:0 auto 17px;border:3px solid #36df91;border-radius:50%;display:grid;place-items:center;color:#36df91;font-size:34px}.apn-modal-title{font-size:17px;font-weight:900;margin:0 0 9px}.apn-modal-message{font-size:13px;line-height:2;color:#d5e7f6;margin:0}.modal-title{font-size:24px;font-weight:900;margin:0 0 16px}.modal-message{font-size:22px;font-weight:900;line-height:1.9;margin:0 0 14px;color:#dff7ff}.modal-channel{display:block;direction:ltr;color:#56d6ff;font-size:15px;font-weight:800;margin:8px 0 20px;text-decoration:none}.modal-button{width:100%;padding:13px;border:0;border-radius:13px;background:linear-gradient(100deg,#56d6ff,#8b7cff);color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer}
+
+/* Subtle glassmorphism refinement */
+:root{--glass:rgba(13,22,38,.66);--line:rgba(211,228,255,.16);--accent:#75d9ff;--accent2:#a69aff}
+.panel{position:relative;background:linear-gradient(145deg,rgba(24,38,59,.74),rgba(8,15,28,.70));border:1px solid rgba(220,235,255,.17);backdrop-filter:blur(21px) saturate(128%);-webkit-backdrop-filter:blur(21px) saturate(128%);box-shadow:0 18px 55px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.07);overflow:hidden}
+.panel:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(112deg,transparent 20%,rgba(255,255,255,.035) 48%,transparent 72%);background-size:220% 100%;animation:glassShimmer 15s ease-in-out infinite}
+.panel>*{position:relative;z-index:1}
+@keyframes glassShimmer{0%,15%{background-position:180% 0}75%,100%{background-position:-180% 0}}
+.theme,.field input,.field select,.ipbox,.collapsible,.service-item,.apn-item,.melli-row{border-color:rgba(218,232,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.035)}
+.theme{background:linear-gradient(135deg,rgba(28,45,68,.78),rgba(9,17,31,.78));backdrop-filter:blur(12px)}
+input,select{background:rgba(9,19,34,.72)}
+.ipbox,.collapsible{background:rgba(8,19,34,.58);backdrop-filter:blur(12px)}
+.service-item,.apn-item,.melli-row{background:rgba(12,25,43,.58);transition:background .22s ease,border-color .22s ease,transform .22s ease}
+.service-item:hover,.apn-item:hover{border-color:rgba(117,217,255,.34);background:rgba(28,49,73,.68)}
+.btn.secondary{background:rgba(255,255,255,.075);border-color:rgba(218,232,255,.2);backdrop-filter:blur(10px)}
+.output{background:rgba(7,19,34,.82);backdrop-filter:blur(14px)}
+.country-picker{position:relative;width:100%;direction:rtl}
+.country-trigger{width:100%;min-height:51px;display:flex;align-items:center;gap:11px;padding:9px 12px;border:1px solid rgba(218,232,255,.19);border-radius:14px;background:linear-gradient(135deg,rgba(24,41,63,.82),rgba(8,17,31,.86));color:#fff;font:inherit;font-size:14px;text-align:right;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 8px 24px rgba(0,0,0,.12);transition:border-color .2s,box-shadow .2s}
+.country-trigger:hover:not(:disabled),.country-trigger[aria-expanded="true"]{border-color:rgba(117,217,255,.48);box-shadow:0 0 0 3px rgba(117,217,255,.08),inset 0 1px 0 rgba(255,255,255,.07)}
+.country-trigger:disabled{opacity:.6;cursor:not-allowed}
+.country-current-flag{width:37px;height:26px;min-width:37px;display:grid;place-items:center;overflow:hidden;border-radius:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}
+.country-current-flag img,.country-flag-img{display:block;width:100%;height:100%;object-fit:cover}
+.country-current-name{flex:1;font-weight:700}.country-current-count{font-size:11px;color:#b9d7e9;direction:ltr;white-space:nowrap}.country-chevron{font-size:19px;color:#9cddf5;transition:transform .2s}.country-trigger[aria-expanded="true"] .country-chevron{transform:rotate(180deg)}
+.country-menu{position:absolute;top:calc(100% + 8px);right:0;left:0;z-index:1000;max-height:280px;overflow:auto;padding:6px;border:1px solid rgba(211,228,255,.2);border-radius:16px;background:rgba(9,18,32,.96);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 18px 48px rgba(0,0,0,.48)}
+.country-menu[hidden]{display:none}
+.country-option{width:100%;display:flex;align-items:center;gap:11px;padding:9px 10px;border:1px solid transparent;border-radius:11px;background:transparent;color:#f4f8ff;font:inherit;font-size:13px;text-align:right;cursor:pointer;transition:background .18s,border-color .18s}
+.country-option:hover{background:rgba(117,217,255,.09);border-color:rgba(117,217,255,.16)}
+.country-option.active{background:rgba(117,217,255,.13);border-color:rgba(117,217,255,.3);color:#bceeff}
+.country-flag{width:38px;height:27px;min-width:38px;overflow:hidden;border-radius:6px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.country-option-name{flex:1}.country-option-count{font-size:10px;color:#a9c4d8;direction:ltr;white-space:nowrap}
+.location-native{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+@media(prefers-reduced-motion:reduce){.panel:before{animation:none}.country-trigger,.country-chevron,.service-item,.apn-item{transition:none}}
 @media(max-width:620px){.service-list,.apn-list,.grid{grid-template-columns:1fr}.panel{padding:16px}.top{align-items:flex-start}.brand h1{font-size:16px}}
 </style>
 </head>
@@ -39,7 +70,18 @@ body.day .bg{filter:brightness(1.15) saturate(1.05)}body.night .bg{filter:bright
 <div class="ip-group"><div class="ip-version-title"><span>IPv6</span><span style="display:flex;align-items:center;gap:9px"><img src="https://www.google.com/s2/favicons?domain=google.com&sz=64" alt="Google" width="22"><img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64" alt="Cloudflare" width="22"><span class="ip-version-count" id="ipv6Count">0 IP</span></span></div><div class="ipbox"><div id="ipv6List" class="iplist"><div class="ip-empty">در حال دریافت IPv6...</div></div></div></div><span class="hint">بعد زدن مرتب سازی IP پینگ ها مرتب میشود</span></div>
 <div class="field"><label for="sni">SNI (سفارشی)</label><select id="sni"><option value="cloudflare.com">cloudflare.com</option><option value="play.google.com">play.google.com</option><option value="soft98.ir">soft98.ir</option><option value="speedtest.net">speedtest.net</option><option value="chatgpt.com">chatgpt.com</option><option value="aparat.ir">aparat.ir</option><option value="deepseek.com">deepseek.com</option><option value="check-host.net">check-host.net</option></select></div>
 <div class="field"><label for="dns">DNS (سفارشی)</label><select id="dns"><option value="8.8.8.8,8.8.4.4">Google DNS</option><option value="1.1.1.1,1.0.0.1">Cloudflare DNS</option><option value="9.9.9.9,149.112.112.112">Quad9 DNS</option></select></div>
-<div class="field full"><label for="locationSelect">انتخاب کشور و لوکیشن دیتاسنتر</label><select id="locationSelect" disabled><option value="">در حال دریافت لوکیشن‌ها...</option></select></div></div>
+<div class="field full"><label for="countryTrigger">انتخاب کشور و لوکیشن دیتاسنتر</label>
+<div class="country-picker" id="countryPicker">
+  <button class="country-trigger" id="countryTrigger" type="button" disabled aria-haspopup="listbox" aria-expanded="false">
+    <span class="country-current-flag"><img id="countryCurrentFlag" src="" alt="" hidden></span>
+    <span class="country-current-name" id="countryCurrentName">در حال دریافت لوکیشن‌ها...</span>
+    <span class="country-current-count" id="countryCurrentCount"></span>
+    <span class="country-chevron" aria-hidden="true">⌄</span>
+  </button>
+  <div class="country-menu" id="countryMenu" role="listbox" aria-label="کشورهای موجود" hidden></div>
+</div>
+<select id="locationSelect" class="location-native" disabled aria-hidden="true" tabindex="-1"><option value="">در حال دریافت لوکیشن‌ها...</option></select>
+</div></div>
 <div class="actions"><button class="btn secondary" id="createVlessBtn" type="button" disabled>ساخت کانفیگ VLESS+RTL</button><button class="btn secondary" id="refreshBtn" type="button">مرتب‌سازی IPها</button></div><div class="status" id="status" role="status">در حال دریافت فایل‌ها...</div>
 <div class="output" id="vlessOutput"><div style="font-weight:800;margin-bottom:9px">کانفیگ VLESS+RTL آماده است</div><div class="hint" id="vlessSelectedIp" style="margin-bottom:10px"></div><code id="vlessResultLink"></code><div class="actions"><button class="btn primary" id="openVlessBtn" type="button">باز کردن در کلاینت‌ها</button></div><div class="hint" style="margin-top:9px">اگر چند برنامه سازگار روی گوشی نصب باشد، اندروید ممکن است فهرست انتخاب برنامه را نمایش دهد.</div></div></section>
 <section class="panel" style="margin-top:16px"><h3 class="section-title">APN مودم</h3><div class="apn-list" id="apnList">
@@ -157,10 +199,17 @@ function isValidLocationIP(ip){
 
 async function loadLocations(){
   const select=$("locationSelect");
+  const trigger=$("countryTrigger");
+  const menu=$("countryMenu");
 
   $("createVlessBtn").disabled=true;
   select.disabled=true;
   select.innerHTML='<option value="">در حال دریافت کشورها...</option>';
+  trigger.disabled=true;
+  $("countryCurrentName").textContent="در حال دریافت لوکیشن‌ها...";
+  $("countryCurrentCount").textContent="";
+  $("countryCurrentFlag").hidden=true;
+  menu.replaceChildren();
 
   try{
     const response=await fetch(
@@ -176,81 +225,112 @@ async function loadLocations(){
     const grouped=new Map();
 
     raw.split(/\r?\n/).forEach(line=>{
-
-      // حذف فاصله و BOM احتمالی فایل
       line=line.replace(/^\uFEFF/,"").trim();
-
       if(!line||line.startsWith("#"))return;
-
-      // خواندن فرمت IP#CC
       const match=line.match(/^(.+?)\s*#\s*([A-Za-z]{2})\s*$/);
-
       if(!match)return;
 
       const ip=match[1].trim();
       let code=match[2].trim().toUpperCase();
-
       if(code==="UK")code="GB";
-
       if(!isValidLocationIP(ip))return;
-
-      if(!grouped.has(code)){
-        grouped.set(code,[]);
-      }
-
-      if(!grouped.get(code).includes(ip)){
-        grouped.get(code).push(ip);
-      }
+      if(!grouped.has(code))grouped.set(code,[]);
+      if(!grouped.get(code).includes(ip))grouped.get(code).push(ip);
     });
 
     locationIps=grouped;
     select.innerHTML="";
-
     const countries=[...locationIps.keys()].sort();
 
     countries.forEach(code=>{
+      const count=locationIps.get(code).length;
       const option=document.createElement("option");
-
       option.value=code;
-      option.textContent=
-        getCountryFlag(code)+" "+
-        getCountryName(code)+" ("+
-        locationIps.get(code).length+" IP)";
-
+      option.textContent=getCountryName(code)+" ("+count+" IP)";
       select.appendChild(option);
+
+      const item=document.createElement("button");
+      item.type="button";
+      item.className="country-option";
+      item.setAttribute("role","option");
+      item.dataset.code=code;
+      item.setAttribute("aria-selected","false");
+
+      const flagFrame=document.createElement("span");
+      flagFrame.className="country-flag";
+      const flag=document.createElement("img");
+      flag.className="country-flag-img";
+      flag.src="https://flagcdn.com/w80/"+code.toLowerCase()+".png";
+      flag.alt=code+" flag";
+      flag.loading="lazy";
+      flag.onerror=()=>{flag.style.display="none";};
+      flagFrame.appendChild(flag);
+
+      const name=document.createElement("span");
+      name.className="country-option-name";
+      name.textContent=getCountryName(code);
+      const total=document.createElement("span");
+      total.className="country-option-count";
+      total.textContent=count+" IP";
+      item.append(flagFrame,name,total);
+      item.addEventListener("click",()=>selectCountry(code));
+      menu.appendChild(item);
     });
 
     let total=0;
-    locationIps.forEach(list=>{
-      total+=list.length;
-    });
-
+    locationIps.forEach(list=>{total+=list.length;});
     select.disabled=total===0;
+    trigger.disabled=total===0;
     $("createVlessBtn").disabled=total===0;
 
     if(total){
-      setStatus(
-        "لوکیشن‌ها دریافت شدند: "+
-        countries.length+" کشور و "+total+" IP."
-      );
+      select.value=countries[0];
+      updateCountryPicker(countries[0]);
+      setStatus("لوکیشن‌ها دریافت شدند: "+countries.length+" کشور و "+total+" IP.");
     }else{
       select.innerHTML='<option value="">لوکیشنی پیدا نشد</option>';
+      $("countryCurrentName").textContent="لوکیشنی پیدا نشد";
       setStatus("هیچ IP معتبری در فایل پیدا نشد.",true);
     }
-
   }catch(error){
-
     locationIps.clear();
-
     select.innerHTML='<option value="">خطا در دریافت لوکیشن</option>';
     select.disabled=true;
+    trigger.disabled=true;
+    menu.replaceChildren();
+    $("countryCurrentName").textContent="خطا در دریافت لوکیشن";
     $("createVlessBtn").disabled=true;
-
-    setStatus(
-      "دریافت لوکیشن ناموفق بود: "+error.message,
-      true
-    );
+    setStatus("دریافت لوکیشن ناموفق بود: "+error.message,true);
   }
+}
+
+function updateCountryPicker(code){
+  const count=locationIps.get(code)?.length||0;
+  const flag=$("countryCurrentFlag");
+  flag.src="https://flagcdn.com/w80/"+code.toLowerCase()+".png";
+  flag.alt=code+" flag";
+  flag.hidden=false;
+  flag.onerror=()=>{flag.hidden=true;};
+  $("countryCurrentName").textContent=getCountryName(code);
+  $("countryCurrentCount").textContent=count+" IP";
+  document.querySelectorAll(".country-option").forEach(item=>{
+    const active=item.dataset.code===code;
+    item.classList.toggle("active",active);
+    item.setAttribute("aria-selected",String(active));
+  });
+}
+
+function selectCountry(code){
+  const select=$("locationSelect");
+  if(!locationIps.has(code))return;
+  select.value=code;
+  updateCountryPicker(code);
+  closeCountryMenu();
+}
+
+function closeCountryMenu(){
+  $("countryMenu").hidden=true;
+  $("countryTrigger").setAttribute("aria-expanded","false");
 }
 
 function getSelectedLocationIP(){
@@ -641,6 +721,19 @@ $("themeBtn").addEventListener("click",()=>{
   const day=document.body.classList.toggle("day");
   document.body.classList.toggle("night",!day);
   $("themeBtn").textContent=day?"🌙 حالت شب":"☀️ حالت روز";
+});
+
+$("countryTrigger").addEventListener("click",()=>{
+  const menu=$("countryMenu");
+  const opening=menu.hidden;
+  menu.hidden=!opening;
+  $("countryTrigger").setAttribute("aria-expanded",String(opening));
+});
+document.addEventListener("click",event=>{
+  if(!$("countryPicker").contains(event.target))closeCountryMenu();
+});
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape")closeCountryMenu();
 });
 
 $("ipSearch").addEventListener("input",renderIps);
