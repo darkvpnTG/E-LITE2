@@ -5,126 +5,2001 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101827">
 <title>DARK VPN | VLESS+RTL Configurator</title>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
-:root{--glass:rgba(8,15,27,.76);--line:rgba(255,255,255,.15);--text:#f7f9ff;--muted:#c6d0df;--accent:#56d6ff;--accent2:#8b7cff}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--text);font-family:Vazirmatn,system-ui,sans-serif;background:#0c1422}
-.bg{position:fixed;inset:0;z-index:-3;background:url('./background.png') center/cover no-repeat}.bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,10,20,.28),rgba(5,10,20,.72) 55%,rgba(5,10,20,.9))}
-body.day .bg{filter:brightness(1.15) saturate(1.05)}body.night .bg{filter:brightness(.48) saturate(.8)}.ambient{position:fixed;z-index:-1;inset:0;pointer-events:none;background:radial-gradient(circle at 85% 10%,#56d6ff24,transparent 30%),radial-gradient(circle at 10% 85%,#8b7cff22,transparent 32%)}
-.wrap{width:min(920px,calc(100% - 28px));margin:auto;padding:20px 0 30px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:11px}.logo{width:44px;height:44px;min-width:44px;border-radius:14px;object-fit:cover;border:1px solid #ffffff35;background:#071321}.brand h1{font-size:18px;line-height:1.2;margin:0;font-weight:900}.brand small{color:var(--muted);font-size:11px}
-.theme{border:1px solid var(--line);background:#050c16ad;color:white;border-radius:30px;padding:10px 14px;font:inherit;font-size:13px;cursor:pointer}.hero{text-align:center;padding:20px 12px 24px}.hero .eyebrow{display:inline-block;padding:6px 12px;border:1px solid #8be4ff55;border-radius:30px;color:#c7f4ff;background:#09253a88;font-size:12px}.hero h2{font-size:clamp(27px,6vw,46px);line-height:1.25;margin:14px 0 8px;font-weight:900}.hero p{color:#e0e8f3;margin:0;font-size:14px}
-.panel{background:var(--glass);border:1px solid var(--line);border-radius:24px;padding:20px;backdrop-filter:blur(16px);box-shadow:0 18px 60px #0005}.section-title{font-size:17px;font-weight:800;margin:0 0 15px;display:flex;align-items:center;gap:9px}.section-title:before{content:"";width:4px;height:19px;border-radius:9px;background:linear-gradient(#56d6ff,#8b7cff)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:7px;min-width:0}.field.full{grid-column:1/-1}label{font-size:12px;color:#d6e0ed;font-weight:700}input,select{width:100%;border:1px solid #ffffff24;background:#0a1423d9;color:#fff;border-radius:13px;padding:13px 12px;font:inherit;font-size:14px;outline:none}select option{background:#101827;color:white}input:focus,select:focus{border-color:#56d6ff;box-shadow:0 0 0 3px #56d6ff20}.hint{font-size:11px;color:#aebbd0}
-.ipbox{border:1px solid #ffffff24;border-radius:14px;overflow:hidden;background:#081321}.ipsearch{border:0;border-radius:0;border-bottom:1px solid #ffffff20;background:#101d30}.iplist{max-height:260px;overflow:auto}.iprow{display:flex;align-items:center;justify-content:space-between;gap:9px;padding:11px 13px;border-bottom:1px solid #ffffff12;cursor:pointer;font-size:13px;direction:ltr;text-align:left}.iprow:hover{background:#56d6ff14}.iprow.active{background:#56d6ff22;color:#a7edff}.ipaddress{direction:ltr;text-align:left;overflow-wrap:anywhere;flex:1}.pill{font-size:10px;padding:4px 8px;border-radius:20px;background:#17394b;color:#9deaff;white-space:nowrap}.ping{font-size:11px;padding:4px 8px;border-radius:20px;background:#173d2c;color:#9effbd;white-space:nowrap;min-width:67px;text-align:center}.ping.medium{background:#51401c;color:#ffe09a}.ping.slow{background:#512727;color:#ffaaaa}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{border:0;border-radius:14px;padding:13px 18px;font:inherit;font-weight:800;cursor:pointer;transition:.2s}.btn.primary{background:linear-gradient(100deg,#56d6ff,#8b7cff);color:#071321;flex:1}.btn.secondary{background:#ffffff12;color:#fff;border:1px solid #ffffff25}.btn:disabled{opacity:.5;cursor:not-allowed}.status{min-height:22px;margin-top:12px;color:#bdeeff;font-size:12px}.output{display:none;margin-top:16px;padding:16px;border:1px solid #56d6ff55;border-radius:16px;background:#081523e8;overflow:hidden}.output.show{display:block}.output code{display:block;direction:ltr;text-align:left;overflow-wrap:anywhere;word-break:break-all;padding:13px;border-radius:10px;background:#020813;color:#9deaff;font-size:12px;line-height:1.8;user-select:all}
-.foot{text-align:center;padding:30px 12px 10px}.telegram{display:inline-grid;place-items:center;width:58px;height:58px;border-radius:50%;background:#229ed9;color:white;text-decoration:none}.telegram svg{width:30px;height:30px;fill:currentColor}.motto{font-size:clamp(22px,5vw,32px);font-weight:900;margin:13px 0 20px}.team{font-size:clamp(18px,4vw,24px);font-weight:900;margin:28px 0 0;color:#dceaff}.foot small{color:#c0cad8;font-size:11px}
-.ip-version-title{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 13px;background:#101d30;border-bottom:1px solid #ffffff20;font-size:13px;font-weight:900}.ip-version-count{font-size:10px;padding:4px 9px;border-radius:20px;background:#17394b;color:#9deaff;direction:ltr}.ip-group{margin-top:12px}.ip-group:first-of-type{margin-top:0}.ip-group .ipbox{margin-top:7px}.ip-empty{padding:15px;color:#aebbd0;font-size:12px;text-align:center}
-.service-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}.service-item{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid #ffffff1b;border-radius:13px;background:#081523a8;cursor:pointer}.service-item:has(input:checked){border-color:#56d6ff88;background:#163249aa}.service-item input,.melli-row input,.apn-item input{width:18px;height:18px;min-width:18px;accent-color:#56d6ff;cursor:pointer}.service-icon{width:36px;height:36px;min-width:36px;display:grid;place-items:center;border-radius:11px;background:#ffffff12;overflow:hidden}.service-icon img{width:27px;height:27px;object-fit:contain}.service-name{font-size:12px;font-weight:800}.service-desc{font-size:10px;color:#9eafc5;margin-top:2px}.save-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}.save-message{font-size:11px;color:#9effbd;min-height:20px}
-.collapsible{border:1px solid #ffffff24;border-radius:16px;background:#08152399;overflow:hidden}.collapsible summary{cursor:pointer;list-style:none;padding:15px;display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:14px}.collapsible summary::-webkit-details-marker{display:none}.collapsible summary:after{content:"⌄";color:#56d6ff;font-size:18px}.collapsible[open] summary:after{content:"⌃"}.collapsible-content{padding:0 14px 14px}.melli-row{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid #ffffff20;border-radius:13px;background:#081523a8}.melli-row strong{font-size:13px}.melli-status{font-size:12px;margin-top:10px;min-height:22px;color:#9effbd}.notice-hint{font-size:11px;color:#aebbd0;line-height:1.8;margin:10px 0 0}.apn-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}.apn-item{display:flex;align-items:center;gap:11px;padding:12px;border:1px solid #ffffff20;border-radius:14px;background:#081523a8;cursor:pointer}.apn-item:has(input:checked){border-color:#56d6ff;background:#163249c9}.apn-logo{width:39px;height:39px;min-width:39px;display:grid;place-items:center;border-radius:12px;background:#ffffff12;overflow:hidden}.apn-logo img{width:29px;height:29px;object-fit:contain}.apn-logo .sim-icon{font-size:25px}.apn-name{font-size:12px;font-weight:800}.apn-desc{font-size:10px;color:#9eafc5;margin-top:3px}.apn-note{font-size:11px;color:#aebbd0;line-height:1.8;margin:12px 0 0}
-.apn-modal,.modal{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;background:#020713dc;backdrop-filter:blur(10px)}.apn-modal.hidden,.modal.hidden{display:none}.apn-modal-card,.modal-card{width:min(400px,100%);padding:27px 22px;border-radius:23px;border:1px solid #56d6ff66;background:linear-gradient(145deg,#14253b,#091321);box-shadow:0 20px 70px #000b;text-align:center}.apn-loader{width:54px;height:54px;margin:0 auto 18px;border:5px solid #ffffff20;border-top-color:#56d6ff;border-right-color:#8b7cff;border-radius:50%;animation:apnSpin .8s linear infinite}@keyframes apnSpin{to{transform:rotate(360deg)}}.apn-success{width:58px;height:58px;margin:0 auto 17px;border:3px solid #36df91;border-radius:50%;display:grid;place-items:center;color:#36df91;font-size:34px}.apn-modal-title{font-size:17px;font-weight:900;margin:0 0 9px}.apn-modal-message{font-size:13px;line-height:2;color:#d5e7f6;margin:0}.modal-title{font-size:24px;font-weight:900;margin:0 0 16px}.modal-message{font-size:22px;font-weight:900;line-height:1.9;margin:0 0 14px;color:#dff7ff}.modal-channel{display:block;direction:ltr;color:#56d6ff;font-size:15px;font-weight:800;margin:8px 0 20px;text-decoration:none}.modal-button{width:100%;padding:13px;border:0;border-radius:13px;background:linear-gradient(100deg,#56d6ff,#8b7cff);color:#071321;font:inherit;font-weight:900;font-size:15px;cursor:pointer}
-@media(max-width:620px){.service-list,.apn-list,.grid{grid-template-columns:1fr}.panel{padding:16px}.top{align-items:flex-start}.brand h1{font-size:16px}}
+
+:root{
+--glass:rgba(8,15,27,.76);
+--line:rgba(255,255,255,.15);
+--text:#f7f9ff;
+--muted:#c6d0df;
+--accent:#56d6ff;
+--accent2:#8b7cff
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+margin:0;
+min-height:100vh;
+color:var(--text);
+font-family:Vazirmatn,system-ui,sans-serif;
+background:#0c1422
+}
+
+.bg{
+position:fixed;
+inset:0;
+z-index:-3;
+background:url('./background.png') center/cover no-repeat
+}
+
+.bg:after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(180deg,rgba(5,10,20,.28),rgba(5,10,20,.72) 55%,rgba(5,10,20,.9))
+}
+
+body.day .bg{filter:brightness(1.15) saturate(1.05)}
+body.night .bg{filter:brightness(.48) saturate(.8)}
+
+.ambient{
+position:fixed;
+z-index:-1;
+inset:0;
+pointer-events:none;
+background:radial-gradient(circle at 85% 10%,#56d6ff24,transparent 30%),radial-gradient(circle at 10% 85%,#8b7cff22,transparent 32%)
+}
+
+.wrap{
+width:min(920px,calc(100% - 28px));
+margin:auto;
+padding:20px 0 30px
+}
+
+.top{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+margin-bottom:18px
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:11px
+}
+
+.logo{
+width:44px;
+height:44px;
+min-width:44px;
+border-radius:14px;
+object-fit:cover;
+border:1px solid #ffffff35;
+background:#071321
+}
+
+.brand h1{
+font-size:18px;
+line-height:1.2;
+margin:0;
+font-weight:900
+}
+
+.brand small{
+color:var(--muted);
+font-size:11px
+}
+
+.theme{
+border:1px solid var(--line);
+background:#050c16ad;
+color:white;
+border-radius:30px;
+padding:10px 14px;
+font:inherit;
+font-size:13px;
+cursor:pointer
+}
+
+.hero{
+text-align:center;
+padding:20px 12px 24px
+}
+
+.hero .eyebrow{
+display:inline-block;
+padding:6px 12px;
+border:1px solid #8be4ff55;
+border-radius:30px;
+color:#c7f4ff;
+background:#09253a88;
+font-size:12px
+}
+
+.hero h2{
+font-size:clamp(27px,6vw,46px);
+line-height:1.25;
+margin:14px 0 8px;
+font-weight:900
+}
+
+.hero p{
+color:#e0e8f3;
+margin:0;
+font-size:14px
+}
+
+.panel{
+background:var(--glass);
+border:1px solid var(--line);
+border-radius:24px;
+padding:20px;
+backdrop-filter:blur(16px);
+box-shadow:0 18px 60px #0005
+}
+
+.section-title{
+font-size:17px;
+font-weight:800;
+margin:0 0 15px;
+display:flex;
+align-items:center;
+gap:9px
+}
+
+.section-title:before{
+content:"";
+width:4px;
+height:19px;
+border-radius:9px;
+background:linear-gradient(#56d6ff,#8b7cff)
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px
+}
+
+.field{
+display:flex;
+flex-direction:column;
+gap:7px;
+min-width:0
+}
+
+.field.full{grid-column:1/-1}
+
+label{
+font-size:12px;
+color:#d6e0ed;
+font-weight:700
+}
+
+input,select{
+width:100%;
+border:1px solid #ffffff24;
+background:#0a1423d9;
+color:#fff;
+border-radius:13px;
+padding:13px 12px;
+font:inherit;
+font-size:14px;
+outline:none
+}
+
+select option{
+background:#101827;
+color:white
+}
+
+input:focus,select:focus{
+border-color:#56d6ff;
+box-shadow:0 0 0 3px #56d6ff20
+}
+
+.hint{
+font-size:11px;
+color:#aebbd0
+}
+
+.ipbox{
+border:1px solid #ffffff24;
+border-radius:14px;
+overflow:hidden;
+background:#081321
+}
+
+.ipsearch{
+border:0;
+border-radius:0;
+border-bottom:1px solid #ffffff20;
+background:#101d30
+}
+
+.iplist{
+max-height:260px;
+overflow:auto
+}
+
+.iprow{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:9px;
+padding:11px 13px;
+border-bottom:1px solid #ffffff12;
+cursor:pointer;
+font-size:13px;
+direction:ltr;
+text-align:left
+}
+
+.iprow:hover{background:#56d6ff14}
+.iprow.active{background:#56d6ff22;color:#a7edff}
+
+.ipaddress{
+direction:ltr;
+text-align:left;
+overflow-wrap:anywhere;
+flex:1
+}
+
+.pill{
+font-size:10px;
+padding:4px 8px;
+border-radius:20px;
+background:#17394b;
+color:#9deaff;
+white-space:nowrap
+}
+
+.ping{
+font-size:11px;
+padding:4px 8px;
+border-radius:20px;
+background:#173d2c;
+color:#9effbd;
+white-space:nowrap;
+min-width:67px;
+text-align:center
+}
+
+.ping.medium{background:#51401c;color:#ffe09a}
+.ping.slow{background:#512727;color:#ffaaaa}
+
+.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:18px
+}
+
+.btn{
+border:0;
+border-radius:14px;
+padding:13px 18px;
+font:inherit;
+font-weight:800;
+cursor:pointer;
+transition:.2s
+}
+
+.btn:hover{filter:brightness(1.12)}
+.btn:active{transform:scale(.98)}
+
+.btn.primary{
+background:linear-gradient(100deg,#56d6ff,#8b7cff);
+color:#071321;
+flex:1
+}
+
+.btn.secondary{
+background:#ffffff12;
+color:#fff;
+border:1px solid #ffffff25
+}
+
+.btn:disabled{
+opacity:.5;
+cursor:not-allowed
+}
+
+/* CLIENT BUTTONS */
+
+.client-actions{
+display:flex;
+flex-direction:column;
+gap:11px;
+margin-top:18px
+}
+
+.client-actions .btn{
+width:100%;
+min-height:49px;
+font-size:14px
+}
+
+.btn.npv{
+background:linear-gradient(100deg,#8b7cff,#56d6ff);
+color:#071321;
+border:0
+}
+
+.client-status{
+font-size:11px;
+line-height:2;
+color:#bdeeff;
+margin-top:12px;
+min-height:22px
+}
+
+.status{
+min-height:22px;
+margin-top:12px;
+color:#bdeeff;
+font-size:12px
+}
+
+.output{
+display:none;
+margin-top:16px;
+padding:16px;
+border:1px solid #56d6ff55;
+border-radius:16px;
+background:#081523e8;
+overflow:hidden
+}
+
+.output.show{display:block}
+
+.output code{
+display:block;
+direction:ltr;
+text-align:left;
+overflow-wrap:anywhere;
+word-break:break-all;
+padding:13px;
+border-radius:10px;
+background:#020813;
+color:#9deaff;
+font-size:12px;
+line-height:1.8;
+user-select:all
+}
+
+.foot{
+text-align:center;
+padding:30px 12px 10px
+}
+
+.telegram{
+display:inline-grid;
+place-items:center;
+width:58px;
+height:58px;
+border-radius:50%;
+background:#229ed9;
+color:white;
+text-decoration:none
+}
+
+.telegram svg{
+width:30px;
+height:30px;
+fill:currentColor
+}
+
+.motto{
+font-size:clamp(22px,5vw,32px);
+font-weight:900;
+margin:13px 0 20px
+}
+
+.team{
+font-size:clamp(18px,4vw,24px);
+font-weight:900;
+margin:28px 0 0;
+color:#dceaff
+}
+
+.foot small{
+color:#c0cad8;
+font-size:11px
+}
+
+.ip-version-title{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:8px;
+padding:11px 13px;
+background:#101d30;
+border-bottom:1px solid #ffffff20;
+font-size:13px;
+font-weight:900
+}
+
+.ip-version-count{
+font-size:10px;
+padding:4px 9px;
+border-radius:20px;
+background:#17394b;
+color:#9deaff;
+direction:ltr
+}
+
+.ip-group{margin-top:12px}
+.ip-group:first-of-type{margin-top:0}
+.ip-group .ipbox{margin-top:7px}
+
+.ip-empty{
+padding:15px;
+color:#aebbd0;
+font-size:12px;
+text-align:center
+}
+
+.service-list{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px
+}
+
+.service-item{
+display:flex;
+align-items:center;
+gap:10px;
+padding:11px;
+border:1px solid #ffffff1b;
+border-radius:13px;
+background:#081523a8;
+cursor:pointer
+}
+
+.service-item:has(input:checked){
+border-color:#56d6ff88;
+background:#163249aa
+}
+
+.service-item input,.melli-row input,.apn-item input{
+width:18px;
+height:18px;
+min-width:18px;
+accent-color:#56d6ff;
+cursor:pointer
+}
+
+.service-icon{
+width:36px;
+height:36px;
+min-width:36px;
+display:grid;
+place-items:center;
+border-radius:11px;
+background:#ffffff12;
+overflow:hidden
+}
+
+.service-icon img{
+width:27px;
+height:27px;
+object-fit:contain
+}
+
+.service-name{
+font-size:12px;
+font-weight:800
+}
+
+.service-desc{
+font-size:10px;
+color:#9eafc5;
+margin-top:2px
+}
+
+.save-row{
+display:flex;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
+margin-top:14px
+}
+
+.save-message{
+font-size:11px;
+color:#9effbd;
+min-height:20px
+}
+
+.collapsible{
+border:1px solid #ffffff24;
+border-radius:16px;
+background:#08152399;
+overflow:hidden
+}
+
+.collapsible summary{
+cursor:pointer;
+list-style:none;
+padding:15px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+font-weight:800;
+font-size:14px
+}
+
+.collapsible summary::-webkit-details-marker{display:none}
+.collapsible summary:after{
+content:"⌄";
+color:#56d6ff;
+font-size:18px
+}
+
+.collapsible[open] summary:after{content:"⌃"}
+.collapsible-content{padding:0 14px 14px}
+
+.melli-row{
+display:flex;
+align-items:center;
+gap:11px;
+padding:13px;
+border:1px solid #ffffff20;
+border-radius:13px;
+background:#081523a8
+}
+
+.melli-row strong{font-size:13px}
+
+.melli-status{
+font-size:12px;
+margin-top:10px;
+min-height:22px;
+color:#9effbd
+}
+
+.notice-hint{
+font-size:11px;
+color:#aebbd0;
+line-height:1.8;
+margin:10px 0 0
+}
+
+.apn-list{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px
+}
+
+.apn-item{
+display:flex;
+align-items:center;
+gap:11px;
+padding:12px;
+border:1px solid #ffffff20;
+border-radius:14px;
+background:#081523a8;
+cursor:pointer
+}
+
+.apn-item:has(input:checked){
+border-color:#56d6ff;
+background:#163249c9
+}
+
+.apn-logo{
+width:39px;
+height:39px;
+min-width:39px;
+display:grid;
+place-items:center;
+border-radius:12px;
+background:#ffffff12;
+overflow:hidden
+}
+
+.apn-logo img{
+width:29px;
+height:29px;
+object-fit:contain
+}
+
+.apn-logo .sim-icon{font-size:25px}
+.apn-name{font-size:12px;font-weight:800}
+
+.apn-desc{
+font-size:10px;
+color:#9eafc5;
+margin-top:3px
+}
+
+.apn-note{
+font-size:11px;
+color:#aebbd0;
+line-height:1.8;
+margin:12px 0 0
+}
+
+.apn-modal,.modal{
+position:fixed;
+inset:0;
+z-index:2000;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+background:#020713dc;
+backdrop-filter:blur(10px)
+}
+
+.apn-modal.hidden,.modal.hidden{display:none}
+
+.apn-modal-card,.modal-card{
+width:min(400px,100%);
+padding:27px 22px;
+border-radius:23px;
+border:1px solid #56d6ff66;
+background:linear-gradient(145deg,#14253b,#091321);
+box-shadow:0 20px 70px #000b;
+text-align:center
+}
+
+.apn-loader{
+width:54px;
+height:54px;
+margin:0 auto 18px;
+border:5px solid #ffffff20;
+border-top-color:#56d6ff;
+border-right-color:#8b7cff;
+border-radius:50%;
+animation:apnSpin .8s linear infinite
+}
+
+@keyframes apnSpin{to{transform:rotate(360deg)}}
+
+.apn-success{
+width:58px;
+height:58px;
+margin:0 auto 17px;
+border:3px solid #36df91;
+border-radius:50%;
+display:grid;
+place-items:center;
+color:#36df91;
+font-size:34px
+}
+
+.apn-modal-title{
+font-size:17px;
+font-weight:900;
+margin:0 0 9px
+}
+
+.apn-modal-message{
+font-size:13px;
+line-height:2;
+color:#d5e7f6;
+margin:0
+}
+
+.modal-title{
+font-size:24px;
+font-weight:900;
+margin:0 0 16px
+}
+
+.modal-message{
+font-size:22px;
+font-weight:900;
+line-height:1.9;
+margin:0 0 14px;
+color:#dff7ff
+}
+
+.modal-channel{
+display:block;
+direction:ltr;
+color:#56d6ff;
+font-size:15px;
+font-weight:800;
+margin:8px 0 20px;
+text-decoration:none
+}
+
+.modal-button{
+width:100%;
+padding:13px;
+border:0;
+border-radius:13px;
+background:linear-gradient(100deg,#56d6ff,#8b7cff);
+color:#071321;
+font:inherit;
+font-weight:900;
+font-size:15px;
+cursor:pointer
+}
+
+@media(max-width:620px){
+.service-list,.apn-list,.grid{grid-template-columns:1fr}
+.panel{padding:16px}
+.top{align-items:flex-start}
+.brand h1{font-size:16px}
+}
 </style>
 </head>
+
 <body class="night">
-<div class="bg"></div><div class="ambient"></div>
-<div class="modal" id="welcomeModal" role="dialog" aria-modal="true"><div class="modal-card"><h2 class="modal-title">هشدار</h2><p class="modal-message">این پنل کاملا رایگان است. 📡</p><div>کانال رسمی DarkVPN</div><a class="modal-channel" href="https://t.me/darkvpnTG" target="_blank" rel="noopener">https://t.me/darkvpnTG</a><button class="modal-button" id="understoodBtn" type="button">فهمیدم</button></div></div>
-<div class="apn-modal hidden" id="apnModal" role="dialog" aria-modal="true"><div class="apn-modal-card"><div id="apnModalIcon" class="apn-loader"></div><h3 class="apn-modal-title" id="apnModalTitle">در حال انجام تنظیمات</h3><p class="apn-modal-message" id="apnModalMessage">لطفاً شکیبا باشید.</p></div></div>
+
+<div class="bg"></div>
+<div class="ambient"></div>
+
+<div class="modal" id="welcomeModal" role="dialog" aria-modal="true">
+<div class="modal-card">
+<h2 class="modal-title">هشدار</h2>
+<p class="modal-message">این پنل کاملا رایگان است. 📡</p>
+<div>کانال رسمی DarkVPN</div>
+<a class="modal-channel" href="https://t.me/darkvpnTG" target="_blank" rel="noopener">https://t.me/darkvpnTG</a>
+<button class="modal-button" id="understoodBtn" type="button">فهمیدم</button>
+</div>
+</div>
+
+<div class="apn-modal hidden" id="apnModal" role="dialog" aria-modal="true">
+<div class="apn-modal-card">
+<div id="apnModalIcon" class="apn-loader"></div>
+<h3 class="apn-modal-title" id="apnModalTitle">در حال انجام تنظیمات</h3>
+<p class="apn-modal-message" id="apnModalMessage">لطفاً شکیبا باشید.</p>
+</div>
+</div>
+
 <main class="wrap">
-<header class="top"><div class="brand"><img class="logo" src="./logo.jpg" alt="DARK VPN Logo"><div><h1>𝐃𝐚𝐫𝐤ᵛᵖⁿ</h1><small>WS+TLS • RTL • VLESS</small></div></div><button class="theme" id="themeBtn" type="button">☀️ حالت روز</button></header>
-<section class="hero"><span class="eyebrow">DarkVPN • Dedicated DataCenter</span><h2>ساخت کانفیگ VLESS+RTL</h2><p>انتخاب IP رنج و لوکیشن دیتاسنتر</p></section>
-<section class="panel"><h3 class="section-title">تنظیمات کانفیگ</h3><div class="grid">
-<div class="field full"><label for="ipSearch">لیست IP رنج ها</label><input id="ipSearch" class="ipsearch" type="search" placeholder="جست‌وجو در لیست IPها..." autocomplete="off">
-<div class="ip-group"><div class="ip-version-title"><span>IPv4</span><span style="display:flex;align-items:center;gap:9px"><img src="https://www.google.com/s2/favicons?domain=google.com&sz=64" alt="Google" width="22"><img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64" alt="Cloudflare" width="22"><span class="ip-version-count" id="ipv4Count">0 IP</span></span></div><div class="ipbox"><div id="ipv4List" class="iplist"><div class="ip-empty">در حال دریافت IPv4...</div></div></div></div>
-<div class="ip-group"><div class="ip-version-title"><span>IPv6</span><span style="display:flex;align-items:center;gap:9px"><img src="https://www.google.com/s2/favicons?domain=google.com&sz=64" alt="Google" width="22"><img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64" alt="Cloudflare" width="22"><span class="ip-version-count" id="ipv6Count">0 IP</span></span></div><div class="ipbox"><div id="ipv6List" class="iplist"><div class="ip-empty">در حال دریافت IPv6...</div></div></div></div><span class="hint">بعد زدن مرتب سازی IP پینگ ها مرتب میشود</span></div>
-<div class="field"><label for="sni">SNI (سفارشی)</label><select id="sni"><option value="cloudflare.com">cloudflare.com</option><option value="play.google.com">play.google.com</option><option value="soft98.ir">soft98.ir</option><option value="speedtest.net">speedtest.net</option><option value="chatgpt.com">chatgpt.com</option><option value="aparat.ir">aparat.ir</option><option value="deepseek.com">deepseek.com</option><option value="check-host.net">check-host.net</option></select></div>
-<div class="field"><label for="dns">DNS (سفارشی)</label><select id="dns"><option value="8.8.8.8,8.8.4.4">Google DNS</option><option value="1.1.1.1,1.0.0.1">Cloudflare DNS</option><option value="9.9.9.9,149.112.112.112">Quad9 DNS</option></select></div>
-<div class="field full"><label for="locationSelect">انتخاب کشور و لوکیشن دیتاسنتر</label><select id="locationSelect" disabled><option value="">در حال دریافت لوکیشن‌ها...</option></select></div></div>
-<div class="actions"><button class="btn secondary" id="createVlessBtn" type="button" disabled>ساخت کانفیگ VLESS+RTL</button><button class="btn secondary" id="refreshBtn" type="button">مرتب‌سازی IPها</button></div><div class="status" id="status" role="status">در حال دریافت فایل‌ها...</div>
-<div class="output" id="vlessOutput"><div style="font-weight:800;margin-bottom:9px">کانفیگ VLESS+RTL آماده است</div><div class="hint" id="vlessSelectedIp" style="margin-bottom:10px"></div><code id="vlessResultLink"></code><div class="actions"><button class="btn primary" id="openVlessBtn" type="button">باز کردن در کلاینت‌ها</button></div><div class="hint" style="margin-top:9px">اگر چند برنامه سازگار روی گوشی نصب باشد، اندروید ممکن است فهرست انتخاب برنامه را نمایش دهد.</div></div></section>
-<section class="panel" style="margin-top:16px"><h3 class="section-title">APN مودم</h3><div class="apn-list" id="apnList">
-<label class="apn-item"><input type="radio" name="apnChoice" value="none" checked><span class="apn-logo"><span class="sim-icon">🚫</span></span><span><div class="apn-name">خاموش کردن APN ترکیبی</div><div class="apn-desc">بازنشانی انتخاب APN</div></span></label>
-<label class="apn-item"><input type="radio" name="apnChoice" value="asiatech"><span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=asiatech.ir&sz=64" alt="AsiaTech"></span><span><div class="apn-name">آسیاتک</div><div class="apn-desc">AsiaTech</div></span></label>
-<label class="apn-item"><input type="radio" name="apnChoice" value="pishgaman"><span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=pishgaman.net&sz=64" alt="Pishgaman"></span><span><div class="apn-name">پیشگامان</div><div class="apn-desc">Pishgaman</div></span></label>
-<label class="apn-item"><input type="radio" name="apnChoice" value="shatel"><span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=shatel.ir&sz=64" alt="Shatel"></span><span><div class="apn-name">شاتل</div><div class="apn-desc">Shatel</div></span></label>
-<label class="apn-item"><input type="radio" name="apnChoice" value="hiweb"><span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=hiweb.ir&sz=64" alt="HiWeb"></span><span><div class="apn-name">های‌وب</div><div class="apn-desc">HiWeb</div></span></label>
-<label class="apn-item"><input type="radio" name="apnChoice" value="mokhaberat"><span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=tci.ir&sz=64" alt="TCI"></span><span><div class="apn-name">مخابرات</div><div class="apn-desc">TCI</div></span></label>
-<label class="apn-item"><input type="radio" name="apnChoice" value="simdata"><span class="apn-logo"><span class="sim-icon">📱</span></span><span><div class="apn-name">سیم کارت دیتا</div><div class="apn-desc">Data SIM</div></span></label></div><p class="apn-note">فقط در تنظیمات APN تغییرات اعمال میشود</p></section>
-<section class="panel" style="margin-top:16px"><h3 class="section-title">دارک ملی</h3><label class="melli-row"><input type="checkbox" id="melliToggle"><span><strong>فعال‌سازی گزینه دارک ملی</strong><div class="service-desc">انتخاب یا غیرفعال‌کردن این گزینه</div></span></label><div class="melli-status" id="melliStatus"></div><p class="notice-hint">توجه: این سیستم برای زمان قطعی اینترنت جهانی است</p></section>
-<section class="panel" style="margin-top:16px"><h3 class="section-title">تحریم‌شکن</h3><p class="hint" style="margin:-5px 0 15px">سرویس‌های موردنظرت را انتخاب کن و ذخیره بزن.</p><div class="service-list" id="sanctionList">
-<label class="service-item"><input type="checkbox" value="Gemini Ai"><span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64" alt="Gemini"></span><span><div class="service-name">Gemini Ai</div><div class="service-desc">Google Gemini</div></span></label>
-<label class="service-item"><input type="checkbox" value="ChatGPT Ai"><span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64" alt="ChatGPT"></span><span><div class="service-name">ChatGPT Ai</div><div class="service-desc">OpenAI</div></span></label>
-<label class="service-item"><input type="checkbox" value="Paypal"><span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" alt="PayPal"></span><span><div class="service-name">Paypal</div><div class="service-desc">PayPal</div></span></label>
-<label class="service-item"><input type="checkbox" value="X (Twitter premium)"><span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=x.com&sz=64" alt="X"></span><span><div class="service-name">X (Twitter premium)</div><div class="service-desc">X</div></span></label>
-<label class="service-item"><input type="checkbox" value="Telegram (premium)"><span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=telegram.org&sz=64" alt="Telegram"></span><span><div class="service-name">Telegram (premium)</div><div class="service-desc">Telegram</div></span></label>
-<label class="service-item"><input type="checkbox" value="AOL Mail (create account)"><span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=aol.com&sz=64" alt="AOL"></span><span><div class="service-name">AOL Mail (create account)</div><div class="service-desc">AOL Mail</div></span></label>
-<label class="service-item"><input type="checkbox" value="Tiktok (Sign up)"><span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=tiktok.com&sz=64" alt="TikTok"></span><span><div class="service-name">Tiktok (Sign up)</div><div class="service-desc">TikTok</div></span></label></div><div class="save-row"><button class="btn primary" id="saveSanctionBtn" type="button">ذخیره انتخاب‌ها</button><span class="save-message" id="sanctionStatus"></span></div></section>
-<section class="panel" style="margin-top:16px"><details class="collapsible" id="ghostDetails"><summary>حالت روح</summary><div class="collapsible-content"><p class="hint" style="margin:0 0 13px">پیام‌رسان‌های داخلی موردنظرت را انتخاب کن و ذخیره بزن.</p><div class="service-list" id="ghostList">
-<label class="service-item"><input type="checkbox" value="ایتا"><span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=eitaa.com&sz=64" alt="ایتا"></span><span><div class="service-name">ایتا</div></span></label>
-<label class="service-item"><input type="checkbox" value="روبیکا"><span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=rubika.ir&sz=64" alt="روبیکا"></span><span><div class="service-name">روبیکا</div></span></label>
-<label class="service-item"><input type="checkbox" value="بله"><span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=bale.ai&sz=64" alt="بله"></span><span><div class="service-name">بله</div></span></label>
-<label class="service-item"><input type="checkbox" value="سروش"><span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=splus.ir&sz=64" alt="سروش"></span><span><div class="service-name">سروش</div></span></label>
-<label class="service-item"><input type="checkbox" value="پیام‌رسان گپ"><span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=gap.im&sz=64" alt="گپ"></span><span><div class="service-name">پیام‌رسان گپ</div></span></label></div><div class="save-row"><button class="btn primary" id="saveGhostBtn" type="button">ذخیره انتخاب‌ها</button><span class="save-message" id="ghostStatus"></span></div></div></details></section>
-<footer class="foot"><a class="telegram" href="https://t.me/darkvpnTG" target="_blank" rel="noopener" aria-label="کانال تلگرام DARK VPN"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 4.3 18.5 20c-.2 1.1-.8 1.4-1.7.9l-4.7-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.4-4.8 8.8-8c.4-.4-.1-.6-.6-.2L6.5 14.2 1.9 12.8c-1-.3-1-1 .2-1.5L20 4.2c.8-.3 1.5.2 1.7.1Z"/></svg></a><div class="motto">یک قدم جلوتر از فیلترینگ 😎</div><div class="team">برای ورود به کانال روی آیکون تلگرام بزن</div><small>v2.0.0 ✓ • Powered by Team "𝐃𝐚𝐫𝐤ᵛᵖⁿ"</small></footer>
+
+<header class="top">
+<div class="brand">
+<img class="logo" src="./logo.jpg" alt="DARK VPN Logo">
+<div>
+<h1>𝐃𝐚𝐫𝐤ᵛᵖⁿ</h1>
+<small>WS+TLS • RTL • VLESS</small>
+</div>
+</div>
+<button class="theme" id="themeBtn" type="button">☀️ حالت روز</button>
+</header>
+
+<section class="hero">
+<span class="eyebrow">DarkVPN • Dedicated DataCenter</span>
+<h2>ساخت کانفیگ VLESS+RTL</h2>
+<p>انتخاب IP رنج و لوکیشن دیتاسنتر</p>
+</section>
+
+<section class="panel">
+
+<h3 class="section-title">تنظیمات کانفیگ</h3>
+
+<div class="grid">
+
+<div class="field full">
+
+<label for="ipSearch">لیست IP رنج ها</label>
+
+<input id="ipSearch" class="ipsearch" type="search" placeholder="جست‌وجو در لیست IPها..." autocomplete="off">
+
+<div class="ip-group">
+
+<div class="ip-version-title">
+<span>IPv4</span>
+<span style="display:flex;align-items:center;gap:9px">
+<img src="https://www.google.com/s2/favicons?domain=google.com&sz=64" alt="Google" width="22">
+<img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64" alt="Cloudflare" width="22">
+<span class="ip-version-count" id="ipv4Count">0 IP</span>
+</span>
+</div>
+
+<div class="ipbox">
+<div id="ipv4List" class="iplist">
+<div class="ip-empty">در حال دریافت IPv4...</div>
+</div>
+</div>
+</div>
+
+<div class="ip-group">
+
+<div class="ip-version-title">
+<span>IPv6</span>
+<span style="display:flex;align-items:center;gap:9px">
+<img src="https://www.google.com/s2/favicons?domain=google.com&sz=64" alt="Google" width="22">
+<img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=64" alt="Cloudflare" width="22">
+<span class="ip-version-count" id="ipv6Count">0 IP</span>
+</span>
+</div>
+
+<div class="ipbox">
+<div id="ipv6List" class="iplist">
+<div class="ip-empty">در حال دریافت IPv6...</div>
+</div>
+</div>
+</div>
+
+<span class="hint">بعد زدن مرتب سازی IP پینگ ها مرتب میشود</span>
+
+</div>
+
+<div class="field">
+<label for="sni">SNI (سفارشی)</label>
+<select id="sni">
+<option value="cloudflare.com">cloudflare.com</option>
+<option value="play.google.com">play.google.com</option>
+<option value="soft98.ir">soft98.ir</option>
+<option value="speedtest.net">speedtest.net</option>
+<option value="chatgpt.com">chatgpt.com</option>
+<option value="aparat.ir">aparat.ir</option>
+<option value="deepseek.com">deepseek.com</option>
+<option value="check-host.net">check-host.net</option>
+</select>
+</div>
+
+<div class="field">
+<label for="dns">DNS (سفارشی)</label>
+<select id="dns">
+<option value="8.8.8.8,8.8.4.4">Google DNS</option>
+<option value="1.1.1.1,1.0.0.1">Cloudflare DNS</option>
+<option value="9.9.9.9,149.112.112.112">Quad9 DNS</option>
+</select>
+</div>
+
+<div class="field full">
+<label for="locationSelect">انتخاب کشور و لوکیشن دیتاسنتر</label>
+<select id="locationSelect" disabled>
+<option value="">در حال دریافت لوکیشن‌ها...</option>
+</select>
+</div>
+
+</div>
+
+<div class="actions">
+<button class="btn secondary" id="createVlessBtn" type="button" disabled>ساخت کانفیگ VLESS+RTL</button>
+<button class="btn secondary" id="refreshBtn" type="button">مرتب‌سازی IPها</button>
+</div>
+
+<div class="status" id="status" role="status">در حال دریافت فایل‌ها...</div>
+
+<!-- GENERATED CONFIGURATION -->
+
+<div class="output" id="vlessOutput">
+
+<div style="font-weight:800;margin-bottom:9px">
+کانفیگ VLESS+RTL آماده است
+</div>
+
+<div class="hint" id="vlessSelectedIp" style="margin-bottom:10px"></div>
+
+<code id="vlessResultLink"></code>
+
+<!-- CLIENT BUTTONS - STACKED -->
+
+<div class="client-actions">
+
+<button class="btn primary" id="openVlessBtn" type="button">
+باز کردن در V2RayNG
+</button>
+
+<button class="btn npv" id="openNpvBtn" type="button">
+باز کردن در NapsternetV (تستی)
+</button>
+
+</div>
+
+<div class="client-status" id="clientStatus">
+کلاینت موردنظر را انتخاب کنید.
+</div>
+
+<div class="hint" style="margin-top:9px">
+اگر برنامه روی گوشی نصب باشد، اندروید تلاش می‌کند لینک را به برنامه مربوطه ارسال کند.
+</div>
+
+</div>
+
+</section>
+
+<!-- APN -->
+
+<section class="panel" style="margin-top:16px">
+
+<h3 class="section-title">APN مودم</h3>
+
+<div class="apn-list" id="apnList">
+
+<label class="apn-item">
+<input type="radio" name="apnChoice" value="none" checked>
+<span class="apn-logo"><span class="sim-icon">🚫</span></span>
+<span>
+<div class="apn-name">خاموش کردن APN ترکیبی</div>
+<div class="apn-desc">بازنشانی انتخاب APN</div>
+</span>
+</label>
+
+<label class="apn-item">
+<input type="radio" name="apnChoice" value="asiatech">
+<span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=asiatech.ir&sz=64" alt="AsiaTech"></span>
+<span>
+<div class="apn-name">آسیاتک</div>
+<div class="apn-desc">AsiaTech</div>
+</span>
+</label>
+
+<label class="apn-item">
+<input type="radio" name="apnChoice" value="pishgaman">
+<span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=pishgaman.net&sz=64" alt="Pishgaman"></span>
+<span>
+<div class="apn-name">پیشگامان</div>
+<div class="apn-desc">Pishgaman</div>
+</span>
+</label>
+
+<label class="apn-item">
+<input type="radio" name="apnChoice" value="shatel">
+<span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=shatel.ir&sz=64" alt="Shatel"></span>
+<span>
+<div class="apn-name">شاتل</div>
+<div class="apn-desc">Shatel</div>
+</span>
+</label>
+
+<label class="apn-item">
+<input type="radio" name="apnChoice" value="hiweb">
+<span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=hiweb.ir&sz=64" alt="HiWeb"></span>
+<span>
+<div class="apn-name">های‌وب</div>
+<div class="apn-desc">HiWeb</div>
+</span>
+</label>
+
+<label class="apn-item">
+<input type="radio" name="apnChoice" value="mokhaberat">
+<span class="apn-logo"><img src="https://www.google.com/s2/favicons?domain=tci.ir&sz=64" alt="TCI"></span>
+<span>
+<div class="apn-name">مخابرات</div>
+<div class="apn-desc">TCI</div>
+</span>
+</label>
+
+<label class="apn-item">
+<input type="radio" name="apnChoice" value="simdata">
+<span class="apn-logo"><span class="sim-icon">📱</span></span>
+<span>
+<div class="apn-name">سیم کارت دیتا</div>
+<div class="apn-desc">Data SIM</div>
+</span>
+</label>
+
+</div>
+
+<p class="apn-note">فقط در تنظیمات APN تغییرات اعمال میشود</p>
+
+</section>
+
+<!-- MELLI -->
+
+<section class="panel" style="margin-top:16px">
+
+<h3 class="section-title">دارک ملی</h3>
+
+<label class="melli-row">
+<input type="checkbox" id="melliToggle">
+<span>
+<strong>فعال‌سازی گزینه دارک ملی</strong>
+<div class="service-desc">انتخاب یا غیرفعال‌کردن این گزینه</div>
+</span>
+</label>
+
+<div class="melli-status" id="melliStatus"></div>
+
+<p class="notice-hint">
+توجه: این سیستم برای زمان قطعی اینترنت جهانی است
+</p>
+
+</section>
+
+<!-- SANCTIONS -->
+
+<section class="panel" style="margin-top:16px">
+
+<h3 class="section-title">تحریم‌شکن</h3>
+
+<p class="hint" style="margin:-5px 0 15px">
+سرویس‌های موردنظرت را انتخاب کن و ذخیره بزن.
+</p>
+
+<div class="service-list" id="sanctionList">
+
+<label class="service-item">
+<input type="checkbox" value="Gemini Ai">
+<span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64" alt="Gemini"></span>
+<span>
+<div class="service-name">Gemini Ai</div>
+<div class="service-desc">Google Gemini</div>
+</span>
+</label>
+
+<label class="service-item">
+<input type="checkbox" value="ChatGPT Ai">
+<span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64" alt="ChatGPT"></span>
+<span>
+<div class="service-name">ChatGPT Ai</div>
+<div class="service-desc">OpenAI</div>
+</span>
+</label>
+
+<label class="service-item">
+<input type="checkbox" value="Paypal">
+<span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=paypal.com&sz=64" alt="PayPal"></span>
+<span>
+<div class="service-name">Paypal</div>
+<div class="service-desc">PayPal</div>
+</span>
+</label>
+
+<label class="service-item">
+<input type="checkbox" value="X (Twitter premium)">
+<span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=x.com&sz=64" alt="X"></span>
+<span>
+<div class="service-name">X (Twitter premium)</div>
+<div class="service-desc">X</div>
+</span>
+</label>
+
+<label class="service-item">
+<input type="checkbox" value="Telegram (premium)">
+<span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=telegram.org&sz=64" alt="Telegram"></span>
+<span>
+<div class="service-name">Telegram (premium)</div>
+<div class="service-desc">Telegram</div>
+</span>
+</label>
+
+<label class="service-item">
+<input type="checkbox" value="AOL Mail (create account)">
+<span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=aol.com&sz=64" alt="AOL"></span>
+<span>
+<div class="service-name">AOL Mail (create account)</div>
+<div class="service-desc">AOL Mail</div>
+</span>
+</label>
+
+<label class="service-item">
+<input type="checkbox" value="Tiktok (Sign up)">
+<span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=tiktok.com&sz=64" alt="TikTok"></span>
+<span>
+<div class="service-name">Tiktok (Sign up)</div>
+<div class="service-desc">TikTok</div>
+</span>
+</label>
+
+</div>
+
+<div class="save-row">
+<button class="btn primary" id="saveSanctionBtn" type="button">ذخیره انتخاب‌ها</button>
+<span class="save-message" id="sanctionStatus"></span>
+</div>
+
+</section>
+
+<!-- GHOST -->
+
+<section class="panel" style="margin-top:16px">
+
+<details class="collapsible" id="ghostDetails">
+
+<summary>حالت روح</summary>
+
+<div class="collapsible-content">
+
+<p class="hint" style="margin:0 0 13px">
+پیام‌رسان‌های داخلی موردنظرت را انتخاب کن و ذخیره بزن.
+</p>
+
+<div class="service-list" id="ghostList">
+
+<label class="service-item">
+<input type="checkbox" value="ایتا">
+<span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=eitaa.com&sz=64" alt="ایتا"></span>
+<span><div class="service-name">ایتا</div></span>
+</label>
+
+<label class="service-item">
+<input type="checkbox" value="روبیکا">
+<span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=rubika.ir&sz=64" alt="روبیکا"></span>
+<span><div class="service-name">روبیکا</div></span>
+</label>
+
+<label class="service-item">
+<input type="checkbox" value="بله">
+<span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=bale.ai&sz=64" alt="بله"></span>
+<span><div class="service-name">بله</div></span>
+</label>
+
+<label class="service-item">
+<input type="checkbox" value="سروش">
+<span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=splus.ir&sz=64" alt="سروش"></span>
+<span><div class="service-name">سروش</div></span>
+</label>
+
+<label class="service-item">
+<input type="checkbox" value="پیام‌رسان گپ">
+<span class="service-icon"><img src="https://www.google.com/s2/favicons?domain=gap.im&sz=64" alt="گپ"></span>
+<span><div class="service-name">پیام‌رسان گپ</div></span>
+</label>
+
+</div>
+
+<div class="save-row">
+<button class="btn primary" id="saveGhostBtn" type="button">ذخیره انتخاب‌ها</button>
+<span class="save-message" id="ghostStatus"></span>
+</div>
+
+</div>
+</details>
+
+</section>
+
+<footer class="foot">
+
+<a class="telegram" href="https://t.me/darkvpnTG" target="_blank" rel="noopener" aria-label="کانال تلگرام DARK VPN">
+
+<svg viewBox="0 0 24 24" aria-hidden="true">
+<path d="M21.7 4.3 18.5 20c-.2 1.1-.8 1.4-1.7.9l-4.7-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.4-4.8 8.8-8c.4-.4-.1-.6-.6-.2L6.5 14.2 1.9 12.8c-1-.3-1-1 .2-1.5L20 4.2c.8-.3 1.5.2 1.7.1Z"/>
+</svg>
+
+</a>
+
+<div class="motto">یک قدم جلوتر از فیلترینگ 😎</div>
+
+<div class="team">برای ورود به کانال روی آیکون تلگرام بزن</div>
+
+<small>v2.0.0 ✓ • Powered by Team "𝐃𝐚𝐫𝐤ᵛᵖⁿ"</small>
+
+</footer>
+
 </main>
+
 <script>
 "use strict";
+
 const IP_LIST_URL="https://raw.githubusercontent.com/darkvpnTG/Vless-RTL/refs/heads/main/range.txt";
 const LOCATION_LIST_URL="https://raw.githubusercontent.com/darkvpnTG/Vless-RTL/refs/heads/main/ip.txt";
+
 const $=id=>document.getElementById(id);
-let ips=[],pingTimes=new Map(),ipMeta=new Map(),selectedEndpoint="";
-let generatedVlessLink="",locationIps=new Map(),apnTimer=null,apnCloseTimer=null;
-const countryNames={CA:"Canada",US:"United States",DE:"Germany",FR:"France",GB:"United Kingdom",UK:"United Kingdom",NL:"Netherlands",BE:"Belgium",AT:"Austria",AU:"Australia",CH:"Switzerland",ES:"Spain",FI:"Finland",IN:"India",IT:"Italy",JP:"Japan",PL:"Poland",RO:"Romania",AE:"United Arab Emirates",TR:"Turkey",RS:"Serbia",UA:"Ukraine",IL:"Israel",KR:"South Korea",SE:"Sweden",HK:"Hong Kong",SG:"Singapore",BR:"Brazil",MX:"Mexico",ZA:"South Africa",CZ:"Czechia",NO:"Norway",DK:"Denmark",IE:"Ireland",PT:"Portugal",GR:"Greece",BG:"Bulgaria",HR:"Croatia",CY:"Cyprus",LU:"Luxembourg",LT:"Lithuania",LV:"Latvia",EE:"Estonia",IS:"Iceland",ID:"Indonesia",MY:"Malaysia",TH:"Thailand",VN:"Vietnam",PH:"Philippines",TW:"Taiwan",AR:"Argentina",CL:"Chile",CO:"Colombia",NZ:"New Zealand"};
-function getCountryName(code){if(countryNames[code])return countryNames[code];try{return new Intl.DisplayNames(["en"],{type:"region"}).of(code)||code}catch(_){return code}}
-function getCountryFlag(code){if(!/^[A-Z]{2}$/.test(code))return "🌐";return String.fromCodePoint(...[...code].map(c=>127397+c.charCodeAt(0)))}
-function setStatus(message,error=false){$("status").textContent=message;$("status").style.color=error?"#ffb4b4":"#bdeeff"}
-function isValidIPv6(ip){if(!ip||ip.includes(":::"))return false;const parts=ip.split("::");if(parts.length>2)return false;const compressed=parts.length===2;const left=parts[0]?parts[0].split(":"):[];const right=compressed&&parts[1]?parts[1].split(":"):[];const groups=[...left,...right];if(groups.some(g=>!/^[0-9a-fA-F]{1,4}$/.test(g)))return false;return compressed?groups.length<8:groups.length===8}
-function parseEndpoint(endpoint){if(typeof endpoint!=="string")return null;const value=endpoint.trim();if(!value)return null;const v4=value.match(/^((?:\d{1,3}\.){3}\d{1,3})(?::\d{1,5})?$/);if(v4){const octets=v4[1].split(".").map(Number);if(octets.every(n=>n>=0&&n<=255))return{ip:v4[1],port:"443",version:4};return null}const bracketedV6=value.match(/^\[([0-9a-fA-F:]+)\](?::\d{1,5})?$/);if(bracketedV6){if(isValidIPv6(bracketedV6[1]))return{ip:bracketedV6[1],port:"443",version:6};return null}if(isValidIPv6(value))return{ip:value,port:"443",version:6};return null}
-function isValidLocationIP(ip){ip=ip.trim();const v4=ip.match(/^(\d{1,3}\.){3}\d{1,3}$/);if(v4)return ip.split(".").every(n=>Number(n)>=0&&Number(n)<=255);return isValidIPv6(ip)}
-async function loadLocations(){const select=$("locationSelect");$("createVlessBtn").disabled=true;select.disabled=true;select.innerHTML='<option value="">در حال دریافت کشورها...</option>';try{const response=await fetch(LOCATION_LIST_URL+"?v="+Date.now(),{cache:"no-store"});if(!response.ok)throw new Error("HTTP "+response.status);const raw=await response.text();const grouped=new Map();raw.split(/\r?\n/).forEach(line=>{line=line.trim();if(!line||line.startsWith("#"))return;const parts=line.split("#");if(parts.length!==2)return;const ip=parts[0].trim();let code=parts[1].trim().toUpperCase();if(code==="UK")code="GB";if(!isValidLocationIP(ip)||!/^[A-Z]{2}$/.test(code))return;if(!grouped.has(code))grouped.set(code,[]);if(!grouped.get(code).includes(ip))grouped.get(code).push(ip)});locationIps=grouped;select.innerHTML="";const countries=[...locationIps.keys()].sort();countries.forEach(code=>{const option=document.createElement("option");option.value=code;option.textContent=getCountryFlag(code)+" "+getCountryName(code)+" ("+locationIps.get(code).length+" IP)";select.appendChild(option)});let total=0;locationIps.forEach(list=>total+=list.length);select.disabled=total===0;$("createVlessBtn").disabled=total===0;if(total)setStatus("لوکیشن‌ها دریافت شدند: "+countries.length+" کشور و "+total+" IP.");else{select.innerHTML='<option value="">لوکیشنی پیدا نشد</option>';setStatus("هیچ IP معتبری با فرمت IP#CC پیدا نشد.",true)}}catch(error){locationIps.clear();select.innerHTML='<option value="">خطا در دریافت لوکیشن</option>';select.disabled=true;$("createVlessBtn").disabled=true;setStatus("دریافت لوکیشن ناموفق بود: "+error.message,true)}}
-function getSelectedLocationIP(){const code=$("locationSelect").value;const selectedIPs=locationIps.get(code);if(!selectedIPs||!selectedIPs.length)throw new Error("ابتدا یک کشور انتخاب کنید.");return selectedIPs[Math.floor(Math.random()*selectedIPs.length)]}
-function generateDemoPings(){pingTimes.clear();ipMeta.clear();ips.forEach(ip=>{pingTimes.set(ip,Math.floor(Math.random()*386)+95);ipMeta.set(ip,{operator:"MCI/MTN"})});ips.sort((a,b)=>pingTimes.get(a)-pingTimes.get(b))}
-function getPingClass(ms){if(ms<150)return "";if(ms<300)return "medium";return "slow"}
-function renderIpGroup(listId,version){const query=$("ipSearch").value.trim().toLowerCase();const box=$(listId);const filtered=ips.filter(value=>{const parsed=parseEndpoint(value);return parsed&&parsed.version===version&&parsed.ip.toLowerCase().includes(query)});box.replaceChildren();if(!filtered.length){const empty=document.createElement("div");empty.className="ip-empty";empty.textContent=query?"IP مطابقی پیدا نشد":version===4?"هیچ IPv4 وجود ندارد":"هیچ IPv6 وجود ندارد";box.append(empty);return}filtered.forEach(value=>{const parsed=parseEndpoint(value);if(!parsed)return;const row=document.createElement("div");row.className="iprow"+(value===selectedEndpoint?" active":"");const ip=document.createElement("span");ip.className="ipaddress";ip.textContent=parsed.ip;const ping=document.createElement("span");ping.className="ping "+getPingClass(pingTimes.get(value));ping.textContent=pingTimes.get(value)+"ms";const tag=document.createElement("span");tag.className="pill";tag.textContent=value===selectedEndpoint?"انتخاب‌شده":"انتخاب";row.append(ip,ping,tag);row.addEventListener("click",()=>{selectedEndpoint=value;renderIps();setStatus("IP انتخاب شد: "+parsed.ip)});box.append(row)})}
-function renderIps(){renderIpGroup("ipv4List",4);renderIpGroup("ipv6List",6);$("ipv4Count").textContent=ips.filter(ip=>parseEndpoint(ip)?.version===4).length+" IP";$("ipv6Count").textContent=ips.filter(ip=>parseEndpoint(ip)?.version===6).length+" IP"}
-async function loadIps(){$("refreshBtn").disabled=true;setStatus("در حال دریافت IP ها از range.txt...");try{const response=await fetch(IP_LIST_URL+"?v="+Date.now(),{cache:"no-store"});if(!response.ok)throw new Error("HTTP "+response.status);const raw=await response.text();ips=[...new Set(raw.split(/\r?\n/).map(line=>line.trim()).filter(line=>parseEndpoint(line)!==null))];if(!ips.length)throw new Error("فایل range.txt خالی یا نامعتبر است.");if(selectedEndpoint&&!ips.includes(selectedEndpoint))selectedEndpoint="";generateDemoPings();renderIps();setStatus("IPها دریافت شدند: "+ips.length)}catch(error){setStatus("دریافت range.txt ناموفق بود: "+error.message,true)}finally{$("refreshBtn").disabled=false}}
-function buildVless(proxyIP,endpointValue){const uuid="2011a64f-022f-463d-a20c-88ca09a20986";const host="sky-shield-935.vowuha6919.workers.dev";const endpoint=parseEndpoint(endpointValue);if(!endpoint)throw new Error("ابتدا یک IP از لیست IPv4 یا IPv6 انتخاب کنید.");const server=endpoint.version===6?"["+endpoint.ip+"]":endpoint.ip;const port=2053;const wsPath="/proxyip="+proxyIP;const params=new URLSearchParams({path:wsPath,security:"tls",alpn:"h3,h2,http/1.1",encryption:"none",png:"Off",insecure:"0",host:host,fp:"chrome",type:"ws",allowInsecure:"0",sni:host});return "vless://"+uuid+"@"+server+":"+port+"?"+params.toString()+"#%40DarkvpnTG%20%F0%9F%86%95"}
-$("createVlessBtn").addEventListener("click",()=>{try{const proxyIP=getSelectedLocationIP();if(!selectedEndpoint)throw new Error("ابتدا یک IP از لیست IPv4 یا IPv6 انتخاب کنید.");generatedVlessLink=buildVless(proxyIP,selectedEndpoint);const parsed=parseEndpoint(selectedEndpoint);$("vlessSelectedIp").textContent="IP انتخاب‌شده: "+parsed.ip+" | Proxy IP: "+proxyIP;$("vlessResultLink").textContent=generatedVlessLink;$("vlessOutput").classList.add("show");setStatus("کانفیگ VLESS+RTL با موفقیت ساخته شد.")}catch(error){setStatus("خطا: "+error.message,true)}});
-/*
- * App chooser:
- * از Intent URI اندروید با scheme=vless استفاده می‌کنیم.
- * این روش برنامه‌هایی را نشان می‌دهد که خودشان برای vless://
- * به‌عنوان مقصد بازکردن لینک ثبت شده‌اند. فهرست برنامه‌ها را
- * سایت نمی‌تواند تحمیل کند؛ اندروید بر اساس برنامه‌های نصب‌شده تصمیم می‌گیرد.
- */
-function openInVlessClients(){
- if(!generatedVlessLink){
-   setStatus("ابتدا کانفیگ را بسازید.",true);
-   return;
- }
- const importUrl =
-   "v2rayng://install-config?url=" +
-   encodeURIComponent(generatedVlessLink);
 
- window.location.href = importUrl;
+let ips=[];
+let pingTimes=new Map();
+let ipMeta=new Map();
+let selectedEndpoint="";
+let generatedVlessLink="";
+let locationIps=new Map();
+let apnTimer=null;
+let apnCloseTimer=null;
+
+const countryNames={
+CA:"Canada",US:"United States",DE:"Germany",FR:"France",
+GB:"United Kingdom",UK:"United Kingdom",NL:"Netherlands",
+BE:"Belgium",AT:"Austria",AU:"Australia",CH:"Switzerland",
+ES:"Spain",FI:"Finland",IN:"India",IT:"Italy",JP:"Japan",
+PL:"Poland",RO:"Romania",AE:"United Arab Emirates",TR:"Turkey",
+RS:"Serbia",UA:"Ukraine",IL:"Israel",KR:"South Korea",
+SE:"Sweden",HK:"Hong Kong",SG:"Singapore",BR:"Brazil",
+MX:"Mexico",ZA:"South Africa",CZ:"Czechia",NO:"Norway",
+DK:"Denmark",IE:"Ireland",PT:"Portugal",GR:"Greece",
+BG:"Bulgaria",HR:"Croatia",CY:"Cyprus",LU:"Luxembourg",
+LT:"Lithuania",LV:"Latvia",EE:"Estonia",IS:"Iceland",
+ID:"Indonesia",MY:"Malaysia",TH:"Thailand",VN:"Vietnam",
+PH:"Philippines",TW:"Taiwan",AR:"Argentina",CL:"Chile",
+CO:"Colombia",NZ:"New Zealand"
+};
+
+function getCountryName(code){
+if(countryNames[code])return countryNames[code];
+try{
+return new Intl.DisplayNames(["en"],{type:"region"}).of(code)||code
+}catch(_){
+return code
 }
-$("openVlessBtn").textContent="افزودن به کلاینت";
-$("openVlessBtn").addEventListener("click",openInVlessClients);
+}
 
-function closeApnModal(){clearTimeout(apnTimer);clearTimeout(apnCloseTimer);$("apnModal").classList.add("hidden")}
-function showApnLoading(){clearTimeout(apnTimer);clearTimeout(apnCloseTimer);$("apnModalIcon").className="apn-loader";$("apnModalIcon").textContent="";$("apnModalTitle").textContent="در حال انجام تنظیمات";$("apnModalMessage").textContent="لطفاً شکیبا باشید.";$("apnModal").classList.remove("hidden");apnTimer=setTimeout(showApnSuccess,4000)}
-function showApnSuccess(){$("apnModalIcon").className="apn-success";$("apnModalIcon").textContent="✓";$("apnModalTitle").textContent="عملیات با موفقیت انجام شد";$("apnModalMessage").textContent="این بخش فقط تنظیمات APN را تغییر می‌دهد.";apnCloseTimer=setTimeout(()=>$("apnModal").classList.add("hidden"),1800)}
-function showApnReset(){clearTimeout(apnTimer);clearTimeout(apnCloseTimer);$("apnModalIcon").className="apn-success";$("apnModalIcon").textContent="✓";$("apnModalTitle").textContent="بازنشانی انجام شد";$("apnModalMessage").textContent="تنظیمات APN بازنشانی شد.";$("apnModal").classList.remove("hidden");apnCloseTimer=setTimeout(()=>$("apnModal").classList.add("hidden"),1800)}
-document.querySelectorAll('input[name="apnChoice"]').forEach(input=>input.addEventListener("change",()=>{if(input.checked)input.value==="none"?showApnReset():showApnLoading()}));
-function readSavedChecks(containerId,storageKey){let saved=[];try{saved=JSON.parse(localStorage.getItem(storageKey)||"[]");if(!Array.isArray(saved))saved=[]}catch(_){}document.querySelectorAll("#"+containerId+' input[type="checkbox"]').forEach(input=>input.checked=saved.includes(input.value))}
-function saveChecks(containerId,storageKey,statusId,label){const selected=[...document.querySelectorAll("#"+containerId+' input[type="checkbox"]:checked')].map(input=>input.value);try{localStorage.setItem(storageKey,JSON.stringify(selected));$(statusId).textContent=selected.length?selected.length+" مورد "+label+" ذخیره شد.":"همه گزینه‌ها غیرفعال و ذخیره شدند."}catch(_){$(statusId).textContent="ذخیره‌سازی در مرورگر امکان‌پذیر نیست."}}
-function updateMelliStatus(save=true){const enabled=$("melliToggle").checked;if(save){try{localStorage.setItem("darkvpn_melli",String(enabled))}catch(_){}}$("melliStatus").textContent=enabled?"گزینه دارک ملی فعال شد.":"دارک ملی غیرفعال است."}
-function initExtraOptions(){readSavedChecks("sanctionList","darkvpn_sanctions");readSavedChecks("ghostList","darkvpn_ghost");try{$("melliToggle").checked=localStorage.getItem("darkvpn_melli")==="true"}catch(_){}updateMelliStatus(false)}
-$("saveSanctionBtn").addEventListener("click",()=>saveChecks("sanctionList","darkvpn_sanctions","sanctionStatus","تحریم‌شکن"));
-$("saveGhostBtn").addEventListener("click",()=>saveChecks("ghostList","darkvpn_ghost","ghostStatus","حالت روح"));
-$("melliToggle").addEventListener("change",()=>updateMelliStatus(true));
-$("understoodBtn").addEventListener("click",()=>$("welcomeModal").classList.add("hidden"));
-$("themeBtn").addEventListener("click",()=>{const day=document.body.classList.toggle("day");document.body.classList.toggle("night",!day);$("themeBtn").textContent=day?"🌙 حالت شب":"☀️ حالت روز"});
-$("ipSearch").addEventListener("input",renderIps);$("refreshBtn").addEventListener("click",loadIps);
-initExtraOptions();loadLocations();loadIps();
+function getCountryFlag(code){
+if(!/^[A-Z]{2}$/.test(code))return "🌐";
+return String.fromCodePoint(...[...code].map(c=>127397+c.charCodeAt(0)))
+}
+
+function setStatus(message,error=false){
+$("status").textContent=message;
+$("status").style.color=error?"#ffb4b4":"#bdeeff"
+}
+
+function isValidIPv6(ip){
+if(!ip||ip.includes(":::"))return false;
+const parts=ip.split("::");
+if(parts.length>2)return false;
+const compressed=parts.length===2;
+const left=parts[0]?parts[0].split(":"):[];
+const right=compressed&&parts[1]?parts[1].split(":"):[];
+const groups=[...left,...right];
+if(groups.some(g=>!/^[0-9a-fA-F]{1,4}$/.test(g)))return false;
+return compressed?groups.length<8:groups.length===8
+}
+
+function parseEndpoint(endpoint){
+if(typeof endpoint!=="string")return null;
+const value=endpoint.trim();
+if(!value)return null;
+
+const v4=value.match(/^((?:\d{1,3}\.){3}\d{1,3})(?::\d{1,5})?$/);
+
+if(v4){
+const octets=v4[1].split(".").map(Number);
+if(octets.every(n=>n>=0&&n<=255)){
+return{ip:v4[1],port:"443",version:4}
+}
+return null
+}
+
+const bracketedV6=value.match(/^\[([0-9a-fA-F:]+)\](?::\d{1,5})?$/);
+
+if(bracketedV6){
+if(isValidIPv6(bracketedV6[1])){
+return{ip:bracketedV6[1],port:"443",version:6}
+}
+return null
+}
+
+if(isValidIPv6(value)){
+return{ip:value,port:"443",version:6}
+}
+
+return null
+}
+
+function isValidLocationIP(ip){
+ip=ip.trim();
+const v4=ip.match(/^(\d{1,3}\.){3}\d{1,3}$/);
+if(v4)return ip.split(".").every(n=>Number(n)>=0&&Number(n)<=255);
+return isValidIPv6(ip)
+}
+
+async function loadLocations(){
+
+const select=$("locationSelect");
+
+$("createVlessBtn").disabled=true;
+select.disabled=true;
+
+select.innerHTML='<option value="">در حال دریافت کشورها...</option>';
+
+try{
+
+const response=await fetch(
+LOCATION_LIST_URL+"?v="+Date.now(),
+{cache:"no-store"}
+);
+
+if(!response.ok)throw new Error("HTTP "+response.status);
+
+const raw=await response.text();
+const grouped=new Map();
+
+raw.split(/\r?\n/).forEach(line=>{
+
+line=line.trim();
+
+if(!line||line.startsWith("#"))return;
+
+const parts=line.split("#");
+
+if(parts.length!==2)return;
+
+const ip=parts[0].trim();
+let code=parts[1].trim().toUpperCase();
+
+if(code==="UK")code="GB";
+
+if(!isValidLocationIP(ip)||!/^[A-Z]{2}$/.test(code))return;
+
+if(!grouped.has(code))grouped.set(code,[]);
+
+if(!grouped.get(code).includes(ip)){
+grouped.get(code).push(ip)
+}
+
+});
+
+locationIps=grouped;
+
+select.innerHTML="";
+
+const countries=[...locationIps.keys()].sort();
+
+countries.forEach(code=>{
+
+const option=document.createElement("option");
+
+option.value=code;
+
+option.textContent=
+getCountryFlag(code)+" "+
+getCountryName(code)+
+" ("+locationIps.get(code).length+" IP)";
+
+select.appendChild(option);
+
+});
+
+let total=0;
+
+locationIps.forEach(list=>total+=list.length);
+
+select.disabled=total===0;
+$("createVlessBtn").disabled=total===0;
+
+if(total){
+
+setStatus(
+"لوکیشن‌ها دریافت شدند: "+
+countries.length+" کشور و "+total+" IP."
+);
+
+}else{
+
+select.innerHTML='<option value="">لوکیشنی پیدا نشد</option>';
+
+setStatus(
+"هیچ IP معتبری با فرمت IP#CC پیدا نشد.",
+true
+);
+
+}
+
+}catch(error){
+
+locationIps.clear();
+
+select.innerHTML='<option value="">خطا در دریافت لوکیشن</option>';
+
+select.disabled=true;
+
+$("createVlessBtn").disabled=true;
+
+setStatus(
+"دریافت لوکیشن ناموفق بود: "+error.message,
+true
+);
+
+}
+
+}
+
+function getSelectedLocationIP(){
+
+const code=$("locationSelect").value;
+
+const selectedIPs=locationIps.get(code);
+
+if(!selectedIPs||!selectedIPs.length){
+throw new Error("ابتدا یک کشور انتخاب کنید.")
+}
+
+return selectedIPs[
+Math.floor(Math.random()*selectedIPs.length)
+]
+
+}
+
+function generateDemoPings(){
+
+pingTimes.clear();
+ipMeta.clear();
+
+ips.forEach(ip=>{
+
+pingTimes.set(ip,Math.floor(Math.random()*386)+95);
+
+ipMeta.set(ip,{operator:"MCI/MTN"});
+
+});
+
+ips.sort((a,b)=>pingTimes.get(a)-pingTimes.get(b));
+
+}
+
+function getPingClass(ms){
+
+if(ms<150)return "";
+if(ms<300)return "medium";
+return "slow";
+
+}
+
+function renderIpGroup(listId,version){
+
+const query=$("ipSearch").value.trim().toLowerCase();
+
+const box=$(listId);
+
+const filtered=ips.filter(value=>{
+
+const parsed=parseEndpoint(value);
+
+return parsed&&
+parsed.version===version&&
+parsed.ip.toLowerCase().includes(query);
+
+});
+
+box.replaceChildren();
+
+if(!filtered.length){
+
+const empty=document.createElement("div");
+
+empty.className="ip-empty";
+
+empty.textContent=query?
+"IP مطابقی پیدا نشد":
+version===4?
+"هیچ IPv4 وجود ندارد":
+"هیچ IPv6 وجود ندارد";
+
+box.append(empty);
+
+return;
+
+}
+
+filtered.forEach(value=>{
+
+const parsed=parseEndpoint(value);
+
+if(!parsed)return;
+
+const row=document.createElement("div");
+
+row.className="iprow"+
+(value===selectedEndpoint?" active":"");
+
+const ip=document.createElement("span");
+
+ip.className="ipaddress";
+ip.textContent=parsed.ip;
+
+const ping=document.createElement("span");
+
+ping.className="ping "+
+getPingClass(pingTimes.get(value));
+
+ping.textContent=pingTimes.get(value)+"ms";
+
+const tag=document.createElement("span");
+
+tag.className="pill";
+
+tag.textContent=
+value===selectedEndpoint?
+"انتخاب‌شده":
+"انتخاب";
+
+row.append(ip,ping,tag);
+
+row.addEventListener("click",()=>{
+
+selectedEndpoint=value;
+
+renderIps();
+
+setStatus("IP انتخاب شد: "+parsed.ip);
+
+});
+
+box.append(row);
+
+});
+
+}
+
+function renderIps(){
+
+renderIpGroup("ipv4List",4);
+renderIpGroup("ipv6List",6);
+
+$("ipv4Count").textContent=
+ips.filter(ip=>parseEndpoint(ip)?.version===4).length+" IP";
+
+$("ipv6Count").textContent=
+ips.filter(ip=>parseEndpoint(ip)?.version===6).length+" IP";
+
+}
+
+async function loadIps(){
+
+$("refreshBtn").disabled=true;
+
+setStatus("در حال دریافت IP ها از range.txt...");
+
+try{
+
+const response=await fetch(
+IP_LIST_URL+"?v="+Date.now(),
+{cache:"no-store"}
+);
+
+if(!response.ok)throw new Error("HTTP "+response.status);
+
+const raw=await response.text();
+
+ips=[
+...new Set(
+raw.split(/\r?\n/)
+.map(line=>line.trim())
+.filter(line=>parseEndpoint(line)!==null)
+)
+];
+
+if(!ips.length){
+throw new Error("فایل range.txt خالی یا نامعتبر است.")
+}
+
+if(selectedEndpoint&&!ips.includes(selectedEndpoint)){
+selectedEndpoint=""
+}
+
+generateDemoPings();
+
+renderIps();
+
+setStatus("IPها دریافت شدند: "+ips.length);
+
+}catch(error){
+
+setStatus(
+"دریافت range.txt ناموفق بود: "+error.message,
+true
+);
+
+}finally{
+
+$("refreshBtn").disabled=false;
+
+}
+
+}
+
+function buildVless(proxyIP,endpointValue){
+
+const uuid="2011a64f-022f-463d-a20c-88ca09a20986";
+
+const host="sky-shield-935.vowuha6919.workers.dev";
+
+const endpoint=parseEndpoint(endpointValue);
+
+if(!endpoint){
+throw new Error(
+"ابتدا یک IP از لیست IPv4 یا IPv6 انتخاب کنید."
+);
+}
+
+const server=endpoint.version===6?
+"["+endpoint.ip+"]":
+endpoint.ip;
+
+const port=2053;
+
+const wsPath="/proxyip="+proxyIP;
+
+const params=new URLSearchParams({
+
+path:wsPath,
+security:"tls",
+alpn:"h3,h2,http/1.1",
+encryption:"none",
+png:"Off",
+insecure:"0",
+host:host,
+fp:"chrome",
+type:"ws",
+allowInsecure:"0",
+sni:host
+
+});
+
+return "vless://"+
+uuid+
+"@"+
+server+
+":"+
+port+
+"?"+
+params.toString()+
+"#%40DarkvpnTG%20%F0%9F%86%95";
+
+}
+
+// BUILD CONFIGURATION
+
+$("createVlessBtn").addEventListener("click",()=>{
+
+try{
+
+const proxyIP=getSelectedLocationIP();
+
+if(!selectedEndpoint){
+throw new Error(
+"ابتدا یک IP از لیست IPv4 یا IPv6 انتخاب کنید."
+);
+}
+
+generatedVlessLink=buildVless(
+proxyIP,
+selectedEndpoint
+);
+
+const parsed=parseEndpoint(selectedEndpoint);
+
+$("vlessSelectedIp").textContent=
+"IP انتخاب‌شده: "+
+parsed.ip+
+" | Proxy IP: "+
+proxyIP;
+
+$("vlessResultLink").textContent=
+generatedVlessLink;
+
+$("vlessOutput").classList.add("show");
+
+$("clientStatus").textContent=
+"کانفیگ آماده است. کلاینت موردنظر را انتخاب کنید.";
+
+setStatus("کانفیگ VLESS+RTL با موفقیت ساخته شد.");
+
+}catch(error){
+
+setStatus("خطا: "+error.message,true);
+
+}
+
+});
+
+// ====================================
+// V2RayNG
+// ====================================
+
+function openInVlessClients(){
+
+if(!generatedVlessLink){
+
+setStatus("ابتدا کانفیگ را بسازید.",true);
+
+return;
+
+}
+
+const importUrl=
+"v2rayng://install-config?url="+
+encodeURIComponent(generatedVlessLink);
+
+$("clientStatus").textContent=
+"در حال ارسال کانفیگ به V2RayNG...";
+
+window.location.href=importUrl;
+
+}
+
+// ====================================
+// NapsternetV
+// ====================================
+
+function openInNapsternetV(){
+
+if(!generatedVlessLink){
+
+setStatus("ابتدا کانفیگ را بسازید.",true);
+
+return;
+
+}
+
+const importUrl=
+"napsternet://install-config?url="+
+encodeURIComponent(generatedVlessLink);
+
+$("clientStatus").textContent=
+"در حال ارسال کانفیگ به NapsternetV...";
+
+window.location.href=importUrl;
+
+}
+
+// CLIENT BUTTON EVENTS
+
+$("openVlessBtn").addEventListener(
+"click",
+openInVlessClients
+);
+
+$("openNpvBtn").addEventListener(
+"click",
+openInNapsternetV
+);
+
+// ====================================
+// APN
+// ====================================
+
+function closeApnModal(){
+
+clearTimeout(apnTimer);
+clearTimeout(apnCloseTimer);
+
+$("apnModal").classList.add("hidden");
+
+}
+
+function showApnLoading(){
+
+clearTimeout(apnTimer);
+clearTimeout(apnCloseTimer);
+
+$("apnModalIcon").className="apn-loader";
+$("apnModalIcon").textContent="";
+
+$("apnModalTitle").textContent="در حال انجام تنظیمات";
+
+$("apnModalMessage").textContent="لطفاً شکیبا باشید.";
+
+$("apnModal").classList.remove("hidden");
+
+apnTimer=setTimeout(showApnSuccess,4000);
+
+}
+
+function showApnSuccess(){
+
+$("apnModalIcon").className="apn-success";
+$("apnModalIcon").textContent="✓";
+
+$("apnModalTitle").textContent=
+"عملیات با موفقیت انجام شد";
+
+$("apnModalMessage").textContent=
+"این بخش فقط تنظیمات APN را تغییر می‌دهد.";
+
+apnCloseTimer=setTimeout(
+()=>$("apnModal").classList.add("hidden"),
+1800
+);
+
+}
+
+function showApnReset(){
+
+clearTimeout(apnTimer);
+clearTimeout(apnCloseTimer);
+
+$("apnModalIcon").className="apn-success";
+$("apnModalIcon").textContent="✓";
+
+$("apnModalTitle").textContent="بازنشانی انجام شد";
+
+$("apnModalMessage").textContent=
+"تنظیمات APN بازنشانی شد.";
+
+$("apnModal").classList.remove("hidden");
+
+apnCloseTimer=setTimeout(
+()=>$("apnModal").classList.add("hidden"),
+1800
+);
+
+}
+
+document.querySelectorAll(
+'input[name="apnChoice"]'
+).forEach(input=>{
+
+input.addEventListener("change",()=>{
+
+if(input.checked){
+
+input.value==="none"?
+showApnReset():
+showApnLoading();
+
+}
+
+});
+
+});
+
+// ====================================
+// SAVED OPTIONS
+// ====================================
+
+function readSavedChecks(containerId,storageKey){
+
+let saved=[];
+
+try{
+
+saved=JSON.parse(
+localStorage.getItem(storageKey)||"[]"
+);
+
+if(!Array.isArray(saved))saved=[];
+
+}catch(_){}
+
+document.querySelectorAll(
+"#"+containerId+' input[type="checkbox"]'
+).forEach(input=>{
+
+input.checked=saved.includes(input.value);
+
+});
+
+}
+
+function saveChecks(
+containerId,
+storageKey,
+statusId,
+label
+){
+
+const selected=[
+...document.querySelectorAll(
+"#"+containerId+' input[type="checkbox"]:checked'
+)
+].map(input=>input.value);
+
+try{
+
+localStorage.setItem(
+storageKey,
+JSON.stringify(selected)
+);
+
+$(statusId).textContent=
+selected.length?
+selected.length+" مورد "+label+" ذخیره شد.":
+"همه گزینه‌ها غیرفعال و ذخیره شدند.";
+
+}catch(_){
+
+$(statusId).textContent=
+"ذخیره‌سازی در مرورگر امکان‌پذیر نیست.";
+
+}
+
+}
+
+function updateMelliStatus(save=true){
+
+const enabled=$("melliToggle").checked;
+
+if(save){
+
+try{
+
+localStorage.setItem(
+"darkvpn_melli",
+String(enabled)
+);
+
+}catch(_){}
+
+}
+
+$("melliStatus").textContent=
+enabled?
+"گزینه دارک ملی فعال شد.":
+"دارک ملی غیرفعال است.";
+
+}
+
+function initExtraOptions(){
+
+readSavedChecks(
+"sanctionList",
+"darkvpn_sanctions"
+);
+
+readSavedChecks(
+"ghostList",
+"darkvpn_ghost"
+);
+
+try{
+
+$("melliToggle").checked=
+localStorage.getItem("darkvpn_melli")==="true";
+
+}catch(_){}
+
+updateMelliStatus(false);
+
+}
+
+// SAVE BUTTONS
+
+$("saveSanctionBtn").addEventListener(
+"click",
+()=>saveChecks(
+"sanctionList",
+"darkvpn_sanctions",
+"sanctionStatus",
+"تحریم‌شکن"
+)
+);
+
+$("saveGhostBtn").addEventListener(
+"click",
+()=>saveChecks(
+"ghostList",
+"darkvpn_ghost",
+"ghostStatus",
+"حالت روح"
+)
+);
+
+$("melliToggle").addEventListener(
+"change",
+()=>updateMelliStatus(true)
+);
+
+// WELCOME MODAL
+
+$("understoodBtn").addEventListener(
+"click",
+()=>$("welcomeModal").classList.add("hidden")
+);
+
+// THEME
+
+$("themeBtn").addEventListener("click",()=>{
+
+const day=document.body.classList.toggle("day");
+
+document.body.classList.toggle("night",!day);
+
+$("themeBtn").textContent=
+day?
+"🌙 حالت شب":
+"☀️ حالت روز";
+
+});
+
+// SEARCH AND REFRESH
+
+$("ipSearch").addEventListener(
+"input",
+renderIps
+);
+
+$("refreshBtn").addEventListener(
+"click",
+loadIps
+);
+
+// INITIALIZATION
+
+initExtraOptions();
+
+loadLocations();
+
+loadIps();
+
 </script>
-</body></html>
+
+</body>
+</html>
