@@ -618,14 +618,14 @@ const server=endpoint.version===6
 :endpoint.ip;
 
 // پورت همیشه 8443 است؛ پورت فایل range.txt نادیده گرفته می‌شود.
-const port=8443;
+const port=2053;
 
 const wsPath="/proxyip="+proxyIP;
 
 const params=new URLSearchParams({
 path:wsPath,
 security:"tls",
-alpn:"",
+alpn:"h3,h2,http/1.1",
 encryption:"none",
 png:"Off",
 insecure:"0",
