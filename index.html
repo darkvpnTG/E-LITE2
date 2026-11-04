@@ -287,6 +287,28 @@ input:focus,select:focus{
 
 .ip-info{min-width:0}
 
+  .ip-line{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  direction:ltr;
+  flex-wrap:wrap
+}
+
+.ip-country-flag{
+  width:38px;
+  height:26px;
+  min-width:38px;
+  object-fit:cover;
+  border-radius:5px;
+  border:1px solid #ffffff55;
+  box-shadow:0 2px 8px #0005
+}
+
+.ip-country-flag[hidden]{
+  display:none
+}
+  
 .ip-label{
   font-size:11px;
   color:#aebbd0;
@@ -825,7 +847,16 @@ input:focus,select:focus{
 <section class="ip-panel" aria-label="Your public IP">
   <div class="ip-info">
     <div class="ip-label">YOUR IP ADDRESS</div>
-    <div class="ip-value" id="userPublicIP">در حال دریافت...</div>
+    <div class="ip-line">
+  <img
+    class="ip-country-flag"
+    id="userIPFlag"
+    src=""
+    alt="IP Country"
+    hidden
+  >
+  <div class="ip-value" id="userPublicIP">در حال دریافت...</div>
+    </div>
     <div class="ip-status" id="ipStatus">Checking current connection</div>
   </div>
 
@@ -1398,41 +1429,99 @@ async function loadPublicIP() {
   const ipElement = $("userPublicIP");
   const statusElement = $("ipStatus");
   const refreshButton = $("refreshIPBtn");
+  const flagElement = $("userIPFlag");
 
   refreshButton.disabled = true;
   ipElement.textContent = "در حال بررسی...";
   statusElement.textContent = "Checking current connection";
 
+  flagElement.hidden = true;
+  flagElement.src = "";
+
   const services = [
-    "https://api.ipify.org?format=json",
-    "https://api64.ipify.org?format=json"
+    "https://ipapi.co/json/",
+    "https://ipwho.is/"
   ];
 
   let detectedIP = "";
+  let countryCode = "";
 
   for (const url of services) {
     try {
       const response = await fetch(url, {
-        cache:"no-store"
+        cache: "no-store"
       });
 
       if (!response.ok) continue;
 
       const data = await response.json();
 
-      if (data.ip) {
+      if (url.includes("ipwho.is") && data.success === false) {
+        continue;
+      }
+
+      if (data.ip && /^[0-9a-fA-F:.]+$/.test(data.ip)) {
         detectedIP = data.ip;
+        countryCode = String(
+          data.country_code || ""
+        ).toUpperCase();
+
         break;
       }
     } catch (_) {}
   }
 
+  if (!detectedIP) {
+    const fallbackServices = [
+      "https://api.ipify.org?format=json",
+      "https://api64.ipify.org?format=json"
+    ];
+
+    for (const url of fallbackServices) {
+      try {
+        const response = await fetch(url, {
+          cache: "no-store"
+        });
+
+        if (!response.ok) continue;
+
+        const data = await response.json();
+
+        if (data.ip) {
+          detectedIP = data.ip;
+          break;
+        }
+      } catch (_) {}
+    }
+  }
+
   if (detectedIP) {
     ipElement.textContent = detectedIP;
-    statusElement.textContent = "✓ Current public IP detected";
+
+    if (/^[A-Z]{2}$/.test(countryCode)) {
+      flagElement.src =
+        "https://flagcdn.com/w80/" +
+        countryCode.toLowerCase() +
+        ".png";
+
+      flagElement.alt = countryCode + " flag";
+      flagElement.hidden = false;
+
+      flagElement.onerror = () => {
+        flagElement.hidden = true;
+      };
+
+      statusElement.textContent =
+        "✓ IP detected • " + getCountryName(countryCode);
+    } else {
+      statusElement.textContent =
+        "✓ Current public IP detected";
+    }
+
   } else {
     ipElement.textContent = "Unavailable";
-    statusElement.textContent = "امکان دریافت IP وجود ندارد.";
+    statusElement.textContent =
+      "امکان دریافت IP وجود ندارد.";
   }
 
   refreshButton.disabled = false;
@@ -1729,16 +1818,18 @@ function closeCountryMenu() {
 /* =========================
    PINGNG LINK
 ========================= */
-
+// تنظیمات قابل تغییر توسط مدیر سایت
+const CONFIG_R = "Core: E-LITE/2 - 𝐃𝐚𝐫𝐤ᵛᵖⁿ";
+const CONFIG_DN = "@DARKvpnTG System";
 const PINGNG_BASE =
   "pingng-warp://profile?v=1" +
   "&kind=m" +
-  "&r=Q29yZTogRS1MSVRFLzIgfCBEYXJrdnBuVEc" +
+  "&r=" + encodeURIComponent(CONFIG_R) +
   "&ec=MTYyLjE1OS4xOTguMC8yNDo0NDMsMTYyLjE1OS4xOTkuMC8yNDo0NDM" +
   "&pe=MTYyLjE1OS4xOTguMTM2" +
   "&pp=NDQz" +
   "&mode=QXV0bw" +
-  "&dn=REFSS3ZwbiBTeXN0ZW0" +
+  "&dn=" + encodeURIComponent(CONFIG_DN) +
   "&sni=Y2xvdWRmbGFyZS5jb20" +
   "&dns=MS4xLjEuMSwxLjAuMC4x" +
   "&h2=dHJ1ZQ" +
