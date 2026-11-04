@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -267,6 +268,74 @@ input:focus,select:focus{
 }
 
 .foot small{color:#c0cad8;font-size:11px}
+
+/* YOUR IP */
+
+.ip-panel{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin:0 0 12px;
+  padding:15px 17px;
+  border:1px solid rgba(117,217,255,.28);
+  border-radius:18px;
+  background:linear-gradient(120deg,rgba(13,39,60,.9),rgba(16,19,43,.88));
+  box-shadow:0 8px 25px #0003;
+  direction:ltr
+}
+
+.ip-info{min-width:0}
+
+.ip-label{
+  font-size:11px;
+  color:#aebbd0;
+  font-weight:700;
+  margin-bottom:5px
+}
+
+.ip-value{
+  font-size:19px;
+  font-weight:900;
+  color:#8be4ff;
+  overflow-wrap:anywhere;
+  letter-spacing:.4px
+}
+
+.ip-status{
+  font-size:10px;
+  color:#aebbd0;
+  margin-top:5px
+}
+
+.ip-actions{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  min-width:112px
+}
+
+.ip-btn{
+  border:1px solid #ffffff24;
+  border-radius:10px;
+  padding:8px 10px;
+  background:#ffffff10;
+  color:#fff;
+  font:inherit;
+  font-size:11px;
+  font-weight:800;
+  text-align:center;
+  text-decoration:none;
+  cursor:pointer
+}
+
+.ip-btn.primary{
+  background:linear-gradient(100deg,#56d6ff,#8b7cff);
+  color:#071321;
+  border:0
+}
+
+.ip-btn:disabled{opacity:.5;cursor:wait}
 
 /* DATABASE CARDS */
 
@@ -683,6 +752,12 @@ input:focus,select:focus{
   .database-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
+@media(max-width:420px){
+  .ip-panel{padding:12px;gap:8px}
+  .ip-value{font-size:16px}
+  .ip-actions{min-width:100px}
+}
+
 @media(prefers-reduced-motion:reduce){
   *,*:before,*:after{
     animation-duration:.01ms!important;
@@ -745,6 +820,29 @@ input:focus,select:focus{
   <button class="theme" id="themeBtn" type="button">☀️ حالت روز</button>
 </header>
 
+<!-- YOUR IP -->
+
+<section class="ip-panel" aria-label="Your public IP">
+  <div class="ip-info">
+    <div class="ip-label">YOUR IP ADDRESS</div>
+    <div class="ip-value" id="userPublicIP">در حال دریافت...</div>
+    <div class="ip-status" id="ipStatus">Checking current connection</div>
+  </div>
+
+  <div class="ip-actions">
+    <button class="ip-btn primary" id="refreshIPBtn" type="button">
+      ↻ بررسی مجدد
+    </button>
+
+    <a class="ip-btn"
+       href="https://browserleaks.com/ip"
+       target="_blank"
+       rel="noopener">
+      BrowserLeaks ↗
+    </a>
+  </div>
+</section>
+
 <section class="hero">
   <span class="eyebrow">DarkVPN • Dedicated DataCenter</span>
   <h2>ساخت کانفیگ PingNG</h2>
@@ -796,133 +894,133 @@ input:focus,select:focus{
       </span>
       <span class="database-name">PlayStation</span>
     </button>
+
     <button class="database-card" type="button" data-db="Samsung">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=samsung.com&sz=128" alt="Samsung">
-  </span>
-      
-  <span class="database-name">Samsung</span>
-</button>
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=samsung.com&sz=128" alt="Samsung">
+      </span>
+      <span class="database-name">Samsung</span>
+    </button>
 
-<button class="database-card" type="button" data-db="Apple">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=apple.com&sz=128" alt="Apple">
-  </span>
-  <span class="database-name">Apple</span>
-</button>
+    <button class="database-card" type="button" data-db="Apple">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=apple.com&sz=128" alt="Apple">
+      </span>
+      <span class="database-name">Apple</span>
+    </button>
 
-<button class="database-card" type="button" data-db="Xiaomi">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=mi.com&sz=128" alt="Xiaomi">
-  </span>
-  <span class="database-name">Xiaomi</span>
-</button>
+    <button class="database-card" type="button" data-db="Xiaomi">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=mi.com&sz=128" alt="Xiaomi">
+      </span>
+      <span class="database-name">Xiaomi</span>
+    </button>
 
-<button class="database-card" type="button" data-db="POCO">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=po.co&sz=128" alt="POCO">
-  </span>
-  <span class="database-name">POCO</span>
-</button>
+    <button class="database-card" type="button" data-db="POCO">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=po.co&sz=128" alt="POCO">
+      </span>
+      <span class="database-name">POCO</span>
+    </button>
 
-<button class="database-card" type="button" data-db="Opera">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=opera.com&sz=128" alt="Opera">
-  </span>
-  <span class="database-name">Opera</span>
-</button>
+    <button class="database-card" type="button" data-db="Opera">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=opera.com&sz=128" alt="Opera">
+      </span>
+      <span class="database-name">Opera</span>
+    </button>
 
-<button class="database-card" type="button" data-db="Firefox">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=mozilla.org&sz=128" alt="Firefox">
-  </span>
-  <span class="database-name">Firefox</span>
-</button>
+    <button class="database-card" type="button" data-db="Firefox">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=mozilla.org&sz=128" alt="Firefox">
+      </span>
+      <span class="database-name">Firefox</span>
+    </button>
 
-<button class="database-card" type="button" data-db="Steam">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=steampowered.com&sz=128" alt="Steam">
-  </span>
-  <span class="database-name">Steam</span>
-</button>
+    <button class="database-card" type="button" data-db="Steam">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=steampowered.com&sz=128" alt="Steam">
+      </span>
+      <span class="database-name">Steam</span>
+    </button>
 
-<button class="database-card" type="button" data-db="Capcom">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=capcom.com&sz=128" alt="Capcom">
-  </span>
-  <span class="database-name">Capcom</span>
-</button>
+    <button class="database-card" type="button" data-db="Capcom">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=capcom.com&sz=128" alt="Capcom">
+      </span>
+      <span class="database-name">Capcom</span>
+    </button>
 
-<button class="database-card" type="button" data-db="NetherRealm Studios">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=netherrealm.com&sz=128" alt="NetherRealm Studios">
-  </span>
-  <span class="database-name">NetherRealm Studios</span>
-</button>
+    <button class="database-card" type="button" data-db="NetherRealm Studios">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=netherrealm.com&sz=128" alt="NetherRealm Studios">
+      </span>
+      <span class="database-name">NetherRealm Studios</span>
+    </button>
 
-<button class="database-card" type="button" data-db="Call of Duty">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=callofduty.com&sz=128" alt="Call of Duty">
-  </span>
-  <span class="database-name">Call of Duty</span>
-</button>
+    <button class="database-card" type="button" data-db="Call of Duty">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=callofduty.com&sz=128" alt="Call of Duty">
+      </span>
+      <span class="database-name">Call of Duty</span>
+    </button>
 
-<button class="database-card" type="button" data-db="Netflix">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=netflix.com&sz=128" alt="Netflix">
-  </span>
-  <span class="database-name">Netflix</span>
-</button>
+    <button class="database-card" type="button" data-db="Netflix">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=netflix.com&sz=128" alt="Netflix">
+      </span>
+      <span class="database-name">Netflix</span>
+    </button>
 
-<button class="database-card" type="button" data-db="T-Mobile">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=t-mobile.com&sz=128" alt="T-Mobile">
-  </span>
-  <span class="database-name">T-Mobile</span>
-</button>
+    <button class="database-card" type="button" data-db="T-Mobile">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=t-mobile.com&sz=128" alt="T-Mobile">
+      </span>
+      <span class="database-name">T-Mobile</span>
+    </button>
 
-<button class="database-card" type="button" data-db="Rockstar">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=rockstargames.com&sz=128" alt="Rockstar">
-  </span>
-  <span class="database-name">Rockstar Games</span>
-</button>
+    <button class="database-card" type="button" data-db="Rockstar">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=rockstargames.com&sz=128" alt="Rockstar">
+      </span>
+      <span class="database-name">Rockstar Games</span>
+    </button>
 
-<button class="database-card" type="button" data-db="EA Sports">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=ea.com&sz=128" alt="EA Sports">
-  </span>
-  <span class="database-name">EA Sports</span>
-</button>
+    <button class="database-card" type="button" data-db="EA Sports">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=ea.com&sz=128" alt="EA Sports">
+      </span>
+      <span class="database-name">EA Sports</span>
+    </button>
 
-<button class="database-card" type="button" data-db="Activision Blizzard">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=activision.com&sz=128" alt="Activision Blizzard">
-  </span>
-  <span class="database-name">Activision Blizzard</span>
-</button>
+    <button class="database-card" type="button" data-db="Activision Blizzard">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=activision.com&sz=128" alt="Activision Blizzard">
+      </span>
+      <span class="database-name">Activision Blizzard</span>
+    </button>
 
-<button class="database-card" type="button" data-db="Ubisoft">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=ubisoft.com&sz=128" alt="Ubisoft">
-  </span>
-  <span class="database-name">Ubisoft</span>
-</button>
+    <button class="database-card" type="button" data-db="Ubisoft">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=ubisoft.com&sz=128" alt="Ubisoft">
+      </span>
+      <span class="database-name">Ubisoft</span>
+    </button>
 
-<button class="database-card" type="button" data-db="HP">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=hp.com&sz=128" alt="HP">
-  </span>
-  <span class="database-name">HP</span>
-</button>
+    <button class="database-card" type="button" data-db="HP">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=hp.com&sz=128" alt="HP">
+      </span>
+      <span class="database-name">HP</span>
+    </button>
 
-<button class="database-card" type="button" data-db="Lenovo">
-  <span class="database-icon">
-    <img src="https://www.google.com/s2/favicons?domain=lenovo.com&sz=128" alt="Lenovo">
-  </span>
-  <span class="database-name">Lenovo</span>
-</button>
-    
+    <button class="database-card" type="button" data-db="Lenovo">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=lenovo.com&sz=128" alt="Lenovo">
+      </span>
+      <span class="database-name">Lenovo</span>
+    </button>
+
     <button class="database-card" type="button" data-db="NASA">
       <span class="database-icon">
         <img src="https://www.google.com/s2/favicons?domain=nasa.gov&sz=128" alt="NASA">
@@ -1291,6 +1389,56 @@ function getCountryFlag(code) {
     ...[...code].map(c => 127397 + c.charCodeAt(0))
   );
 }
+
+/* =========================
+   PUBLIC IP DETECTION
+========================= */
+
+async function loadPublicIP() {
+  const ipElement = $("userPublicIP");
+  const statusElement = $("ipStatus");
+  const refreshButton = $("refreshIPBtn");
+
+  refreshButton.disabled = true;
+  ipElement.textContent = "در حال بررسی...";
+  statusElement.textContent = "Checking current connection";
+
+  const services = [
+    "https://api.ipify.org?format=json",
+    "https://api64.ipify.org?format=json"
+  ];
+
+  let detectedIP = "";
+
+  for (const url of services) {
+    try {
+      const response = await fetch(url, {
+        cache:"no-store"
+      });
+
+      if (!response.ok) continue;
+
+      const data = await response.json();
+
+      if (data.ip) {
+        detectedIP = data.ip;
+        break;
+      }
+    } catch (_) {}
+  }
+
+  if (detectedIP) {
+    ipElement.textContent = detectedIP;
+    statusElement.textContent = "✓ Current public IP detected";
+  } else {
+    ipElement.textContent = "Unavailable";
+    statusElement.textContent = "امکان دریافت IP وجود ندارد.";
+  }
+
+  refreshButton.disabled = false;
+}
+
+$("refreshIPBtn").addEventListener("click", loadPublicIP);
 
 /* =========================
    DATABASE SELECTION
@@ -1870,6 +2018,7 @@ $("refreshBtn").addEventListener("click", () => {
 ========================= */
 
 initExtraOptions();
+loadPublicIP();
 
 /*
   در شروع صفحه:
