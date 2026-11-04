@@ -1,6 +1,6 @@
-# Powered by 𝐃𝐚𝐫𝐤ᵛᵖⁿ
 
-✓ [**کانال رسمی تلگرام**](https://t.me/darkvpnTG)
+
+# [**کانال رسمی تلگرام**](https://t.me/darkvpnTG)
 
 🧑‍💻 هسته شبکه **E-LITE/2**
 
