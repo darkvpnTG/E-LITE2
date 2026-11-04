@@ -2,4 +2,5 @@
 
 ✓ [**کانال رسمی تلگرام**](https://t.me/darkvpnTG) 🚀
 
-– هسته شبکه **E-LITE/2 • MASQUE/GO-TLS**
+– هسته شبکه **E-LITE/2**
+✓ ارقام شده با **MASQUE/GO-TLS**
