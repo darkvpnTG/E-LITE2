@@ -1687,6 +1687,13 @@ const countryNames = {
 };
 
 function getCountryName(code) {
+  const customNames = {
+    CZ: "Czechia — گیمینگ",
+    ES: "Spain — گیمینگ ۲",
+    LT: "Lithuania — گیمینگ ۳"
+  };
+
+  if (customNames[code]) return customNames[code];
   if (countryNames[code]) return countryNames[code];
 
   try {
