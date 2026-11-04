@@ -1,6 +1,6 @@
 
 
-# [**کانال رسمی تلگرام**](https://t.me/darkvpnTG)
+# [**کانال تلگرام**](https://t.me/darkvpnTG)
 
 🧑‍💻 هسته شبکه **E-LITE/2**
 
