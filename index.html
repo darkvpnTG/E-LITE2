@@ -423,8 +423,8 @@ input:focus,select:focus{
   border-radius:16px;
   background:linear-gradient(135deg,#102a40d9,#10172bd9);
   box-shadow:0 8px 25px #0003;
-  text-align:right;
-  direction:rtl
+  text-align:left !important;
+  direction:ltr !important;
 }
 
 .public-ip-main{
@@ -432,6 +432,9 @@ input:focus,select:focus{
   align-items:center;
   gap:10px;
   flex-wrap:wrap
+  direction:ltr !important;
+  flex-direction:row !important;
+  justify-content:flex-start !important;
 }
 
 .public-ip-label{
@@ -463,6 +466,8 @@ input:focus,select:focus{
   color:#d0dceb;
   font-size:11px;
   line-height:1.8
+  text-align:left !important;
+  direction:ltr !important;
 }
 
 /* COUNTRY PICKER */
