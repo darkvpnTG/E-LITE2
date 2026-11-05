@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101827">
-<title>DARK VPN | E-LITE/2 Configurator</title>
+<title>DARK VPN | PingNG Configurator</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
@@ -268,277 +268,74 @@ input:focus,select:focus{
 
 .foot small{color:#c0cad8;font-size:11px}
 
-/* YOUR IP */
+/* DATABASE CARDS */
 
-.ip-panel{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  margin:0 0 12px;
-  padding:15px 17px;
-  border:1px solid rgba(117,217,255,.28);
-  border-radius:18px;
-  background:linear-gradient(120deg,rgba(13,39,60,.9),rgba(16,19,43,.88));
-  box-shadow:0 8px 25px #0003;
-  direction:ltr
+.database-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:11px
 }
 
-.ip-info{min-width:0}
-
-.ip-line{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  direction:ltr;
-  flex-wrap:wrap
-}
-
-.ip-country-flag{
-  width:38px;
-  height:26px;
-  min-width:38px;
-  object-fit:cover;
-  border-radius:5px;
-  border:1px solid #ffffff55;
-  box-shadow:0 2px 8px #0005
-}
-
-.ip-country-flag[hidden]{display:none}
-
-.ip-label{
-  font-size:11px;
-  color:#aebbd0;
-  font-weight:700;
-  margin-bottom:5px
-}
-
-.ip-value{
-  font-size:19px;
-  font-weight:900;
-  color:#8be4ff;
-  overflow-wrap:anywhere;
-  letter-spacing:.4px
-}
-
-.ip-status{
-  font-size:10px;
-  color:#aebbd0;
-  margin-top:5px
-}
-
-.ip-actions{
+.database-card{
+  min-width:0;
+  min-height:105px;
   display:flex;
   flex-direction:column;
-  gap:7px;
-  min-width:112px
-}
-
-.ip-btn{
-  border:1px solid #ffffff24;
-  border-radius:10px;
-  padding:8px 10px;
-  background:#ffffff10;
-  color:#fff;
-  font:inherit;
-  font-size:11px;
-  font-weight:800;
-  text-align:center;
-  text-decoration:none;
-  cursor:pointer
-}
-
-.ip-btn.primary{
-  background:linear-gradient(100deg,#56d6ff,#8b7cff);
-  color:#071321;
-  border:0
-}
-
-.ip-btn:disabled{opacity:.5;cursor:wait}
-
-/* DATABASE DROPDOWN */
-
-.database-picker{
-  position:relative;
-  width:100%;
-  direction:rtl
-}
-
-.database-trigger{
-  width:100%;
-  min-height:68px;
-  display:flex;
   align-items:center;
-  gap:12px;
-  padding:10px 13px;
-  border:1px solid rgba(218,232,255,.19);
-  border-radius:14px;
-  background:linear-gradient(135deg,rgba(24,41,63,.88),rgba(8,17,31,.92));
-  color:#fff;
+  justify-content:center;
+  gap:9px;
+  padding:12px 6px;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:16px;
+  background:rgba(8,20,36,.72);
+  color:white;
   font:inherit;
-  font-size:14px;
-  text-align:right;
   cursor:pointer;
   transition:.2s
 }
 
-.database-trigger:hover{
+.database-card:hover{
+  transform:translateY(-2px);
   border-color:#56d6ff88;
-  background:linear-gradient(135deg,rgba(30,55,80,.95),rgba(8,17,31,.96))
+  background:rgba(22,48,73,.85)
 }
 
-.database-trigger:disabled{
-  opacity:.6;
-  cursor:not-allowed
+.database-card.selected{
+  border-color:#56d6ff;
+  background:linear-gradient(145deg,rgba(38,91,125,.65),rgba(53,43,105,.55));
+  box-shadow:0 0 0 2px #56d6ff20,inset 0 0 20px #56d6ff12
 }
 
-.database-current-icon{
+.database-card:disabled{opacity:.55;cursor:not-allowed}
+
+.database-icon{
   width:43px;
   height:43px;
-  min-width:43px;
   display:grid;
   place-items:center;
-  border-radius:12px;
-  background:rgba(255,255,255,.09);
-  border:1px solid rgba(255,255,255,.12);
-  overflow:hidden
-}
-
-.database-current-icon img{
-  width:30px;
-  height:30px;
-  object-fit:contain
-}
-
-.database-current-info{
-  flex:1;
-  min-width:0;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  gap:3px
-}
-
-.database-current-name{
-  font-size:13px;
-  font-weight:900;
-  direction:ltr;
-  text-align:left
-}
-
-.database-current-org{
-  font-size:10px;
-  color:#9eb3ca;
-  direction:ltr
-}
-
-.database-chevron{
-  font-size:20px;
-  color:#9cddf5;
-  transition:transform .2s
-}
-
-.database-trigger[aria-expanded="true"] .database-chevron{
-  transform:rotate(180deg)
-}
-
-.database-menu{
-  width:100%;
-  margin-top:8px;
-  max-height:min(340px,52vh);
-  overflow-y:auto;
-  overflow-x:hidden;
-  overscroll-behavior:contain;
-  -webkit-overflow-scrolling:touch;
-  padding:6px;
-  border:1px solid rgba(211,228,255,.2);
-  border-radius:16px;
-  background:#0b1728;
-  box-shadow:0 18px 48px rgba(0,0,0,.48)
-}
-
-.database-menu[hidden]{display:none}
-
-.database-option{
-  width:100%;
-  min-height:61px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:9px 11px;
-  border:1px solid transparent;
-  border-radius:12px;
-  background:transparent;
-  color:#f4f8ff;
-  font:inherit;
-  text-align:right;
-  cursor:pointer;
-  transition:.18s
-}
-
-.database-option:hover{
-  background:rgba(117,217,255,.09);
-  border-color:rgba(117,217,255,.16)
-}
-
-.database-option.selected{
-  background:rgba(117,217,255,.13);
-  border-color:rgba(117,217,255,.3)
-}
-
-.database-option:disabled{
-  opacity:.5;
-  cursor:not-allowed
-}
-
-.database-option-icon{
-  width:40px;
-  height:40px;
-  min-width:40px;
-  display:grid;
-  place-items:center;
-  border-radius:11px;
+  border-radius:13px;
   background:rgba(255,255,255,.09);
   border:1px solid rgba(255,255,255,.1);
   overflow:hidden
 }
 
-.database-option-icon img{
-  width:28px;
-  height:28px;
+.database-icon img{
+  width:29px;
+  height:29px;
   object-fit:contain
 }
 
-.database-option-info{
-  flex:1;
-  min-width:0;
-  display:flex;
-  flex-direction:column;
-  gap:4px
-}
-
-.database-option-name{
-  font-size:12px;
+.database-icon .fallback{
+  font-size:24px;
   font-weight:900;
-  direction:ltr;
-  text-align:left
+  color:#dff7ff
 }
 
-.database-option-org{
-  font-size:10px;
-  color:#9eafc5;
-  direction:ltr;
-  text-align:left
-}
-
-.database-option-check{
-  color:#56d6ff;
-  font-size:17px;
-  opacity:0
-}
-
-.database-option.selected .database-option-check{
-  opacity:1
+.database-name{
+  font-size:11px;
+  font-weight:800;
+  text-align:center;
+  direction:ltr
 }
 
 .database-status{
@@ -883,12 +680,7 @@ input:focus,select:focus{
   .panel{padding:16px}
   .top{align-items:flex-start}
   .brand h1{font-size:16px}
-}
-
-@media(max-width:420px){
-  .ip-panel{padding:12px;gap:8px}
-  .ip-value{font-size:16px}
-  .ip-actions{min-width:100px}
+  .database-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -947,32 +739,14 @@ input:focus,select:focus{
     <img class="logo" src="./logo.jpg" alt="DARK VPN Logo">
     <div>
       <h1>𝐃𝐚𝐫𝐤ᵛᵖⁿ</h1>
-      <small>MASQUE/GO-TLS • E-LITE/2</small>
+      <small>PingNG • SSTP • E-lite/2</small>
     </div>
   </div>
   <button class="theme" id="themeBtn" type="button">☀️ حالت روز</button>
 </header>
 
-<!-- YOUR IP -->
-
-<section class="ip-panel" aria-label="Your public IP">
-  <div class="ip-info">
-    <div class="ip-label">YOUR IP ADDRESS</div>
-    <div class="ip-line">
-      <img class="ip-country-flag" id="userIPFlag" src="" alt="IP Country" hidden>
-      <div class="ip-value" id="userPublicIP">در حال دریافت...</div>
-    </div>
-    <div class="ip-status" id="ipStatus">Checking current connection</div>
-  </div>
-
-  <div class="ip-actions">
-    <button class="ip-btn primary" id="refreshIPBtn" type="button">↻ بررسی مجدد</button>
-    <a class="ip-btn" href="https://browserleaks.com/ip" target="_blank" rel="noopener">BrowserLeaks ↗</a>
-  </div>
-</section>
-
 <section class="hero">
-  <span class="eyebrow">DarkVPN • E-LITE/2 System</span>
+  <span class="eyebrow">DarkVPN • Dedicated DataCenter</span>
   <h2>ساخت کانفیگ PingNG</h2>
   <p>انتخاب دیتابیس و کشور برای تنظیم لوکیشن</p>
 </section>
@@ -986,395 +760,204 @@ input:focus,select:focus{
     ابتدا یک دیتابیس انتخاب کن تا مرحله انتخاب کشور فعال شود.
   </p>
 
-  <div class="database-picker" id="databasePicker">
+  <div class="database-grid" id="databaseGrid">
 
-    <button class="database-trigger" id="databaseTrigger"
-      type="button" aria-haspopup="listbox" aria-expanded="false">
-
-      <span class="database-current-icon">
-        <img id="databaseCurrentLogo" src="" alt="" hidden>
+    <button class="database-card" type="button" data-db="Google">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=google.com&sz=128" alt="Google">
       </span>
-
-      <span class="database-current-info">
-        <span class="database-current-name" id="databaseCurrentName">
-          انتخاب دیتابیس
-        </span>
-        <span class="database-current-org" id="databaseCurrentOrg">
-          نام دیتابیس و کد فیلر
-        </span>
-      </span>
-
-      <span class="database-chevron" aria-hidden="true">⌄</span>
+      <span class="database-name">Google</span>
     </button>
 
-    <div class="database-menu" id="databaseMenu"
-      role="listbox" aria-label="فهرست دیتابیس‌ها" hidden>
+    <button class="database-card" type="button" data-db="Cloudflare">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=128" alt="Cloudflare">
+      </span>
+      <span class="database-name">Cloudflare</span>
+    </button>
 
-      <button class="database-option" type="button"
-        data-db="Google" data-org="GOG"
-        data-logo="https://www.google.com/s2/favicons?domain=google.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=google.com&sz=128" alt="Google">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Google</span>
-          <span class="database-option-org">GOG</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+    <button class="database-card" type="button" data-db="Microsoft">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=microsoft.com&sz=128" alt="Microsoft">
+      </span>
+      <span class="database-name">Microsoft</span>
+    </button>
 
-      <button class="database-option" type="button"
-        data-db="Cloudflare" data-org="CFE"
-        data-logo="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=cloudflare.com&sz=128" alt="Cloudflare">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Cloudflare</span>
-          <span class="database-option-org">CFE</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+    <button class="database-card" type="button" data-db="Xbox">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=xbox.com&sz=128" alt="Xbox">
+      </span>
+      <span class="database-name">Xbox</span>
+    </button>
 
-      <button class="database-option" type="button"
-        data-db="Microsoft" data-org="MSF"
-        data-logo="https://www.google.com/s2/favicons?domain=microsoft.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=microsoft.com&sz=128" alt="Microsoft">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Microsoft</span>
-          <span class="database-option-org">MSF</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+    <button class="database-card" type="button" data-db="PlayStation">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=playstation.com&sz=128" alt="PlayStation">
+      </span>
+      <span class="database-name">PlayStation</span>
+    </button>
+    <button class="database-card" type="button" data-db="Samsung">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=samsung.com&sz=128" alt="Samsung">
+  </span>
+      
+  <span class="database-name">Samsung</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="Xbox" data-org="XBX"
-        data-logo="https://www.google.com/s2/favicons?domain=xbox.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=xbox.com&sz=128" alt="Xbox">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Xbox</span>
-          <span class="database-option-org">XBX</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="Apple">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=apple.com&sz=128" alt="Apple">
+  </span>
+  <span class="database-name">Apple</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="PlayStation" data-org="PSN"
-        data-logo="https://www.google.com/s2/favicons?domain=playstation.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=playstation.com&sz=128" alt="PlayStation">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">PlayStation</span>
-          <span class="database-option-org">PSN</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="Xiaomi">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=mi.com&sz=128" alt="Xiaomi">
+  </span>
+  <span class="database-name">Xiaomi</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="Samsung" data-org="SAM"
-        data-logo="https://www.google.com/s2/favicons?domain=samsung.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=samsung.com&sz=128" alt="Samsung">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Samsung</span>
-          <span class="database-option-org">SAM</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="POCO">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=po.co&sz=128" alt="POCO">
+  </span>
+  <span class="database-name">POCO</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="Apple" data-org="APL"
-        data-logo="https://www.google.com/s2/favicons?domain=apple.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=apple.com&sz=128" alt="Apple">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Apple</span>
-          <span class="database-option-org">APL</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="Opera">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=opera.com&sz=128" alt="Opera">
+  </span>
+  <span class="database-name">Opera</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="Xiaomi" data-org="XMI"
-        data-logo="https://www.google.com/s2/favicons?domain=mi.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=mi.com&sz=128" alt="Xiaomi">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Xiaomi</span>
-          <span class="database-option-org">XMI</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="Firefox">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=mozilla.org&sz=128" alt="Firefox">
+  </span>
+  <span class="database-name">Firefox</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="POCO" data-org="PCO"
-        data-logo="https://www.google.com/s2/favicons?domain=po.co&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=po.co&sz=128" alt="POCO">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">POCO</span>
-          <span class="database-option-org">PCO</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="Steam">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=steampowered.com&sz=128" alt="Steam">
+  </span>
+  <span class="database-name">Steam</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="Opera" data-org="OPR"
-        data-logo="https://www.google.com/s2/favicons?domain=opera.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=opera.com&sz=128" alt="Opera">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Opera</span>
-          <span class="database-option-org">OPR</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="Capcom">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=capcom.com&sz=128" alt="Capcom">
+  </span>
+  <span class="database-name">Capcom</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="Firefox" data-org="FFX"
-        data-logo="https://www.google.com/s2/favicons?domain=mozilla.org&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=mozilla.org&sz=128" alt="Firefox">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Firefox</span>
-          <span class="database-option-org">FFX</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="NetherRealm Studios">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=netherrealm.com&sz=128" alt="NetherRealm Studios">
+  </span>
+  <span class="database-name">NetherRealm Studios</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="Steam" data-org="STM"
-        data-logo="https://www.google.com/s2/favicons?domain=steampowered.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=steampowered.com&sz=128" alt="Steam">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Steam</span>
-          <span class="database-option-org">STM</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="Call of Duty">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=callofduty.com&sz=128" alt="Call of Duty">
+  </span>
+  <span class="database-name">Call of Duty</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="Capcom" data-org="CPM"
-        data-logo="https://www.google.com/s2/favicons?domain=capcom.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=capcom.com&sz=128" alt="Capcom">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Capcom</span>
-          <span class="database-option-org">CPM</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="Netflix">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=netflix.com&sz=128" alt="Netflix">
+  </span>
+  <span class="database-name">Netflix</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="NetherRealm Studios" data-org="NRS"
-        data-logo="https://www.google.com/s2/favicons?domain=netherrealm.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=netherrealm.com&sz=128" alt="NetherRealm Studios">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">NetherRealm Studios</span>
-          <span class="database-option-org">NRS</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="T-Mobile">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=t-mobile.com&sz=128" alt="T-Mobile">
+  </span>
+  <span class="database-name">T-Mobile</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="Call of Duty" data-org="COD"
-        data-logo="https://www.google.com/s2/favicons?domain=callofduty.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=callofduty.com&sz=128" alt="Call of Duty">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Call of Duty</span>
-          <span class="database-option-org">COD</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="Rockstar">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=rockstargames.com&sz=128" alt="Rockstar">
+  </span>
+  <span class="database-name">Rockstar Games</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="Netflix" data-org="NFX"
-        data-logo="https://www.google.com/s2/favicons?domain=netflix.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=netflix.com&sz=128" alt="Netflix">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Netflix</span>
-          <span class="database-option-org">NFX</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="EA Sports">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=ea.com&sz=128" alt="EA Sports">
+  </span>
+  <span class="database-name">EA Sports</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="T-Mobile" data-org="TMO"
-        data-logo="https://www.google.com/s2/favicons?domain=t-mobile.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=t-mobile.com&sz=128" alt="T-Mobile">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">T-Mobile</span>
-          <span class="database-option-org">TMO</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="Activision Blizzard">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=activision.com&sz=128" alt="Activision Blizzard">
+  </span>
+  <span class="database-name">Activision Blizzard</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="Rockstar" data-org="RSG"
-        data-logo="https://www.google.com/s2/favicons?domain=rockstargames.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=rockstargames.com&sz=128" alt="Rockstar Games">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Rockstar Games</span>
-          <span class="database-option-org">RSG</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="Ubisoft">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=ubisoft.com&sz=128" alt="Ubisoft">
+  </span>
+  <span class="database-name">Ubisoft</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="EA Sports" data-org="EAS"
-        data-logo="https://www.google.com/s2/favicons?domain=ea.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=ea.com&sz=128" alt="EA Sports">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">EA Sports</span>
-          <span class="database-option-org">EAS</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="HP">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=hp.com&sz=128" alt="HP">
+  </span>
+  <span class="database-name">HP</span>
+</button>
 
-      <button class="database-option" type="button"
-        data-db="Activision Blizzard" data-org="ATB"
-        data-logo="https://www.google.com/s2/favicons?domain=activision.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=activision.com&sz=128" alt="Activision Blizzard">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Activision Blizzard</span>
-          <span class="database-option-org">ATB</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+<button class="database-card" type="button" data-db="Lenovo">
+  <span class="database-icon">
+    <img src="https://www.google.com/s2/favicons?domain=lenovo.com&sz=128" alt="Lenovo">
+  </span>
+  <span class="database-name">Lenovo</span>
+</button>
+    
+    <button class="database-card" type="button" data-db="NASA">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=nasa.gov&sz=128" alt="NASA">
+      </span>
+      <span class="database-name">NASA</span>
+    </button>
 
-      <button class="database-option" type="button"
-        data-db="Ubisoft" data-org="UBI"
-        data-logo="https://www.google.com/s2/favicons?domain=ubisoft.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=ubisoft.com&sz=128" alt="Ubisoft">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Ubisoft</span>
-          <span class="database-option-org">UBI</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+    <button class="database-card" type="button" data-db="Tesla">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=tesla.com&sz=128" alt="Tesla">
+      </span>
+      <span class="database-name">Tesla</span>
+    </button>
 
-      <button class="database-option" type="button"
-        data-db="HP" data-org="HPE"
-        data-logo="https://www.google.com/s2/favicons?domain=hp.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=hp.com&sz=128" alt="HP">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">HP</span>
-          <span class="database-option-org">HPE</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+    <button class="database-card" type="button" data-db="SpaceX">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=spacex.com&sz=128" alt="SpaceX">
+      </span>
+      <span class="database-name">SpaceX</span>
+    </button>
 
-      <button class="database-option" type="button"
-        data-db="Lenovo" data-org="LNV"
-        data-logo="https://www.google.com/s2/favicons?domain=lenovo.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=lenovo.com&sz=128" alt="Lenovo">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Lenovo</span>
-          <span class="database-option-org">LNV</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+    <button class="database-card" type="button" data-db="KFC">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=kfc.com&sz=128" alt="KFC">
+      </span>
+      <span class="database-name">KFC</span>
+    </button>
 
-      <button class="database-option" type="button"
-        data-db="NASA" data-org="NASA"
-        data-logo="https://www.google.com/s2/favicons?domain=nasa.gov&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=nasa.gov&sz=128" alt="NASA">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">NASA</span>
-          <span class="database-option-org">NASA</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
+    <button class="database-card" type="button" data-db="Vodafone">
+      <span class="database-icon">
+        <img src="https://www.google.com/s2/favicons?domain=vodafone.com&sz=128" alt="Vodafone">
+      </span>
+      <span class="database-name">Vodafone</span>
+    </button>
 
-      <button class="database-option" type="button"
-        data-db="Tesla" data-org="TSL"
-        data-logo="https://www.google.com/s2/favicons?domain=tesla.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=tesla.com&sz=128" alt="Tesla">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Tesla</span>
-          <span class="database-option-org">TSL</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
-
-      <button class="database-option" type="button"
-        data-db="SpaceX" data-org="SPX"
-        data-logo="https://www.google.com/s2/favicons?domain=spacex.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=spacex.com&sz=128" alt="SpaceX">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">SpaceX</span>
-          <span class="database-option-org">SPX</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
-
-      <button class="database-option" type="button"
-        data-db="KFC" data-org="KFC"
-        data-logo="https://www.google.com/s2/favicons?domain=kfc.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=kfc.com&sz=128" alt="KFC">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">KFC</span>
-          <span class="database-option-org">KFC</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
-
-      <button class="database-option" type="button"
-        data-db="Vodafone" data-org="VDF"
-        data-logo="https://www.google.com/s2/favicons?domain=vodafone.com&sz=128">
-        <span class="database-option-icon">
-          <img src="https://www.google.com/s2/favicons?domain=vodafone.com&sz=128" alt="Vodafone">
-        </span>
-        <span class="database-option-info">
-          <span class="database-option-name">Vodafone</span>
-          <span class="database-option-org">VDF</span>
-        </span>
-        <span class="database-option-check">✓</span>
-      </button>
-
-    </div>
   </div>
 
   <div class="database-status" id="databaseStatus" role="status">
@@ -1642,7 +1225,7 @@ input:focus,select:focus{
 
   <div class="motto">یک قدم جلوتر از فیلترینگ 😎</div>
   <div class="team">برای ورود به کانال روی آیکون تلگرام بزن</div>
-  <small>v2.2.0 ✓ • Powered by Team "𝐃𝐚𝐫𝐤ᵛᵖⁿ | Arti 🧑‍💻"</small>
+  <small>v2.2.0 ✓ • Powered by Team "𝐃𝐚𝐫𝐤ᵛᵖⁿ"</small>
 </footer>
 
 </main>
@@ -1710,184 +1293,23 @@ function getCountryFlag(code) {
 }
 
 /* =========================
-   PUBLIC IP DETECTION
-========================= */
-
-async function loadPublicIP() {
-  const ipElement = $("userPublicIP");
-  const statusElement = $("ipStatus");
-  const refreshButton = $("refreshIPBtn");
-  const flagElement = $("userIPFlag");
-
-  refreshButton.disabled = true;
-  ipElement.textContent = "در حال بررسی...";
-  statusElement.textContent = "Checking current connection";
-
-  flagElement.hidden = true;
-  flagElement.src = "";
-
-  const services = [
-    "https://ipapi.co/json/",
-    "https://ipwho.is/"
-  ];
-
-  let detectedIP = "";
-  let countryCode = "";
-
-  for (const url of services) {
-    try {
-      const response = await fetch(url, {
-        cache: "no-store"
-      });
-
-      if (!response.ok) continue;
-
-      const data = await response.json();
-
-      if (url.includes("ipwho.is") && data.success === false) {
-        continue;
-      }
-
-      if (data.ip && /^[0-9a-fA-F:.]+$/.test(data.ip)) {
-        detectedIP = data.ip;
-        countryCode = String(
-          data.country_code || ""
-        ).toUpperCase();
-
-        break;
-      }
-    } catch (_) {}
-  }
-
-  if (!detectedIP) {
-    const fallbackServices = [
-      "https://api.ipify.org?format=json",
-      "https://api64.ipify.org?format=json"
-    ];
-
-    for (const url of fallbackServices) {
-      try {
-        const response = await fetch(url, {
-          cache: "no-store"
-        });
-
-        if (!response.ok) continue;
-
-        const data = await response.json();
-
-        if (data.ip) {
-          detectedIP = data.ip;
-          break;
-        }
-      } catch (_) {}
-    }
-  }
-
-  if (detectedIP) {
-    ipElement.textContent = detectedIP;
-
-    if (/^[A-Z]{2}$/.test(countryCode)) {
-      flagElement.src =
-        "https://flagcdn.com/w80/" +
-        countryCode.toLowerCase() +
-        ".png";
-
-      flagElement.alt = countryCode + " flag";
-      flagElement.hidden = false;
-
-      flagElement.onerror = () => {
-        flagElement.hidden = true;
-      };
-
-      statusElement.textContent =
-        "✓ IP detected • " + getCountryName(countryCode);
-    } else {
-      statusElement.textContent =
-        "✓ Current public IP detected";
-    }
-
-  } else {
-    ipElement.textContent = "Unavailable";
-    statusElement.textContent =
-      "امکان دریافت IP وجود ندارد.";
-  }
-
-  refreshButton.disabled = false;
-}
-
-$("refreshIPBtn").addEventListener("click", loadPublicIP);
-
-/* =========================
-   DATABASE DROPDOWN
+   DATABASE SELECTION
 ========================= */
 
 function setDatabaseCardsDisabled(disabled) {
-  document.querySelectorAll(".database-option").forEach(option => {
-    option.disabled = disabled;
-  });
-
-  $("databaseTrigger").disabled = disabled;
-}
-
-function closeDatabaseMenu() {
-  const menu = $("databaseMenu");
-  const trigger = $("databaseTrigger");
-  const picker = $("databasePicker");
-
-  if (!menu || !trigger || !picker) return;
-
-  menu.hidden = true;
-  trigger.setAttribute("aria-expanded", "false");
-  picker.classList.remove("menu-open");
-}
-
-function openDatabaseMenu() {
-  if ($("databaseTrigger").disabled) return;
-
-  const menu = $("databaseMenu");
-  const trigger = $("databaseTrigger");
-  const picker = $("databasePicker");
-
-  const opening = menu.hidden;
-
-  menu.hidden = !opening;
-  trigger.setAttribute("aria-expanded", String(opening));
-  picker.classList.toggle("menu-open", opening);
-}
-
-function updateDatabasePicker(option) {
-  const database = option.dataset.db;
-  const org = option.dataset.org;
-  const logo = option.dataset.logo;
-
-  $("databaseCurrentName").textContent = database;
-  $("databaseCurrentOrg").textContent = org;
-
-  const currentLogo = $("databaseCurrentLogo");
-
-  currentLogo.src = logo;
-  currentLogo.alt = database;
-  currentLogo.hidden = false;
-
-  currentLogo.onerror = () => {
-    currentLogo.hidden = true;
-  };
-
-  document.querySelectorAll(".database-option").forEach(item => {
-    const active = item === option;
-
-    item.classList.toggle("selected", active);
-    item.setAttribute("aria-selected", String(active));
+  document.querySelectorAll(".database-card").forEach(card => {
+    card.disabled = disabled;
   });
 }
 
-function selectDatabase(database, option) {
+function selectDatabase(database, card) {
   if (databaseUnlocked) return;
 
   selectedDatabase = database;
 
-  updateDatabasePicker(option);
-  closeDatabaseMenu();
+  document.querySelectorAll(".database-card").forEach(item => {
+    item.classList.toggle("selected", item === card);
+  });
 
   setDatabaseCardsDisabled(true);
 
@@ -1944,13 +1366,11 @@ function showDatabaseSuccess(database) {
   }, 5000);
 }
 
-document.querySelectorAll(".database-option").forEach(option => {
-  option.addEventListener("click", () => {
-    selectDatabase(option.dataset.db, option);
+document.querySelectorAll(".database-card").forEach(card => {
+  card.addEventListener("click", () => {
+    selectDatabase(card.dataset.db, card);
   });
 });
-
-$("databaseTrigger").addEventListener("click", openDatabaseMenu);
 
 /* =========================
    COUNTRY DATABASE
@@ -2433,16 +1853,11 @@ document.addEventListener("click", event => {
   if (!$("countryPicker").contains(event.target)) {
     closeCountryMenu();
   }
-
-  if (!$("databasePicker").contains(event.target)) {
-    closeDatabaseMenu();
-  }
 });
 
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") {
     closeCountryMenu();
-    closeDatabaseMenu();
   }
 });
 
@@ -2455,8 +1870,12 @@ $("refreshBtn").addEventListener("click", () => {
 ========================= */
 
 initExtraOptions();
-loadPublicIP();
 
+/*
+  در شروع صفحه:
+  دیتابیس هنوز انتخاب نشده است.
+  انتخاب کشور و ساخت لینک تا پایان مرحله دیتابیس غیرفعال می‌مانند.
+*/
 setDatabaseCardsDisabled(false);
 
 </script>
