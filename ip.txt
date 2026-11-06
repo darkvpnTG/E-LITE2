@@ -1,28 +1,28 @@
-{at}
-{au}
-{be}
-{br}
-{ca}
-{ch}
-{cz}
-{de}
-{dk}
-{es}
-{fi}
-{fr}
-{gb}
-{id}
-{ie}
-{in}
-{it}
-{jp}
-{kr}
-{lt}
-{nl}
-{no}
-{pl}
-{ro}
-{rs}
-{se}
-{sg}
-{us}
+{at} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=AT
+{au} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=AU
+{be} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=BE
+{br} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=BR
+{ca} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=CA
+{ch} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=CH
+{cz} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=CZ
+{de} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=DE
+{dk} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=DK
+{es} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=ES
+{fi} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=FI
+{fr} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=FR
+{gb} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=GB
+{id} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=ID
+{ie} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=IE
+{in} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=IN
+{it} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=IT
+{jp} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=JP
+{kr} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=KR
+{lt} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=LT
+{nl} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=NL
+{no} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=NO
+{pl} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=PL
+{ro} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=RO
+{rs} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=RS
+{se} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=SE
+{sg} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=SG
+{us} https://sky-pixel-295.gumepe3734.workers.dev/sync?sub=US
