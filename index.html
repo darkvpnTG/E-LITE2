@@ -6,7 +6,7 @@
 <meta name="google-site-verification" content="ipW9z_TjvqoYkor_Mwue2dRp-iUmRiApxP824lYhDx8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101827">
-<title>DARK VPN | PingNG Configurator</title>
+<title>DARK VPN | VLESS Subscription</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
@@ -580,6 +580,32 @@ input:focus,select:focus{
 
 .country-option-name{flex:1}
 
+
+/* SUBSCRIPTION CARD */
+
+.subscription-card{
+  margin-top:14px;
+  padding:15px;
+  border:1px solid rgba(117,217,255,.32);
+  border-radius:17px;
+  background:linear-gradient(135deg,rgba(16,42,64,.88),rgba(16,23,43,.9));
+  box-shadow:0 8px 25px rgba(0,0,0,.2)
+}
+
+.subscription-card[hidden]{display:none}
+.subscription-head{display:flex;align-items:center;gap:11px}
+.subscription-flag{width:42px;height:29px;min-width:42px;overflow:hidden;border-radius:6px;border:1px solid #ffffff45;background:#ffffff12}
+.subscription-flag img{display:block;width:100%;height:100%;object-fit:cover}
+.subscription-country{display:flex;flex-direction:column;gap:3px;font-size:11px;color:#a9bfd5}
+.subscription-country strong{font-size:14px;color:#f4f8ff}
+.subscription-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
+.subscription-meta-item{padding:10px;border:1px solid #ffffff18;border-radius:11px;background:#07132170}
+.subscription-meta-item span{display:block;font-size:10px;color:#a9bfd5;margin-bottom:4px}
+.subscription-meta-item strong{font-size:13px;color:#dff7ff}
+.subscription-card .btn{width:100%}
+.endpoint-count{font-size:34px;font-weight:900;color:#9deaff;line-height:1.4;margin:7px 0}
+.endpoint-copy-button{margin-top:17px}
+
 .location-native{
   position:absolute!important;
   width:1px!important;
@@ -844,6 +870,17 @@ input:focus,select:focus{
   </div>
 </div>
 
+<!-- ENDPOINT SCAN MODAL -->
+<div class="apn-modal hidden" id="endpointModal" role="dialog" aria-modal="true">
+  <div class="apn-modal-card">
+    <div id="endpointModalIcon" class="apn-loader"></div>
+    <h3 class="apn-modal-title" id="endpointModalTitle">در حال اسکن Endpoint</h3>
+    <p class="apn-modal-message" id="endpointModalMessage">لطفاً تا پایان فرایند منتظر بمانید.</p>
+    <div id="endpointCount" class="endpoint-count" hidden></div>
+    <button class="modal-button endpoint-copy-button" id="copySubscriptionBtn" type="button" hidden>کپی ساب</button>
+  </div>
+</div>
+
 <!-- APN MODAL -->
 <div class="apn-modal hidden" id="apnModal" role="dialog" aria-modal="true">
   <div class="apn-modal-card">
@@ -860,7 +897,7 @@ input:focus,select:focus{
     <img class="logo" src="./logo.jpg" alt="DARK VPN Logo">
     <div>
       <h1>𝐃𝐚𝐫𝐤ᵛᵖⁿ</h1>
-      <small>PingNG • SSTP • E-lite/2</small>
+      <small>VLESS • SSTP • E-lite/2</small>
     </div>
   </div>
   <button class="theme" id="themeBtn" type="button">☀️ حالت روز</button>
@@ -880,8 +917,8 @@ input:focus,select:focus{
     </div>
   </div>
 
-  <h2>ساخت کانفیگ PingNG</h2>
-  <p>انتخاب دیتابیس و کشور برای تنظیم لوکیشن</p>
+  <h2>دریافت اشتراک VLESS</h2>
+  <p>انتخاب دیتابیس و لوکیشن برای دریافت لینک اشتراک</p>
 </section>
 
 <!-- DATABASE SECTION -->
@@ -1053,9 +1090,9 @@ input:focus,select:focus{
   </div>
 </section>
 
-<!-- PINGNG CONFIGURATION -->
+<!-- SUBSCRIPTION CONFIGURATION -->
 <section class="panel" id="configPanel" style="margin-top:16px">
-  <h3 class="section-title">تنظیمات کانفیگ</h3>
+  <h3 class="section-title">انتخاب لوکیشن اشتراک</h3>
 
   <div class="grid">
     <div class="field full">
@@ -1080,14 +1117,26 @@ input:focus,select:focus{
         <option value="">ابتدا دیتابیس انتخاب کنید</option>
       </select>
 
-      <span class="hint">کشور انتخاب‌شده در پارامتر لوکیشن پروفایل قرار می‌گیرد.</span>
+      <span class="hint">پس از انتخاب کشور، اطلاعات اشتراک و گزینه جستجوی Endpoint نمایش داده می‌شود.</span>
+
+      <div class="subscription-card" id="subscriptionCard" hidden>
+        <div class="subscription-head">
+          <span class="subscription-flag"><img id="subscriptionFlag" src="" alt="پرچم کشور"></span>
+          <div class="subscription-country">
+            <span>لوکیشن انتخاب‌شده</span>
+            <strong id="subscriptionCountryName"></strong>
+          </div>
+        </div>
+        <div class="subscription-meta">
+          <div class="subscription-meta-item"><span>حجم</span><strong>100GB</strong></div>
+          <div class="subscription-meta-item"><span>انقضا</span><strong>10 روز</strong></div>
+        </div>
+        <button class="btn primary" id="scanEndpointBtn" type="button">جستجو Endpoint</button>
+      </div>
     </div>
   </div>
 
   <div class="actions">
-    <button class="btn primary" id="createPingngBtn" type="button" disabled>
-      ساخت کانفیگ PingNG
-    </button>
     <button class="btn secondary" id="refreshBtn" type="button" disabled>
       بارگذاری مجدد کشورها
     </button>
@@ -1095,22 +1144,6 @@ input:focus,select:focus{
 
   <div class="status" id="status" role="status">
     ابتدا یک دیتابیس انتخاب کنید.
-  </div>
-
-  <div class="output" id="pingngOutput">
-    <div style="font-weight:800;margin-bottom:9px">کانفیگ PingNG آماده است</div>
-    <div class="hint" id="selectedCountryText" style="margin-bottom:10px"></div>
-    <code id="pingngResultLink"></code>
-
-    <div class="actions">
-      <button class="btn primary" id="openPingngBtn" type="button">
-        باز کردن در PingNG
-      </button>
-    </div>
-
-    <div class="hint" style="margin-top:9px">
-      برای باز شدن مستقیم، برنامه PingNG باید روی گوشی نصب باشد.
-    </div>
   </div>
 </section>
 
@@ -1322,8 +1355,10 @@ const LOCATION_LIST_URL =
 const $ = id => document.getElementById(id);
 
 let availableCountries = new Set();
+let countrySubscriptions = new Map();
 let selectedCountry = "";
-let generatedPingngLink = "";
+let endpointTimer = null;
+let displayedEndpointCount = 0;
 
 let databaseUnlocked = false;
 let selectedDatabase = "";
@@ -1494,9 +1529,10 @@ function selectDatabase(database, card) {
 
   selectedCountry = "";
   availableCountries.clear();
-  generatedPingngLink = "";
-
-  $("pingngOutput").classList.remove("show");
+  countrySubscriptions.clear();
+  clearTimeout(endpointTimer);
+  $("endpointModal").classList.add("hidden");
+  $("subscriptionCard").hidden = true;
 
   document.querySelectorAll(".database-card").forEach(item => {
     item.classList.toggle("selected", item === card);
@@ -1514,7 +1550,6 @@ function selectDatabase(database, card) {
 
   $("countryTrigger").disabled = true;
   $("refreshBtn").disabled = true;
-  $("createPingngBtn").disabled = true;
 
   $("countryCurrentName").textContent =
     "در انتظار آماده‌سازی دیتابیس...";
@@ -1589,8 +1624,8 @@ async function loadLocations() {
   const trigger = $("countryTrigger");
   const menu = $("countryMenu");
 
-  $("createPingngBtn").disabled = true;
   $("refreshBtn").disabled = true;
+  $("scanEndpointBtn").disabled = true;
   trigger.disabled = true;
 
   select.disabled = true;
@@ -1598,6 +1633,7 @@ async function loadLocations() {
 
   $("countryCurrentName").textContent = "در حال دریافت لوکیشن‌ها...";
   $("countryCurrentFlag").hidden = true;
+  $("subscriptionCard").hidden = true;
 
   menu.replaceChildren();
   closeCountryMenu();
@@ -1608,32 +1644,33 @@ async function loadLocations() {
       {cache:"no-store"}
     );
 
-    if (!response.ok) {
-      throw new Error("HTTP " + response.status);
-    }
+    if (!response.ok) throw new Error("HTTP " + response.status);
 
     const raw = await response.text();
-    const countries = new Set();
+    const subscriptions = new Map();
 
     raw.split(/\r?\n/).forEach(line => {
       line = line.replace(/^\uFEFF/, "").trim();
-
       if (!line || line.startsWith("#")) return;
 
-      const match = line.match(/^\{\s*([A-Za-z]{2})\s*\}$/);
-
+      const match = line.match(/^\{\s*([A-Za-z]{2})\s*\}\s+(https?:\/\/\S+)\s*$/);
       if (!match) return;
 
       let code = match[1].toUpperCase();
-
       if (code === "UK") code = "GB";
 
-      countries.add(code);
+      try {
+        const parsedUrl = new URL(match[2]);
+        if (parsedUrl.protocol !== "https:" && parsedUrl.protocol !== "http:") return;
+        subscriptions.set(code, match[2]);
+      } catch (_) {
+        return;
+      }
     });
 
-    availableCountries = countries;
-
-    const sortedCountries = [...countries].sort();
+    countrySubscriptions = subscriptions;
+    availableCountries = new Set(subscriptions.keys());
+    const sortedCountries = [...availableCountries].sort();
 
     select.replaceChildren();
     menu.replaceChildren();
@@ -1645,7 +1682,6 @@ async function loadLocations() {
       select.appendChild(option);
 
       const item = document.createElement("button");
-
       item.type = "button";
       item.className = "country-option";
       item.setAttribute("role", "option");
@@ -1660,12 +1696,10 @@ async function loadLocations() {
       flag.src = "https://flagcdn.com/w80/" + code.toLowerCase() + ".png";
       flag.alt = code + " flag";
       flag.loading = "lazy";
-
       flag.onerror = () => {
         flag.style.display = "none";
         flagFrame.textContent = getCountryFlag(code);
       };
-
       flagFrame.appendChild(flag);
 
       const name = document.createElement("span");
@@ -1673,53 +1707,32 @@ async function loadLocations() {
       name.textContent = getCountryName(code);
 
       item.append(flagFrame, name);
-
       item.addEventListener("click", () => selectCountry(code));
-
       menu.appendChild(item);
     });
 
     select.disabled = sortedCountries.length === 0;
     trigger.disabled = sortedCountries.length === 0;
 
-    $("createPingngBtn").disabled = sortedCountries.length === 0;
-
     if (sortedCountries.length) {
-      const firstCountry = sortedCountries[0];
-
-      select.value = firstCountry;
-      selectCountry(firstCountry);
-
-      setStatus(
-        "کشورها دریافت شدند: " + sortedCountries.length + " کشور."
-      );
+      selectCountry(sortedCountries[0]);
+      setStatus("کشورها و لینک‌های اشتراک دریافت شدند: " + sortedCountries.length + " کشور.");
     } else {
       select.innerHTML = '<option value="">کشوری پیدا نشد</option>';
       $("countryCurrentName").textContent = "کشوری پیدا نشد";
-
-      setStatus(
-        "هیچ کد کشور معتبری در فایل ip.txt پیدا نشد.",
-        true
-      );
+      setStatus("هیچ خط معتبر شامل کد کشور و لینک در فایل ip.txt پیدا نشد.", true);
     }
 
   } catch (error) {
     availableCountries.clear();
-
+    countrySubscriptions.clear();
     select.innerHTML = '<option value="">خطا در دریافت کشورها</option>';
     select.disabled = true;
     trigger.disabled = true;
-
-    $("createPingngBtn").disabled = true;
-
     menu.replaceChildren();
-
     $("countryCurrentName").textContent = "خطا در دریافت لوکیشن";
-
-    setStatus(
-      "دریافت کشورها ناموفق بود: " + error.message,
-      true
-    );
+    $("subscriptionCard").hidden = true;
+    setStatus("دریافت کشورها ناموفق بود: " + error.message, true);
 
   } finally {
     $("refreshBtn").disabled = false;
@@ -1750,24 +1763,22 @@ function updateCountryPicker(code) {
 
 function selectCountry(code) {
   code = String(code || "").toUpperCase();
-
-  if (!availableCountries.has(code)) return;
+  if (!availableCountries.has(code) || !countrySubscriptions.has(code)) return;
 
   selectedCountry = code;
-
   $("locationSelect").value = code;
-
   updateCountryPicker(code);
 
-  $("pingngOutput").classList.remove("show");
+  clearTimeout(endpointTimer);
+  $("endpointModal").classList.add("hidden");
+  $("scanEndpointBtn").disabled = false;
+  $("subscriptionCard").hidden = false;
+  $("subscriptionFlag").src = "https://flagcdn.com/w80/" + code.toLowerCase() + ".png";
+  $("subscriptionFlag").alt = code + " flag";
+  $("subscriptionCountryName").textContent =
+    getCountryFlag(code) + "  " + getCountryName(code) + " (" + code + ")";
 
-  generatedPingngLink = "";
-
-  setStatus(
-    "کشور انتخاب شد: " + getCountryName(code) +
-    " — آماده ساخت لینک PingNG."
-  );
-
+  setStatus("لوکیشن انتخاب شد: " + getCountryName(code) + " — آماده جستجوی Endpoint.");
   closeCountryMenu();
 }
 
@@ -1775,98 +1786,80 @@ function closeCountryMenu() {
   const menu = $("countryMenu");
   const trigger = $("countryTrigger");
   const picker = $("countryPicker");
-
   if (!menu || !trigger || !picker) return;
-
   menu.hidden = true;
   trigger.setAttribute("aria-expanded", "false");
   picker.classList.remove("menu-open");
 }
 
 /* =========================
-   PINGNG LINK
+   ENDPOINT SCAN AND SUBSCRIPTION COPY
 ========================= */
 
-const PINGNG_BASE =
-  "pingng-warp://profile?v=1" +
-  "&kind=m" +
-  "&r=RS1MSVRFLzIgLSBEQVJLdnBu" +
-  "&ec=MTYyLjE1OS4xOTguMC8yNDo0NDMsMTYyLjE1OS4xOTkuMC8yNDo0NDM" +
-  "&pe=MTYyLjE1OS4xOTguMTM2" +
-  "&pp=NDQz" +
-  "&mode=QXV0bw" +
-  "&dn=REFSS3ZwbiBTeXN0ZW0" +
-  "&sni=Y2xvdWRmbGFyZS5jb20" +
-  "&dns=MS4xLjEuMSwxLjAuMC4x" +
-  "&h2=dHJ1ZQ" +
-  "&sb=MTI3LjAuMC4x" +
-  "&sp=MTgxOQ" +
-  "&sel=MTYyLjE1OS4xOTguMTM2OjQ0Mw" +
-  "&ps=dHJ1ZQ" +
-  "&tor=ZmFsc2U" +
-  "&reg=X19BVVRPX18" +
-  "&tbm=YXV0bw" +
-  "&tbs=YXV0bw" +
-  "&tbl=" +
-  "&pm=ZGlyZWN0" +
-  "&ci=" +
-  "&cs=" +
-  "&cl=" +
-  "&ppro=T2Zm" +
-  "&da=";
-
-function encodeCountry(code) {
-  return btoa(code).replace(/=+$/g, "");
-}
-
-function buildPingngLink(countryCode) {
-  const code = String(countryCode || "").toUpperCase();
-
-  if (!availableCountries.has(code)) {
-    throw new Error("لطفاً ابتدا یک کشور معتبر انتخاب کنید.");
-  }
-
-  return PINGNG_BASE + "&pr=" + encodeCountry(code);
-}
-
-$("createPingngBtn").addEventListener("click", () => {
-  try {
-    if (!databaseUnlocked) {
-      throw new Error("ابتدا یک دیتابیس انتخاب کنید.");
-    }
-
-    if (!selectedCountry) {
-      throw new Error("ابتدا کشور موردنظر را انتخاب کنید.");
-    }
-
-    generatedPingngLink = buildPingngLink(selectedCountry);
-
-    $("selectedCountryText").textContent =
-      "دیتابیس: " + selectedDatabase + " | " +
-      "لوکیشن انتخاب‌شده: " +
-      getCountryFlag(selectedCountry) + " " +
-      getCountryName(selectedCountry) +
-      " (" + selectedCountry + ")";
-
-    $("pingngResultLink").textContent = generatedPingngLink;
-
-    $("pingngOutput").classList.add("show");
-
-    setStatus("لینک PingNG برای کشور انتخاب‌شده ساخته شد.");
-
-  } catch (error) {
-    setStatus("خطا: " + error.message, true);
-  }
-});
-
-$("openPingngBtn").addEventListener("click", () => {
-  if (!generatedPingngLink) {
-    setStatus("ابتدا لینک PingNG را بسازید.", true);
+function startEndpointScan() {
+  if (!selectedCountry || !countrySubscriptions.has(selectedCountry)) {
+    setStatus("ابتدا یک لوکیشن معتبر انتخاب کنید.", true);
     return;
   }
 
-  window.location.href = generatedPingngLink;
-});
+  clearTimeout(endpointTimer);
+  $("scanEndpointBtn").disabled = true;
+  $("endpointModalIcon").className = "apn-loader";
+  $("endpointModalIcon").textContent = "";
+  $("endpointModalTitle").textContent = "در حال اسکن Endpoint";
+  $("endpointModalMessage").textContent = "لطفاً تا پایان فرایند منتظر بمانید.";
+  $("endpointCount").hidden = true;
+  $("copySubscriptionBtn").hidden = true;
+  $("copySubscriptionBtn").textContent = "کپی ساب";
+  $("endpointModal").classList.remove("hidden");
+
+  endpointTimer = setTimeout(() => {
+    displayedEndpointCount = Math.floor(Math.random() * 150) + 1;
+
+    $("endpointModalIcon").className = "apn-success";
+    $("endpointModalIcon").textContent = "✓";
+    $("endpointModalTitle").textContent = "جستجو با موفقیت انجام شد";
+    $("endpointModalMessage").textContent =
+      "تعداد " + displayedEndpointCount + " Endpoint برای شما پیدا شد.";
+    $("endpointCount").textContent = displayedEndpointCount;
+    $("endpointCount").hidden = false;
+    $("copySubscriptionBtn").hidden = false;
+    $("scanEndpointBtn").disabled = false;
+  }, 2600);
+}
+
+async function copySelectedSubscription() {
+  const subscriptionUrl = countrySubscriptions.get(selectedCountry);
+  if (!subscriptionUrl) {
+    setStatus("لینک اشتراک این لوکیشن در فایل ip.txt پیدا نشد.", true);
+    return;
+  }
+
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(subscriptionUrl);
+    } else {
+      const temp = document.createElement("textarea");
+      temp.value = subscriptionUrl;
+      temp.setAttribute("readonly", "");
+      temp.style.position = "fixed";
+      temp.style.opacity = "0";
+      document.body.appendChild(temp);
+      temp.select();
+      const copied = document.execCommand("copy");
+      temp.remove();
+      if (!copied) throw new Error("کپی خودکار در این مرورگر پشتیبانی نشد.");
+    }
+
+    $("copySubscriptionBtn").textContent = "کپی شد ✓";
+    setStatus("لینک اشتراک " + getCountryName(selectedCountry) + " در کلیپ‌بورد کپی شد.");
+  } catch (error) {
+    setStatus("کپی لینک انجام نشد: " + error.message, true);
+  }
+}
+
+$("scanEndpointBtn").addEventListener("click", startEndpointScan);
+$("copySubscriptionBtn").addEventListener("click", copySelectedSubscription);
 
 /* =========================
    APN MODAL
