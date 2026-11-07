@@ -414,6 +414,68 @@ input:focus,select:focus{
   line-height:1.8
 }
 
+
+
+/* LIVE TRAFFIC STATUS CARD — MATCHES YOUR IP CARD */
+.traffic-card{
+  width:min(440px,100%);
+  margin:18px auto 14px;
+  padding:13px 15px;
+  border:1px solid #75d9ff45;
+  border-radius:16px;
+  background:linear-gradient(135deg,#102a40d9,#10172bd9);
+  box-shadow:0 8px 25px #0003;
+  overflow:hidden;
+  direction:rtl;
+  text-align:right
+}
+.traffic-card-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px
+}
+.traffic-card-title{font-size:13px;font-weight:900;color:#eaf8ff}
+.traffic-live{
+  display:inline-flex;align-items:center;gap:6px;
+  color:#91f2c0;font-size:10px;font-weight:800;
+  border:1px solid #59d99a45;background:#35c77b12;
+  border-radius:30px;padding:5px 8px;white-space:nowrap
+}
+.traffic-live:before{
+  content:"";width:6px;height:6px;border-radius:50%;
+  background:#53e49b;box-shadow:0 0 9px #53e49b;
+  animation:trafficPulse 1.4s ease-in-out infinite
+}
+.traffic-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 112px;
+  align-items:center;gap:10px;
+  padding:9px 0
+}
+.traffic-row + .traffic-row{border-top:1px solid #ffffff13}
+.traffic-meta{min-width:0}
+.traffic-label{font-size:11px;color:#b9cadd;font-weight:700;margin-bottom:5px}
+.traffic-value{
+  display:block;direction:ltr;text-align:right;
+  color:#8ee8ff;font-size:clamp(19px,4.5vw,24px);
+  line-height:1.35;font-weight:900;font-variant-numeric:tabular-nums;
+  letter-spacing:.2px;white-space:nowrap
+}
+.traffic-range{font-size:9px;color:#829ab3;margin-top:3px;direction:ltr;text-align:right}
+.traffic-wave{width:100%;height:43px;overflow:visible;filter:drop-shadow(0 0 5px #54dfff55)}
+.traffic-wave path{fill:none;stroke:#61dcff;stroke-width:2.3;stroke-linecap:round;stroke-dasharray:9 6;animation:trafficWaveMove 1.5s linear infinite}
+.traffic-wave .wave-glow{stroke:#9a91ff;stroke-width:1.4;opacity:.6;stroke-dasharray:5 8;animation:trafficWaveMove 2.2s linear infinite reverse}
+.traffic-row.user .traffic-wave{filter:drop-shadow(0 0 5px #9e91ff55)}
+.traffic-row.user .traffic-wave path{stroke:#a69aff;animation-duration:2.1s}
+.traffic-row.user .traffic-wave .wave-glow{stroke:#72dfff;animation-duration:1.7s}
+.traffic-footnote{font-size:9px;color:#8298ae;text-align:left;direction:rtl;margin-top:5px}
+@keyframes trafficWaveMove{to{stroke-dashoffset:-60}}
+@keyframes trafficPulse{50%{opacity:.35;box-shadow:0 0 2px #53e49b}}
+@media(max-width:380px){.traffic-row{grid-template-columns:minmax(0,1fr) 88px;gap:7px}.traffic-card{padding:12px}}
+@media(prefers-reduced-motion:reduce){.traffic-live:before,.traffic-wave path{animation:none}}
+
 /* PUBLIC IP */
 
 .public-ip-card{
@@ -897,7 +959,7 @@ input:focus,select:focus{
     <img class="logo" src="./logo.jpg" alt="DARK VPN Logo">
     <div>
       <h1>𝐃𝐚𝐫𝐤ᵛᵖⁿ</h1>
-      <small>Xray • EPN • E-lite</small>
+      <small>Xray • EPN • E-LITE</small>
     </div>
   </div>
   <button class="theme" id="themeBtn" type="button">☀️ حالت روز</button>
@@ -929,10 +991,42 @@ input:focus,select:focus{
     ابتدا یک دیتابیس انتخاب کن تا مرحله انتخاب کشور فعال شود.
   </p>
 
+  <div class="traffic-card" id="trafficCard" aria-label="وضعیت نمایشی ترافیک شبکه">
+    <div class="traffic-card-head">
+      <span class="traffic-card-title">مانیتورینگ ترافیک شبکه</span>
+      <span class="traffic-live">LIVE • NORMAL</span>
+    </div>
+
+    <div class="traffic-row">
+      <div class="traffic-meta">
+        <div class="traffic-label">وضعیت دیتاسنتر</div>
+        <strong class="traffic-value" id="datacenterRate">58.4 MB/s</strong>
+        <div class="traffic-range">43–73 MB/s</div>
+      </div>
+      <svg class="traffic-wave" viewBox="0 0 120 42" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 22 C7 22 7 7 15 7 S23 35 30 35 S38 12 45 12 S53 28 60 28 S68 5 75 5 S83 34 90 34 S98 13 105 13 S113 22 120 22"/>
+        <path class="wave-glow" d="M0 23 C8 23 8 13 16 13 S24 30 32 30 S40 17 48 17 S56 26 64 26 S72 11 80 11 S88 29 96 29 S104 18 112 18 S116 23 120 23"/>
+      </svg>
+    </div>
+
+    <div class="traffic-row user">
+      <div class="traffic-meta">
+        <div class="traffic-label">وضعیت شبکه کاربر</div>
+        <strong class="traffic-value" id="userRate">2.8 MB/s</strong>
+        <div class="traffic-range">625 KB/s – 5 MB/s</div>
+      </div>
+      <svg class="traffic-wave" viewBox="0 0 120 42" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 21 C7 21 7 9 15 9 S23 32 30 32 S38 14 45 14 S53 27 60 27 S68 7 75 7 S83 33 90 33 S98 15 105 15 S113 21 120 21"/>
+        <path class="wave-glow" d="M0 22 C8 22 8 14 16 14 S24 29 32 29 S40 18 48 18 S56 25 64 25 S72 12 80 12 S88 28 96 28 S104 18 112 18 S116 22 120 22"/>
+      </svg>
+    </div>
+    <div class="traffic-footnote"></div>
+  </div>
+
   <details class="database-picker" id="databasePicker">
     <summary id="databasePickerTitle">
       <span>برای مشاهده دیتابیس‌ها کلیک کنید</span>
-      <small>۲۸ دیتابیس</small>
+      <small>۲۹ دیتابیس</small>
     </summary>
 
     <div class="database-grid" id="databaseGrid">
@@ -976,12 +1070,7 @@ input:focus,select:focus{
         <span class="database-icon"><img src="https://www.google.com/s2/favicons?domain=mi.com&sz=128" alt="Xiaomi"></span>
         <span class="database-info"><span class="database-name">Xiaomi</span><span class="database-code">XMI</span></span>
       </button>
-      
-<button class="database-card" type="button" data-db="Visa">
-  <span class="database-icon"><img src="https://www.google.com/s2/favicons?domain=visa.com&sz=128" alt="Visa"></span>
-  <span class="database-info"><span class="database-name">Visa</span><span class="database-code">VIS</span></span>
-</button>
-      
+
       <button class="database-card" type="button" data-db="POCO">
         <span class="database-icon"><img src="https://www.google.com/s2/favicons?domain=po.co&sz=128" alt="POCO"></span>
         <span class="database-info"><span class="database-name">POCO</span><span class="database-code">PCO</span></span>
@@ -1080,6 +1169,11 @@ input:focus,select:focus{
       <button class="database-card" type="button" data-db="Vodafone">
         <span class="database-icon"><img src="https://www.google.com/s2/favicons?domain=vodafone.com&sz=128" alt="Vodafone"></span>
         <span class="database-info"><span class="database-name">Vodafone</span><span class="database-code">VDF</span></span>
+      </button>
+
+      <button class="database-card" type="button" data-db="Visa">
+        <span class="database-icon"><img src="https://www.google.com/s2/favicons?domain=visa.com&sz=128" alt="Visa"></span>
+        <span class="database-info"><span class="database-name">Visa</span><span class="database-code">VIS</span></span>
       </button>
       
       <button class="database-card" type="button" data-db="TikTok">
@@ -2068,12 +2162,65 @@ $("refreshBtn").addEventListener("click", () => {
   if (databaseUnlocked) loadLocations();
 });
 
+
+
+/* =========================
+   LIVE TRAFFIC DISPLAY SIMULATION
+   Smoothly interpolated demo values; not real network measurements.
+========================= */
+function startTrafficDisplay() {
+  const dcEl = $("datacenterRate");
+  const userEl = $("userRate");
+  if (!dcEl || !userEl) return;
+
+  let dcValue = 58.4;
+  let dcTarget = 58.4;
+  let userValue = 2.8;
+  let userTarget = 2.8;
+  let lastFrame = 0;
+  let lastTargetChange = 0;
+
+  function randomBetween(min, max) {
+    return min + Math.random() * (max - min);
+  }
+
+  function formatUserRate(value) {
+    if (value < 1) return Math.round(value * 1000) + " KB/s";
+    return value.toFixed(2) + " MB/s";
+  }
+
+  function animate(timestamp) {
+    if (!lastFrame) lastFrame = timestamp;
+    const delta = Math.min(timestamp - lastFrame, 50);
+    lastFrame = timestamp;
+
+    if (timestamp - lastTargetChange > 2600) {
+      dcTarget = randomBetween(43, 73);
+      userTarget = randomBetween(0.625, 5);
+      lastTargetChange = timestamp;
+    }
+
+    // Exponential easing avoids sudden jumps and imitates a live throughput meter.
+    const easing = 1 - Math.exp(-delta / 1450);
+    dcValue += (dcTarget - dcValue) * easing;
+    userValue += (userTarget - userValue) * easing;
+
+    dcEl.textContent = dcValue.toFixed(1) + " MB/s";
+    userEl.textContent = formatUserRate(userValue);
+
+    requestAnimationFrame(animate);
+  }
+
+  requestAnimationFrame(animate);
+}
+
 /* =========================
    START
 ========================= */
 
 initExtraOptions();
 loadPublicIP();
+startTrafficDisplay();
 
 setDatabaseCardsDisabled(false);
 </script>
